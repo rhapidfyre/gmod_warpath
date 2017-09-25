@@ -10,6 +10,7 @@ function ENT:Initialize()
 	self.occupied = false
     self.count = 0
     self.last_command = CurTime()
+    self.cooldown = CurTime()
     
 end
 
@@ -26,6 +27,8 @@ function ENT:AcceptInput(inputName, activator, called, data)
             net.WriteInt( self.pointnumber, 8)
             net.WriteInt( self.ownerteam, 8)
             net.Broadcast()
+            
+        self.cooldown = CurTime() + 20
         
     
     elseif inputName == "report" then
@@ -91,23 +94,27 @@ function ENT:Touch(activator)
         else*/
         if activator:GetWarTeam() ~= 5 then
             if !self.occupied then
-            
-                self:Input("capture", activator, activator, activator:GetWarTeam())
-                SpawnpointChange() -- setup_npc.lua
-                self.count = 1
-                self.occupied = true
+                if self.cooldown < CurTime() then
+                    self:Input("capture", activator, activator, activator:GetWarTeam())
+                    SpawnpointChange() -- setup_npc.lua
+                    self.count = 1
+                    self.occupied = true
+                    
+                    for _,spwn in pairs (ents.FindByClass("war_npcspawner")) do
+                        spwn:Input("change")
+                    end
+                    
+                    /*for _,spwn in pairs (ents.FindByClass("war_spawnpoint")) do
+                        spwn:Input("change")
+                    end*/
+                    
+                    -- Sends the NPC to the next assault point
+                    timer.Simple(0.25, function() AssaultPoint(activator) end)
+                    
+                else
+                    activator:SetSchedule(SCHED_ALERT_STAND)
                 
-                for _,spwn in pairs (ents.FindByClass("war_npcspawner")) do
-                    spwn:Input("change")
                 end
-                
-                /*for _,spwn in pairs (ents.FindByClass("war_spawnpoint")) do
-                    spwn:Input("change")
-                end*/
-                
-                -- Sends the NPC to the next assault point
-                timer.Simple(0.25, function() AssaultPoint(activator) end)
-                
             end
             
         end
