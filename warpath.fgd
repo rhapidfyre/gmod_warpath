@@ -1,0 +1,89 @@
+
+@PointClass base(Targetname, Angles) iconsprite("editor/bullseye.vmt") = war_turret : "" 
+[
+	safeteam(choices) : "Alignment" : 5 : "Set which team this turret belongs to." =
+	[
+		1 : "Blue"
+		2 : "Red"
+		3 : "Green"
+		4 : "Yellow"
+		5 : "None"
+	] 
+]
+
+@PointClass base(Targetname, Angles) iconsprite("editor/bullseye.vmt") = war_npcspawner : "" 
+[
+]
+
+@SolidClass base(Trigger, Targetname, Angles) studio("models/items/ammocrate_smg2.mdl") = war_capture_zone :
+	"Used to detect NPC captures"
+[
+	startteam(choices) : "Start Team" : 5 : "If used, selected team starts in control of this point." =
+	[
+		1 : "Blue"
+		2 : "Red"
+		3 : "Green"
+		4 : "Yellow"
+		5 : "None"
+	]
+	pointnumber(choices) : "Point Number" : 1 : "Control Point Number - Must be unique, you do not have to use all nine." =
+	[
+		1 : "Command Point 1"
+		2 : "Command Point 2"
+		3 : "Command Point 3"
+		4 : "Command Point 4"
+		5 : "Command Point 5"
+		6 : "Command Point 6"
+		7 : "Command Point 7"
+		8 : "Command Point 8"
+		9 : "Command Point 9"
+	]
+]
+
+@PointClass base(Targetname, Angles) iconsprite("editor/bullseye.vmt") = war_spawnpoint : ""
+[
+]
+
+@PointClass base(PlayerClass, Angles) studio("models/editor/playerstart.mdl") = info_player_red :
+	"RED (Rebel) Team Spawn Point. Players will face the set angle of the spawn."
+[
+]
+
+@PointClass base(PlayerClass, Angles) studio("models/editor/playerstart.mdl") = info_player_blue :
+	"BLUE (Combine) Team Spawn Point. Players will face the set angle of the spawn."
+[
+]
+
+@PointClass base(PlayerClass, Angles) studio("models/editor/playerstart.mdl") = info_player_green :
+	"GREEN Team Spawn Point. Players will face the set angle of the spawn."
+[
+]
+
+@PointClass base(PlayerClass, Angles) studio("models/editor/playerstart.mdl") = info_player_yellow :
+	"YELLOW Team Spawn Point. Players will face the set angle of the spawn."
+[
+]
+
+@PointClass base(PlayerClass, Angles) studio("models/editor/playerstart.mdl") = info_player_white :
+	"Lazy Team Spawn Point. Players will face the set angle of the spawn."
+[
+]
+
+@PointClass base(PlayerClass, Angles) studio("models/editor/playerstart.mdl") = info_player_deathmatch :
+	"Spectator Spawn Point. Players will face the set angle of the spawn."
+[
+]
+
+@AutoVisGroup = "Spawns"
+[
+	"Player"
+	[
+		"info_player_red"
+		"info_player_blue"
+		"info_player_yellow"
+		"info_player_green"
+		"info_player_white"
+		"info_player_deathmatch"
+        "war_npcspawner"
+	]
+]
