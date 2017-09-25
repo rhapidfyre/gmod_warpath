@@ -9,6 +9,7 @@ function ENT:Initialize()
     self:SetTrigger(true)
 	self.occupied = false
     self.count = 0
+    self.last_command = CurTime()
     
 end
 
@@ -82,12 +83,15 @@ end
 function ENT:Touch(activator)
 	
 	if activator:IsNPC() then
-    
-        if activator:GetWarTeam() == self.ownerteam then
-            AssaultPoint(npc)
+    /*
+        if activator:GetWarTeam() == self.ownerteam and self.last_command < CurTime() then
+            AssaultPoint(activator)
+            self.last_command = CurTime() + 5
             
-        elseif activator:GetWarTeam() ~= 5 then
+        else*/
+        if activator:GetWarTeam() ~= 5 then
             if !self.occupied then
+            
                 self:Input("capture", activator, activator, activator:GetWarTeam())
                 SpawnpointChange() -- setup_npc.lua
                 self.count = 1
@@ -96,9 +100,13 @@ function ENT:Touch(activator)
                 for _,spwn in pairs (ents.FindByClass("war_npcspawner")) do
                     spwn:Input("change")
                 end
+                
                 /*for _,spwn in pairs (ents.FindByClass("war_spawnpoint")) do
                     spwn:Input("change")
                 end*/
+                
+                -- Sends the NPC to the next assault point
+                timer.Simple(0.25, function() AssaultPoint(activator) end)
                 
             end
             

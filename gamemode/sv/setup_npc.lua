@@ -114,9 +114,12 @@ function AssaultPoint(npc)
         if npc:GetWarTeam() ~= 5 then
             if !(CombatSchedules(npc)) then
             
+                print("[DEBUG] "..tostring(npc).." is not in combat. Finding capture zone.")
+                
                 local flag = false
                 local minimum = nil
                 local move_to
+                
                 for _,zone in pairs (ents.FindByClass("war_capture_zone")) do
                 
                     if zone:GetKeyValues()["TeamNum"] ~= npc:GetWarTeam() then
@@ -134,17 +137,25 @@ function AssaultPoint(npc)
                 end
                 
                 if flag then
+                
+                    print("[DEBUG] "..tostring(npc).." found "..minimum:GetName().." - Advancing.")
                     
                     --local speed = { SCHED_FORCED_GO, SCHED_FORCED_GO_RUN }
                     npc:SetSaveValue("m_VecLastPosition", minimum:GetPos())
-                    npc:SetSchedule(SCHED_FORCED_GO_RUN /*table.Random(speed)*/)
+                    npc:SetSchedule(SCHED_FORCED_GO /*table.Random(speed)*/)
                     
+                    print("[DEBUG] "..tostring(npc).." is assaulting "..minimum:GetName().."!")
                     
                 else
                     npc:Fire("StartPatrolling")
-                    
+                    print("[DEBUG] No capture point for ("..tostring(npc:GetName())..") to advance on to. Beginning patrol.")
                 end
             end
         end
     end
 end
+timer.Create("SendAll", 6, 0, function()
+    for _,npc in pairs (ents.FindByClass("npc_*")) do
+        AssaultPoint(npc)
+    end
+end)
