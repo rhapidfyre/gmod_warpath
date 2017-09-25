@@ -1,45 +1,30 @@
 
 --[[---------------------------------------------------------
-	Name: gamemode:OnPhysgunFreeze( weapon, phys, ent, player )
-	Desc: The physgun wants to freeze a prop
+   Name: gamemode:PlayerHurt( )
+   Desc: Called when a player is hurt.
 -----------------------------------------------------------]]
-function GM:OnPhysgunFreeze( weapon, phys, ent, ply )
-	
-	-- Object is already frozen (!?)
-	if ( !phys:IsMoveable() ) then return false end
-	if ( ent:GetUnFreezable() ) then return false end
-	
-	phys:EnableMotion( false )
-	
-	-- With the jeep we need to pause all of its physics objects
-	-- to stop it spazzing out and killing the server.
-	if ( ent:GetClass() == "prop_vehicle_jeep" ) then
-	
-		local objects = ent:GetPhysicsObjectCount()
-		
-		for i = 0, objects - 1 do
-		
-			local physobject = ent:GetPhysicsObjectNum( i )
-			physobject:EnableMotion( false )
-		
-		end
-	
-	end
-
-	-- Add it to the player's frozen props
-	ply:AddFrozenPhysicsObject( ent, phys )
-	
-	return true
-
+function GM:PlayerHurt( player, attacker, healthleft, healthtaken )
 end
 
 --[[---------------------------------------------------------
-	Name: gamemode:OnPhysgunReload( weapon, player )
-	Desc: The physgun wants to freeze a prop
+   Name: gamemode:DoPlayerDeath( )
+   Desc: Carries out actions when the player dies
 -----------------------------------------------------------]]
-function GM:OnPhysgunReload( weapon, ply )
+function GM:DoPlayerDeath( ply, attacker, dmginfo )
 
-	ply:PhysgunUnfreeze( weapon )
+	ply:CreateRagdoll()
+	
+	ply:AddDeaths( 1 )
+	
+	if ( attacker:IsValid() && attacker:IsPlayer() ) then
+	
+		if ( attacker == ply ) then
+			attacker:AddFrags( -1 )
+		else
+			attacker:AddFrags( 1 )
+		end
+	
+	end
 
 end
 
@@ -57,7 +42,7 @@ end
 -----------------------------------------------------------]]
 function GM:PlayerCanPickupWeapon( player, entity )
 
-	return true
+	return false
 
 end
 
@@ -67,16 +52,6 @@ end
 		 return true to allow the pickup.
 -----------------------------------------------------------]]
 function GM:PlayerCanPickupItem( player, entity )
-
-	return true
-
-end
-
---[[---------------------------------------------------------
-	Name: gamemode:CanPlayerUnfreeze( )
-	Desc: Can the player unfreeze this entity & physobject
------------------------------------------------------------]]
-function GM:CanPlayerUnfreeze( ply, entity, physobject )
 
 	return true
 

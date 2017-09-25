@@ -1,5 +1,8 @@
 warpath
 {
+	"base"		"base"
 	"title"		"Warpath"
-	"base"		""
+	"maps"		"war_"
+	"menusystem"	"1"
+	"workshopid"	""
 }

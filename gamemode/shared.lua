@@ -10,14 +10,11 @@
 
 -----------------------------------------------------------]]
 
-include( 'obj_player_extend.lua' )
+-- Include all shared Lua files
+for _, v in pairs(file.Find("warpath/gamemode/sh/*.lua","LUA")) do include("sh/" .. v) end
 
-include( 'gravitygun.lua' )
-include( 'player_shd.lua' )
-include( 'animations.lua' )
-include( 'player_class/player_default.lua' )
+DeriveGamemode("sandbox") -- DEBUG
 
-DeriveGamemode("sandbox")
 GM.Name			= "Warpath"
 GM.Author		= "RhapidFyre & Zoythrus"
 GM.Email		= "nojunkmail@mailinator.com"
@@ -115,62 +112,11 @@ function GM:Tick()
 end
 
 --[[---------------------------------------------------------
-   Name: OnEntityCreated
-   Desc: Called right after the Entity has been made visible to Lua
------------------------------------------------------------]]
-function GM:OnEntityCreated( Ent )
-
-    -- Removes client-side Ragdolls
-	if CLIENT then
-	if Ent:GetClass() == "class C_ClientRagdoll" then
-		Ent:Remove()
-	end
-	end
-    
-    -- If Ent is an NPC, set up WarTeam variable (checks NPC's team)
-    if Ent:IsNPC() then
-		Ent:InstallDataTable()
-		Ent:NetworkVar("Int",0,"WarTeam")
-        
-        --if SERVER then Hostility() end
-        
-    end
-end
-
---[[---------------------------------------------------------
    Name: gamemode:EntityKeyValue( ent, key, value )
    Desc: Called when an entity has a keyvalue set
 		 Returning a string it will override the value
 -----------------------------------------------------------]]
 function GM:EntityKeyValue( ent, key, value )
-end
-
---[[---------------------------------------------------------
-   Name: gamemode:CreateTeams()
-   Desc: Note - HAS to be shared.
------------------------------------------------------------]]
-function GM:CreateTeams()
-
-	-- Don't do this if not teambased. But if it is teambased we
-	-- create a few teams here as an example. If you're making a teambased
-	-- gamemode you should override this function in your gamemode
-
-	if ( !GAMEMODE.TeamBased ) then return end
-
-    local teams = {
-        {1,		"Blue Team",	Color(40,40,255,225),	true,	"info_player_blue"},	
-        {2,		"Red Team",	    Color(255,40,40,255),	true,	"info_player_red"},		
-        {3,		"Yellow Team",	Color(255,255,40,255),	false,	"info_player_yellow" },	
-        {4,		"Green Team",	Color(40,255,40,255),	false,	"info_player_green" },	
-        {5,		"Neutral Team",	Color(255,255,255,255),	false,	"info_player_deathmatch" }
-    }
-    
-    for n,r in pairs(teams) do
-        --          #,name,color,joinable
-        team.SetUp( n, r[2], r[3], r[4] )
-        team.SetSpawnPoint(n,r[5])
-    end
-
 end
 
 --[[---------------------------------------------------------

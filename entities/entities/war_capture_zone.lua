@@ -19,7 +19,13 @@ function ENT:AcceptInput(inputName, activator, called, data)
         PrintMessage(HUD_PRINTTALK, tostring(activator).." (TEAM "..tostring(activator:GetWarTeam())..") captured Control Point "..tostring(self.pointnumber))
         self.ownerteam = data
         self:SetKeyValue("TeamNum", data)
-        print("[DEBUG] [war_capture_zone] Now belongs to team #"..tostring(self.ownerteam))
+        
+        -- Make clients get information
+        net.Start("SV_Capture")
+            net.WriteInt( self.pointnumber, 8)
+            net.WriteInt( self.ownerteam, 8)
+            net.Broadcast()
+        
     
     elseif inputName == "report" then
         print("[WARPATH]")

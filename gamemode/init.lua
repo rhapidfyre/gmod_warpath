@@ -1,10 +1,23 @@
 
-include( 'shared.lua' )
-include( 'player.lua' )
-include( 'npc.lua' )
-include( 'variable_edit.lua' )
-include( 'setup_npc.lua' )
-include( 'commands.lua' )
+-- include root folder and first-order Lua files
+include("sv_vars.lua")
+include("shared.lua")
+include("sh/utils.lua")
+AddCSLuaFile("shared.lua")
+AddCSLuaFile("cl_init.lua")
+
+-- Load the rest of the Lua files, order not important
+local LuaFiles = { ["lua"] = true, }
+ProcDirTree("warpath/gamemode/sv", "LUA", include, LuaFiles)
+ProcDirTree("warpath/gamemode/cl", "LUA", AddCSLuaFile, LuaFiles)
+ProcDirTree("warpath/gamemode/sh", "LUA", AddCSLuaFile, LuaFiles)
+
+-- Before the gamemode loads, precache models and sounds
+function GM:PreGamemodeLoaded()
+	ProcDirTree("gamemodes/warpath/content", "GAME", util.PrecacheModel, { ["mdl"] = true, ["vmt"] = true, })
+	ProcDirTree("gamemodes/warpath/content", "GAME", util.PrecacheSound, { ["wav"] = true, ["mp3"] = true, })
+end
+
 
 GM.PlayerSpawnTime = {}
 
@@ -34,42 +47,6 @@ end
    Desc: Called when the Lua system is about to shut down
 -----------------------------------------------------------]]
 function GM:ShutDown()
-end
-
---[[---------------------------------------------------------
-   Name: gamemode:DoPlayerDeath( )
-   Desc: Carries out actions when the player dies
------------------------------------------------------------]]
-function GM:DoPlayerDeath( ply, attacker, dmginfo )
-
-	ply:CreateRagdoll()
-	
-	ply:AddDeaths( 1 )
-	
-	if ( attacker:IsValid() && attacker:IsPlayer() ) then
-	
-		if ( attacker == ply ) then
-			attacker:AddFrags( -1 )
-		else
-			attacker:AddFrags( 1 )
-		end
-	
-	end
-
-end
-
---[[---------------------------------------------------------
-   Name: gamemode:EntityTakeDamage( ent, info )
-   Desc: The entity has received damage
------------------------------------------------------------]]
-function GM:EntityTakeDamage( ent, info )
-end
-
---[[---------------------------------------------------------
-   Name: gamemode:PlayerHurt( )
-   Desc: Called when a player is hurt.
------------------------------------------------------------]]
-function GM:PlayerHurt( player, attacker, healthleft, healthtaken )
 end
 
 --[[---------------------------------------------------------

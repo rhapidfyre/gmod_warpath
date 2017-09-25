@@ -1,12 +1,14 @@
 
-include( "shared.lua" )
-include( "cl_scoreboard.lua" )
-include( "cl_targetid.lua" )
-include( "cl_hudpickup.lua" )
-include( "cl_spawnmenu.lua" )
-include( "cl_deathnotice.lua" )
-include( "cl_pickteam.lua" )
-include( "cl_voice.lua" )
+-- Include client code
+include("shared.lua")
+ProcDirTree("warpath/gamemode/cl", "LUA", include, { ["lua"] = true, })
+ProcDirTree("warpath/gamemode/cl", "LUA", AddCSLuaFile, { ["lua"] = true, })
+
+function GM:PreGamemodeLoaded()
+	-- Precache content
+	ProcDirTree("gamemodes/warpath/content", "GAME", util.PrecacheModel, { ["mdl"] = true, ["vmt"] = true, })
+	ProcDirTree("gamemodes/warpath/content", "GAME", util.PrecacheSound, { ["wav"] = true, ["mp3"] = true, })
+end
 
 --[[---------------------------------------------------------
 	Name: gamemode:Initialize()
