@@ -11,9 +11,8 @@
 -----------------------------------------------------------]]
 
 -- Include all shared Lua files
+include('player_default.lua')
 for _, v in pairs(file.Find("warpath/gamemode/sh/*.lua","LUA")) do include("sh/" .. v) end
-
-DeriveGamemode("sandbox") -- DEBUG
 
 GM.Name			= "Warpath"
 GM.Author		= "RhapidFyre & Zoythrus"

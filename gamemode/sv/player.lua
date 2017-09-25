@@ -42,7 +42,7 @@ end
 -----------------------------------------------------------]]
 function GM:PlayerCanPickupWeapon( player, entity )
 
-	return false
+	return true
 
 end
 

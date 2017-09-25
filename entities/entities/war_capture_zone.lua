@@ -63,11 +63,17 @@ end
 
 function ENT:StartTouch(ent)
     if ent:IsNPC() or ent:IsPlayer() then
-        if ent:GetWarTeam() == self.ownerteam then
+    
+        local entTeam = nil
+        if ent:IsPlayer() then entTeam = ent:Team()
+        elseif ent:IsNPC() then entTeam = ent:GetWarTeam() end
+        
+        if entTeam == self.ownerteam then
             self.occupied = true
             self.count = self.count + 1
             print("[DEBUG] ("..tostring(self:GetName())..") is now occupied.")
         end
+        
     end
 end
 
@@ -75,10 +81,17 @@ function ENT:EndTouch(ent)
     if ent:IsNPC() or ent:IsPlayer() then
         self.count = self.count - 1
         if self.count <= 0 then
-            if ent:GetWarTeam() == self.ownerteam then
+        
+            local entTeam = nil
+            if ent:IsPlayer() then entTeam = ent:Team()
+            elseif ent:IsNPC() then entTeam = ent:GetWarTeam() end
+            
+            if entTeam == self.ownerteam then
+            self.count = 0
             self.occupied = false
             print("[DEBUG] ("..tostring(self:GetName())..") is now vacant.")
             end
+            
         end
     end
 end
