@@ -11,6 +11,7 @@ function ENT:Initialize()
     self.count = 0
     self.last_command = CurTime()
     self.cooldown = CurTime()
+	self.allowcap = true
     
 end
 
@@ -37,6 +38,12 @@ function ENT:AcceptInput(inputName, activator, called, data)
         print("Currently controlled by "..team.GetName(self.ownerteam))
         print("[END]")
     
+	elseif inputName == "DisableCapture" then
+		self.allowcap = false
+	
+	elseif inputName == "EnableCapture" then
+		self.allowcap = true
+	
     end
     
 end
@@ -106,7 +113,7 @@ function ENT:Touch(activator)
             
         else*/
         if activator:GetWarTeam() ~= 5 then
-            if !self.occupied then
+            if !self.occupied and self.allowcap then
                 if self.cooldown < CurTime() then
                     self:Input("capture", activator, activator, activator:GetWarTeam())
                     SpawnpointChange() -- setup_npc.lua
