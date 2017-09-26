@@ -10,16 +10,12 @@ function ENT:EstablishTeam()
     self.WarTeam        = 5
     local cap_distance  = nil
     local distance      = 16300
-    print("\n")
     for _,zone in pairs(ents.FindByClass("war_capture_zone")) do
         local new_distance = self:GetPos():Distance(zone:GetPos())
         if (distance > new_distance) then
-            print("[DEBUG] NPC Spawner ("..tostring(zone:GetName()).." @ "..tostring(zone:GetPos())..") owned by team "..tostring(zone:GetKeyValues()["TeamNum"]).." is closer ("..tostring(new_distance)..") than previous ("..tostring(distance)..") zone.")
             self.nearest   = zone
             distance       = new_distance
             self.WarTeam   = zone:GetKeyValues()["TeamNum"]
-        else
-            print("[DEBUG] NPC Spawner ("..tostring(zone:GetName()).." @ "..tostring(zone:GetPos())..") was NOT closer ("..tostring(new_distance)..") than previous ("..tostring(distance)..") zone.")
         end
     end
     
@@ -27,7 +23,6 @@ function ENT:EstablishTeam()
     print("[WARPATH] Nearest Capture Point: "..tostring(self.nearest:GetName()).." @ "..tostring(self.nearest:GetPos()))
     
     self.complete = true
-    print("\n")
 end
 
 function ENT:Initialize()
@@ -49,7 +44,6 @@ end
 
 function ENT:AcceptInput(inputName, activator, called, data)
 	if inputName == "DecreaseCount" then
-		print("[DEBUG] [war_npcspawner] Decreasing count "..tostring(self.livingmobs).." by 1.")
 		self.livingmobs = self.livingmobs - tonumber(data)
     elseif inputName == "change" then
         self.complete = false
@@ -69,7 +63,6 @@ function ENT:Think()
     if self.complete and RoundActive() then
         if CurTime() >= self.next_spawn then
             print("")
-            print("[DEBUG] ["..self:GetName().."] Checking for spawn possibility..."..tostring(self.livingmobs).."/"..tostring(self.maxmobs))
             if self.livingmobs < self.maxmobs and self.WarTeam ~= 5 then
                 
                 self.next_spawn = CurTime() + spawn_gap
@@ -102,7 +95,6 @@ function ENT:Think()
                 npc:SetCurrentWeaponProficiency(WEAPON_PROFICIENCY_VERY_GOOD)
                 
                 npc:SetWarTeam(self.WarTeam)
-                print("[DEBUG] ["..self:GetName().."] I spawn NPCs that are on "..team.GetName(self.WarTeam).." ("..tostring(self.WarTeam)..")")
                 
                 -- Randomly spawn within given radius by map
                 npc:SetPos(self:GetPos() + Vector(0, 0, 0))
@@ -117,15 +109,11 @@ function ENT:Think()
                 -- Change this spawners # of mobs alive (to prevent crowding/server overloading)
                 self.livingmobs = self.livingmobs + 1
                 
-                print("[DEBUG] ["..self:GetName().."] "..tostring(npc:GetName())..", team #"..npc:GetWarTeam().." spawned.")
-                
                 Hostility()
                 
             else
-                print("[DEBUG] ["..self:GetName().."] Spawner failure; self.maxmobs reached!")
                 self.next_spawn = CurTime() + spawn_gap
             end
-            print("")
             
         end
     end

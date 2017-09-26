@@ -374,13 +374,10 @@ end
 -----------------------------------------------------------]]
 function GM:PlayerSelectSpawn( pl )
 
-	if ( self.TeamBased ) then
+	local ent = self:PlayerSelectTeamSpawn( pl:Team(), pl )
+	if ( IsValid( ent ) ) then return ent end
 	
-		local ent = self:PlayerSelectTeamSpawn( pl:Team(), pl )
-		if ( IsValid( ent ) ) then return ent end
-	
-	end
-
+    /*
 	-- Save information about all of the spawn points
 	-- in a team based game you'd split up the spawns
 	if ( !IsTableOfEntitiesValid( self.SpawnPoints ) ) then
@@ -427,9 +424,9 @@ function GM:PlayerSelectSpawn( pl )
 		end
 		
 	end
-	
 	return ChosenSpawnPoint
 
+	*/
 end
 
 --[[---------------------------------------------------------

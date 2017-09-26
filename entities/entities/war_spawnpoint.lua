@@ -10,16 +10,13 @@ function ENT:EstablishTeam()
     self.WarTeam        = 5
     local cap_distance  = nil
     local distance      = 16300
-    print("\n")
+    
     for _,zone in pairs(ents.FindByClass("war_capture_zone")) do
         local new_distance = self:GetPos():Distance(zone:GetPos())
         if (distance > new_distance) then
-            print("[DEBUG] Player Spawnpoint ("..tostring(zone:GetName()).." @ "..tostring(zone:GetPos())..") owned by team "..tostring(zone:GetKeyValues()["TeamNum"]).." is closer ("..tostring(new_distance)..") than previous ("..tostring(distance)..") zone.")
             self.nearest   = zone
             distance       = new_distance
             self.WarTeam   = zone:GetKeyValues()["TeamNum"]
-        else
-            print("[DEBUG] Player Spawnpoint ("..tostring(zone:GetName()).." @ "..tostring(zone:GetPos())..") was NOT closer ("..tostring(new_distance)..") than previous ("..tostring(distance)..") zone.")
         end
     end
     
@@ -28,7 +25,6 @@ function ENT:EstablishTeam()
     
     self:SetKeyValue("TeamNum", self.WarTeam)
     self:SetName("SPAWN_"..tostring(self.nearest:GetName()))
-    print("\n")
 end
 
 function ENT:Initialize()

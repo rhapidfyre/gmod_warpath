@@ -29,16 +29,17 @@ function round.Prep()
 	
 	-- Reset Upgrades
 	
-    
-    for _,ply in pairs (player.GetAll()) do
-        -- Respawn
-        if IsPlaying(ply) then ply:Spawn() end
-        
-        -- Weapon Strip 
-        
-        -- Disperse Weaponry
-        
-    end
+    timer.Simple(1, function()
+        for _,ply in pairs (player.GetAll()) do
+            -- Respawn
+            if IsPlaying(ply) then ply:Spawn() end
+            
+            -- Weapon Strip 
+            
+            -- Disperse Weaponry
+            
+        end
+    end)
 	
 	-- Disable Control Point Capturing & Build HUD Info
 	for _,zone in pairs (ents.FindByClass("war_capture_zone")) do

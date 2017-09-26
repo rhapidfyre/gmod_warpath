@@ -113,12 +113,10 @@ function AssaultPoint(npc)
     if IsValid(npc) and npc ~= nil then
         if npc:GetWarTeam() ~= 5 then
             if !(CombatSchedules(npc)) then
-            
-                print("[DEBUG] "..tostring(npc).." is not in combat. Finding capture zone.")
                 
+                /*
                 local flag = false
                 local minimum = nil
-                
                 for _,zone in pairs (ents.FindByClass("war_capture_zone")) do
                 
                     if zone:GetKeyValues()["TeamNum"] ~= npc:GetWarTeam() then
@@ -134,8 +132,7 @@ function AssaultPoint(npc)
                         
                     end
                 end
-                
-                /*
+                */
                 local flag = false
                 local minimum = {}
                 
@@ -147,19 +144,27 @@ function AssaultPoint(npc)
                         
                     end
                 end
-                */
+                
                 if flag then
                 
-                    --print("[DEBUG] "..tostring(npc).." found "..minimum:GetName().." - Advancing.")
+                    local speed = { SCHED_FORCED_GO, SCHED_FORCED_GO_RUN }
+                    local setSpeed = table.Random(speed)
+                    local vect = table.Random(minimum)
                     
-                    --local speed = { SCHED_FORCED_GO, SCHED_FORCED_GO_RUN }
-                    npc:SetSaveValue("m_VecLastPosition", /*table.Random(minimum)*/minimum:GetPos())
-                    npc:SetSchedule(SCHED_FORCED_GO/*table.Random(speed)*/)
+                    if npc:GetNWBool("HasGoal") then
+                        npc:SetSaveValue("m_VecLastPosition", npc:GetNWVector("GoalVector"))
+                        npc:SetSchedule(npc:GetNWString("GoalSpeed"))
+                    else
+                        npc:SetSaveValue("m_VecLastPosition", table.Random(minimum)/*minimum:GetPos()*/)
+                        npc:SetSchedule(setSpeed)
+                    end
                     
-                    --print("[DEBUG] "..tostring(npc).." is assaulting "..minimum:GetName().."!")
+                    npc:SetNWBool("HasGoal", true)
+                    npc:SetNWString("GoalSpeed", setSpeed)
+                    npc:SetNWVector("GoalVector", vect)
+                    
                 else
                     npc:Fire("StartPatrolling")
-                    --print("[DEBUG] No capture point for ("..tostring(npc:GetName())..") to advance on to. Beginning patrol.")
                 end
                 
             end
@@ -170,8 +175,8 @@ end
 -- DEBUG : Find a better way to implement this
 timer.Create("SendAll", 6, 0, function()
     for _,npc in pairs (ents.FindByClass("npc_*")) do
-        --if !(npc:IsCurrentSchedule(SCHED_FORCED_GO)) and !(npc:IsCurrentSchedule(SCHED_FORCED_GO_RUN)) then
+        if !(npc:IsCurrentSchedule(SCHED_FORCED_GO)) and !(npc:IsCurrentSchedule(SCHED_FORCED_GO_RUN)) then
             AssaultPoint(npc)
-        --end
+        end
     end
 end)

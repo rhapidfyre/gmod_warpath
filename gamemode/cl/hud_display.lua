@@ -41,7 +41,7 @@ function HealthFlash()
 		draw.RoundedBox(0,ScrW()*0.016 + 3,ScrH()*0.909 + 3,LocalPlayer():Health() * 3.57,21,hcolor)
 		draw.RoundedBox(0,ScrW()*0.016 + 3,ScrH()*0.909 + 16,LocalPlayer():Armor() * 3.57,8,Color(255,180,0,255))
 		
-		draw.SimpleTextOutlined(LocalPlayer():Health().."%","CloseCaption_Normal",ScrW()*0.2025,ScrH()*0.9075,color,2,0,1,o_color)
+		draw.SimpleText(LocalPlayer():Health().."%","CloseCaption_Normal",ScrW()*0.2025,ScrH()*0.9075,color,2,0)
 	else
 		local trig 		= math.abs(math.sin(CurTime()) * 0.25) * 255
 		draw.SimpleTextOutlined("PRESS F2 TO JOIN!","CloseCaption_Normal",ScrW()*0.016,ScrH()*0.9125,Color(255,255,255,trig),0,0,1,Color(0,0,0))

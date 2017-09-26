@@ -145,7 +145,10 @@ function ENT:Touch(activator)
                     end*/
                     
                     -- Sends the NPC to the next assault point
-                    timer.Simple(0.25, function() AssaultPoint(activator) end)
+                    activator:SetNWBool("HasGoal", false)
+                    timer.Simple(0.25, function()
+                        AssaultPoint(activator)
+                    end)
                     
                 else
                     activator:SetSchedule(SCHED_ALERT_STAND)
