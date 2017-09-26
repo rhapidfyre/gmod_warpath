@@ -103,15 +103,10 @@ end
 	Awards the winning team points then calls round.End()
 ]]
 function round.Victory()
-    print("[DEBUG] [RoundControl] The round has been terminated - All command points controlled.")
     round.End()
 end
 hook.Add("EndRound", "EndRound", function()
-
-
-    print("[DEBUG] [RoundControl] Victory detected")
     round.Victory()
-
 end)
 
 --[[

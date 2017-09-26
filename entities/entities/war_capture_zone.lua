@@ -21,12 +21,6 @@ function ENT:AcceptInput(inputName, activator, called, data)
         PrintMessage(HUD_PRINTTALK, tostring(activator).." (TEAM "..tostring(activator:GetWarTeam())..") captured Control Point "..tostring(self.pointnumber))
         self.ownerteam = data
         self:SetKeyValue("TeamNum", data)
-        
-        -- Make clients get information
-        net.Start("SV_Capture")
-            net.WriteInt( self.pointnumber, 8)
-            net.WriteInt( self.ownerteam, 8)
-            net.Broadcast()
             
         self.cooldown = CurTime() + 20
         
@@ -44,6 +38,11 @@ function ENT:AcceptInput(inputName, activator, called, data)
             hook.Call("EndRound")
             net.Start("SV_Victory")
                 net.WriteInt(self.ownerteam, 8)
+                net.Broadcast()
+        else
+            net.Start("SV_Capture")
+                net.WriteInt( self.pointnumber, 8)
+                net.WriteInt( self.ownerteam, 8)
                 net.Broadcast()
         end -----------------------------------------------------------
         

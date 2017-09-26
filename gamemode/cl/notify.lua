@@ -25,8 +25,13 @@ net.Receive("SV_Capture", function(len, ply)
 
 end)
 
-net.Receive("SV_AllCaptured", function(len, ply)
+net.Receive("SV_Victory", function(len, ply)
 
-    
+    local cteam = net.ReadInt(8)
+    if cteam == LocalPlayer():Team() then
+        surface.PlaySound("vox/all_secure.wav")
+    else
+        surface.PlaySound("vox/all_captured.wav")
+    end
 
 end)
