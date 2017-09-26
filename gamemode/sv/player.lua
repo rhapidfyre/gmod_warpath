@@ -87,7 +87,16 @@ function GM:PlayerDeathThink( pl )
 
 	if ( pl:IsBot() || pl:KeyPressed( IN_ATTACK ) || pl:KeyPressed( IN_ATTACK2 ) || pl:KeyPressed( IN_JUMP ) ) then
 	
-		pl:Spawn()
+		local allowspawn = false
+        for _,zone in pairs (ents.FindByClass("war_capture_zone")) do
+            if zone:GetKeyValues()["TeamNum"] == pl:Team() then
+                allowspawn = true
+            end
+        end
+        
+        if allowspawn then  pl:Spawn()
+        else                return
+        end
 	
 	end
 	
@@ -126,8 +135,8 @@ util.AddNetworkString( "PlayerKilledByPlayer" )
 -----------------------------------------------------------]]
 function GM:PlayerDeath( ply, inflictor, attacker )
 
-	-- Don't spawn for at least 2 seconds
-	ply.NextSpawnTime = CurTime() + 2
+	-- Don't spawn for at least 3 seconds
+	ply.NextSpawnTime = CurTime() + 3
 	ply.DeathTime = CurTime()
 	
 	if ( IsValid( attacker ) && attacker:GetClass() == "trigger_hurt" ) then attacker = ply end
@@ -290,6 +299,10 @@ end
 function GM:PlayerLoadout( pl )
 
 	player_manager.RunClass( pl, "Loadout" )
+    pl:Give("weapon_crowbar")
+    pl:Give("weapon_pistol")
+    pl:Give("weapon_frag")
+    pl:GiveAmmo(90, "Pistol", true)
 
 end
 
@@ -299,22 +312,24 @@ end
 -----------------------------------------------------------]]
 function GM:PlayerSelectTeamSpawn( TeamID, pl )
 
-	local SpawnPoints = team.GetSpawnPoints( TeamID )
-	if ( !SpawnPoints || table.Count( SpawnPoints ) == 0 ) then return end
-	
-	local ChosenSpawnPoint = nil
-	
-	for i = 0, 6 do
-	
-		local ChosenSpawnPoint = table.Random( SpawnPoints )
-		if ( hook.Call( "IsSpawnpointSuitable", GAMEMODE, pl, ChosenSpawnPoint, i == 6 ) ) then
-			return ChosenSpawnPoint
-		end
-	
-	end
-	
-	return ChosenSpawnPoint
-
+    
+    if IsPlaying(pl) then
+    
+        local SpawnPoints = {}
+        for _,spawn in pairs (ents.FindByClass("war_spawnpoint")) do
+            if spawn:GetKeyValues()["TeamNum"] == pl:Team() then
+                table.insert(SpawnPoints, spawn)
+            end
+        end
+    
+        local ChosenSpawnPoint = table.Random(SpawnPoints)
+        return ChosenSpawnPoint
+        
+    else
+        if pl:Team() == 5 then  return ents.FindByClass("info_player_deathmatch")[1]
+        else                    return ents.FindByClass("info_player_start")[1]
+        end
+    end
 end
 
 
@@ -371,57 +386,7 @@ function GM:PlayerSelectSpawn( pl )
 	if ( !IsTableOfEntitiesValid( self.SpawnPoints ) ) then
 	
 		self.LastSpawnPoint = 0
-		self.SpawnPoints = ents.FindByClass( "info_player_start" )
-		self.SpawnPoints = table.Add( self.SpawnPoints, ents.FindByClass( "info_player_deathmatch" ) )
-		self.SpawnPoints = table.Add( self.SpawnPoints, ents.FindByClass( "info_player_combine" ) )
-		self.SpawnPoints = table.Add( self.SpawnPoints, ents.FindByClass( "info_player_rebel" ) )
-		
-		-- CS Maps
-		self.SpawnPoints = table.Add( self.SpawnPoints, ents.FindByClass( "info_player_counterterrorist" ) )
-		self.SpawnPoints = table.Add( self.SpawnPoints, ents.FindByClass( "info_player_terrorist" ) )
-		
-		-- DOD Maps
-		self.SpawnPoints = table.Add( self.SpawnPoints, ents.FindByClass( "info_player_axis" ) )
-		self.SpawnPoints = table.Add( self.SpawnPoints, ents.FindByClass( "info_player_allies" ) )
-
-		-- (Old) GMod Maps
-		self.SpawnPoints = table.Add( self.SpawnPoints, ents.FindByClass( "gmod_player_start" ) )
-		
-		-- TF Maps
-		self.SpawnPoints = table.Add( self.SpawnPoints, ents.FindByClass( "info_player_teamspawn" ) )
-		
-		-- INS Maps
-		self.SpawnPoints = table.Add( self.SpawnPoints, ents.FindByClass( "ins_spawnpoint" ) )
-
-		-- AOC Maps
-		self.SpawnPoints = table.Add( self.SpawnPoints, ents.FindByClass( "aoc_spawnpoint" ) )
-
-		-- Dystopia Maps
-		self.SpawnPoints = table.Add( self.SpawnPoints, ents.FindByClass( "dys_spawn_point" ) )
-
-		-- PVKII Maps
-		self.SpawnPoints = table.Add( self.SpawnPoints, ents.FindByClass( "info_player_pirate" ) )
-		self.SpawnPoints = table.Add( self.SpawnPoints, ents.FindByClass( "info_player_viking" ) )
-		self.SpawnPoints = table.Add( self.SpawnPoints, ents.FindByClass( "info_player_knight" ) )
-
-		-- DIPRIP Maps
-		self.SpawnPoints = table.Add( self.SpawnPoints, ents.FindByClass( "diprip_start_team_blue" ) )
-		self.SpawnPoints = table.Add( self.SpawnPoints, ents.FindByClass( "diprip_start_team_red" ) )
-
-		-- OB Maps
-		self.SpawnPoints = table.Add( self.SpawnPoints, ents.FindByClass( "info_player_red" ) )
-		self.SpawnPoints = table.Add( self.SpawnPoints, ents.FindByClass( "info_player_blue" ) )
-
-		-- SYN Maps
-		self.SpawnPoints = table.Add( self.SpawnPoints, ents.FindByClass( "info_player_coop" ) )
-
-		-- ZPS Maps
-		self.SpawnPoints = table.Add( self.SpawnPoints, ents.FindByClass( "info_player_human" ) )
-		self.SpawnPoints = table.Add( self.SpawnPoints, ents.FindByClass( "info_player_zombie" ) )
-
-		-- ZM Maps
-		self.SpawnPoints = table.Add( self.SpawnPoints, ents.FindByClass( "info_player_zombiemaster" ) )
-
+		self.SpawnPoints = ents.FindByClass( "war_spawnpoint" )
 	end
 	
 	local Count = table.Count( self.SpawnPoints )

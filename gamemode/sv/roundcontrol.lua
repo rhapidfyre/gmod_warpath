@@ -1,4 +1,10 @@
 
+points = {}
+points[1] = 5
+points[2] = 5
+points[3] = 5
+points[4] = 5
+
 local round 		= {}
 round.timeleft 		= -1
 round.status		= ROUND_END
@@ -34,10 +40,19 @@ function round.Prep()
         
     end
 	
-	-- Disable Control Point Capturing
+	-- Disable Control Point Capturing & Build HUD Info
 	for _,zone in pairs (ents.FindByClass("war_capture_zone")) do
 		zone:Input("DisableCapture")
+        if      zone:GetName() == "CAP_POINT_1" then SetGlobalInt("CmdPoint1", zone:GetKeyValues()["TeamNum"])
+        elseif  zone:GetName() == "CAP_POINT_2" then SetGlobalInt("CmdPoint2", zone:GetKeyValues()["TeamNum"])
+        elseif  zone:GetName() == "CAP_POINT_3" then SetGlobalInt("CmdPoint3", zone:GetKeyValues()["TeamNum"])
+        elseif  zone:GetName() == "CAP_POINT_4" then SetGlobalInt("CmdPoint4", zone:GetKeyValues()["TeamNum"])
+        else                                         SetGlobalInt("CmdPoint5", zone:GetKeyValues()["TeamNum"])
+        end
 	end
+    
+    --SetGlobalString("CmdPoints", util.TableToJSON(points))
+    
 	
 end
 

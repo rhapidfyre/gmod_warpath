@@ -21,8 +21,15 @@ function ENT:AcceptInput(inputName, activator, called, data)
         PrintMessage(HUD_PRINTTALK, tostring(activator).." (TEAM "..tostring(activator:GetWarTeam())..") captured Control Point "..tostring(self.pointnumber))
         self.ownerteam = data
         self:SetKeyValue("TeamNum", data)
-            
+        SetGlobalInt("CmdPoint"..self.pointnumber, self.ownerteam)
         self.cooldown = CurTime() + 20
+        
+        -- Changes the cooresponding spawn points
+        for _,spawn in pairs (ents.FindByClass("war_spawnpoint")) do
+            if spawn:GetName() == "SPAWN_"..tostring(self:GetName()) then
+                spawn:Input("change")
+            end
+        end
         
         --------------------------------------------------------------
         -- Checks upon capture if all command points are controlled --
@@ -121,7 +128,7 @@ function ENT:Touch(activator)
             self.last_command = CurTime() + 5
             
         else*/
-        if activator:GetWarTeam() ~= 5 then
+        if (activator:GetWarTeam() ~= 5) and (activator:GetWarTeam() ~= self.ownerteam) then
             if !self.occupied then
                 if self.cooldown < CurTime() then
                     self:Input("capture", activator, activator, activator:GetWarTeam())

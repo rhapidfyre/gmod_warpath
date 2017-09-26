@@ -1,4 +1,4 @@
-
+    
 --[[---------------------------------------------------------
    Name: OnEntityCreated
    Desc: Called right after the Entity has been made visible to Lua

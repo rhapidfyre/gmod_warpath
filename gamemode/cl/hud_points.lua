@@ -1,0 +1,16 @@
+
+hook.Add("HUDPaint", "CmdPoints", function()
+	draw.RoundedBoxEx(8,(ScrW()/2)-128,ScrH()-72,256,48,Color(80,80,80,255),true,true,false,false)
+    draw.SimpleTextOutlined("COMMAND POINTS", "HUDScore3", ScrW()/2, ScrH()-72, Color(80,220,80),TEXT_ALIGN_CENTER,0,1,Color(0,0,0))
+    
+    draw.RoundedBox(8, ScrW()/2 - 76, ScrH()-50, 24, 24, team.GetColor(GetGlobalInt("CmdPoint1")))
+    draw.SimpleTextOutlined("1", "HUDScore3", ScrW()/2 - 64, ScrH()-50, Color(200,200,200),TEXT_ALIGN_CENTER,0,1,Color(0,0,0))
+    draw.RoundedBox(8, ScrW()/2 - 44, ScrH()-50, 24, 24, team.GetColor(GetGlobalInt("CmdPoint2")))
+    draw.SimpleTextOutlined("2", "HUDScore3", ScrW()/2 - 32, ScrH()-50, Color(200,200,200),TEXT_ALIGN_CENTER,0,1,Color(0,0,0))
+    draw.RoundedBox(8, ScrW()/2 - 12, ScrH()-50, 24, 24, team.GetColor(GetGlobalInt("CmdPoint3")))
+    draw.SimpleTextOutlined("3", "HUDScore3", ScrW()/2 - 0, ScrH()-50,  Color(200,200,200),TEXT_ALIGN_CENTER,0,1,Color(0,0,0))
+    draw.RoundedBox(8, ScrW()/2 + 20, ScrH()-50, 24, 24, team.GetColor(GetGlobalInt("CmdPoint4")))
+    draw.SimpleTextOutlined("4", "HUDScore3", ScrW()/2 + 32, ScrH()-50, Color(200,200,200),TEXT_ALIGN_CENTER,0,1,Color(0,0,0))
+    draw.RoundedBox(8, ScrW()/2 + 52, ScrH()-50, 24, 24, team.GetColor(GetGlobalInt("CmdPoint5")))
+    draw.SimpleTextOutlined("5", "HUDScore3", ScrW()/2 + 64, ScrH()-50, Color(200,200,200),TEXT_ALIGN_CENTER,0,1,Color(0,0,0))
+end)
