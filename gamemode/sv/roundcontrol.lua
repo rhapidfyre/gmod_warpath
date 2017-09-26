@@ -184,8 +184,10 @@ function round.clock()
 	-- Send clients the current time
 	net.Start("SV_Clock")
 		net.WriteInt(round.timeleft, 12)
+        net.WriteInt(round.status, 8)
 		net.Broadcast()
-		
+    SetGlobalInt("RoundTimeLeft", round.timeleft)
+    SetGlobalInt("RoundStatus", round.status)
 end
 
 function RoundActive()
