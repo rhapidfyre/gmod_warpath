@@ -58,7 +58,9 @@ function GM:CreateEntityRagdoll( entity, ragdoll )
 	ragdoll.Owner = entity
 	ragdoll:SetNWString("owner", entity:GetNWString("targetname"))
     timer.Simple(3, function()
-        ragdoll:Remove()
+        if IsValid(ragdoll) then
+            ragdoll:Remove()
+        end
     end)
 end
 

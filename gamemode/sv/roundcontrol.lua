@@ -6,42 +6,33 @@ round.in_progress	= false
 round.count			= 0
 
 --[[
-	CheckReady()
-	Returns true if any players are on a playable team and ready to play
-]]
-local function CheckReady()
-
-	local flag = false
-	
-	for _,pl in pairs (players.GetAll()) do
-		if ply:Team() > 0 and ply:Team() < 5 then
-			flag = true
-		end
-	end
-	
-	return flag
-	
-end
-
---[[
 	round.Prep()
 	Terminates the intermission round and respawns all the players
 	Sends input to [war_capture_zone] to disable control point capturing
 ]]
-local function round.Prep()
+function round.Prep()
 
+    print("[DEBUG] [RoundControl] Beginning preparation round...")
 	-- Round Controller
-	round.status 	== ROUND_PREP
-	round.timeleft 	== TIME_PREP
+	round.status 	    = ROUND_PREP
+	round.timeleft 	    = TIME_PREP
+    round.in_progress   = false
 
 	-- Reset Map
 	game.CleanUpMap(false)
 	
 	-- Reset Upgrades
 	
-	-- Weapon Strip Players and Dispurse Default Weaponry
-	
-	-- Respawn Players
+    
+    for _,ply in pairs (player.GetAll()) do
+        -- Respawn
+        if IsPlaying(ply) then ply:Spawn() end
+        
+        -- Weapon Strip 
+        
+        -- Disperse Weaponry
+        
+    end
 	
 	-- Disable Control Point Capturing
 	for _,zone in pairs (ents.FindByClass("war_capture_zone")) do
@@ -55,13 +46,13 @@ end
 	Respawns all dead players and begins the round
 	Sends input to [war_capture_zone] to re-enable control point capturing
 ]]
-local function round.Begin()
+function round.Begin()
 
+    print("[DEBUG] [RoundControl] Control Points unlocked. The round has begun!")
 	-- Round Controller
-	round.status 	== ROUND_ACTIVE
-	round.timeleft	== TIME_ROUND
-
-	-- Respawn dead players that are on a playable teams
+	round.status 	    = ROUND_ACTIVE
+	round.timeleft	    = TIME_ROUND
+    round.in_progress   = true
 	
 	-- Enable Control Point Capturing
 	for _,zone in pairs (ents.FindByClass("war_capture_zone")) do
@@ -75,11 +66,13 @@ end
 	Terminates the active round, disables spawning.
 	Sends input to [war_capture_zone] to disable control point capturing
 ]]
-local function round.End()
+function round.End()
 
+    print("[DEBUG] [RoundControl] The round has ended.")
 	-- Round Controller
-	round.status 	== ROUND_END
-	round.timelfet 	== TIME_END
+	round.status 	    = ROUND_END
+	round.timeleft 	    = TIME_END
+    round.in_progress   = false
 
 	-- Disable Player Spawning
 
@@ -100,14 +93,32 @@ local function round.End()
 		hook.Call("WAR_MapVote")
 		
 	end
+    
+    -- Check for Victors
 	
 end
+
+--[[
+	round.Victory()
+	Awards the winning team points then calls round.End()
+]]
+function round.Victory()
+    print("[DEBUG] [RoundControl] The round has been terminated - All command points controlled.")
+    round.End()
+end
+hook.Add("EndRound", "EndRound", function()
+
+
+    print("[DEBUG] [RoundControl] Victory detected")
+    round.Victory()
+
+end)
 
 --[[
 	round.Stale()
 	Disables the round controller if no players are on playable teams
 ]]
-local function round.Stale()
+function round.Stale()
 
 	if timer.Exists("RoundControl") then timer.Remove("RoundControl") end
 	if !timer.Exists("RoundStale")  then timer.Create("RoundStale", 1, 0, round.Stale) end
@@ -117,13 +128,16 @@ local function round.Stale()
 	round.in_progress = false
 	
 	if CheckReady() then
-		
+        print("[DEBUG] [RoundControl] A player is waiting, the game will begin!")
 		round.timeleft 	= TIME_PREP
 		round.status 	= ROUND_PREP
 		
-		if timer.Exists("RoundStale") then timer.Remove("RoundControl") end
-		if !timer.Exists("RoundSContr")  then timer.Create("RoundStale", 1, 0, round.Stale) end
-	
+		if  timer.Exists("RoundStale")      then timer.Remove("RoundStale") end
+		if !timer.Exists("RoundControl")    then timer.Create("RoundControl", 1, 0, round.Controller) end
+        
+	else
+        print("[DEBUG] [RoundControl] Game Stale - No Players Waiting!")
+        
 	end
 
 end
@@ -132,8 +146,9 @@ end
 	round.Controller()
 	Controls timeleft and round status
 ]]
-local function round.Controller()
+function round.Controller()
 	
+    
 	-- If time expires change round status
 	if round.timeleft <= 0 then
 	
@@ -144,8 +159,13 @@ local function round.Controller()
 		end
 	
 	end
+    
+    if !CheckReady() then
+        round.Stale()
+    end
 	
 	round.clock() -- Should this go at the top of the function? Test it. [DEBUG]
+    round.timeleft = round.timeleft - 1
 	
 end
 
@@ -155,8 +175,9 @@ timer.Create("RoundControl", 1, 0, round.Controller)
 	round.Clock()
 	Sends the timeleft counter to clients
 ]]
-local function round.clock()
+function round.clock()
 	
+    print("[DEBUG] [TimeLeft] Time remaining (in seconds): "..tostring(round.timeleft))
 	-- Never allow a round time to exceed 10 minutes
 	if round.timeleft > 600 then round.timeleft = 600 end
 	
@@ -166,6 +187,11 @@ local function round.clock()
 		net.Broadcast()
 		
 end
+
+function RoundActive()
+    return round.in_progress
+end
+
 
 
 

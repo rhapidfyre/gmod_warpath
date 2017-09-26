@@ -115,7 +115,7 @@ function AssaultPoint(npc)
             if !(CombatSchedules(npc)) then
             
                 print("[DEBUG] "..tostring(npc).." is not in combat. Finding capture zone.")
-                /*
+                
                 local flag = false
                 local minimum = nil
                 
@@ -135,7 +135,7 @@ function AssaultPoint(npc)
                     end
                 end
                 
-                */
+                /*
                 local flag = false
                 local minimum = {}
                 
@@ -147,13 +147,13 @@ function AssaultPoint(npc)
                         
                     end
                 end
-                
+                */
                 if flag then
                 
                     --print("[DEBUG] "..tostring(npc).." found "..minimum:GetName().." - Advancing.")
                     
                     --local speed = { SCHED_FORCED_GO, SCHED_FORCED_GO_RUN }
-                    npc:SetSaveValue("m_VecLastPosition", table.Random(minimum)/*minimum:GetPos()*/)
+                    npc:SetSaveValue("m_VecLastPosition", /*table.Random(minimum)*/minimum:GetPos())
                     npc:SetSchedule(SCHED_FORCED_GO/*table.Random(speed)*/)
                     
                     --print("[DEBUG] "..tostring(npc).." is assaulting "..minimum:GetName().."!")
@@ -170,8 +170,8 @@ end
 -- DEBUG : Find a better way to implement this
 timer.Create("SendAll", 6, 0, function()
     for _,npc in pairs (ents.FindByClass("npc_*")) do
-        if !(npc:IsCurrentSchedule(SCHED_FORCED_GO)) and !(npc:IsCurrentSchedule(SCHED_FORCED_GO_RUN)) then
+        --if !(npc:IsCurrentSchedule(SCHED_FORCED_GO)) and !(npc:IsCurrentSchedule(SCHED_FORCED_GO_RUN)) then
             AssaultPoint(npc)
-        end
+        --end
     end
 end)

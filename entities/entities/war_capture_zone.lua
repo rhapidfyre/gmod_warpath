@@ -11,7 +11,6 @@ function ENT:Initialize()
     self.count = 0
     self.last_command = CurTime()
     self.cooldown = CurTime()
-	self.allowcap = true
     
 end
 
@@ -31,6 +30,23 @@ function ENT:AcceptInput(inputName, activator, called, data)
             
         self.cooldown = CurTime() + 20
         
+        --------------------------------------------------------------
+        -- Checks upon capture if all command points are controlled --
+        --------------------------------------------------------------
+        local capzones = ents.FindByClass("war_capture_zone")
+        local counter = 0
+        for _,zone in pairs (capzones) do
+            if zone:GetKeyValues()["TeamNum"] == self.ownerteam then
+                counter = counter + 1            
+            end
+        end
+        if counter >= #capzones then
+            hook.Call("EndRound")
+            net.Start("SV_Victory")
+                net.WriteInt(self.ownerteam, 8)
+                net.Broadcast()
+        end -----------------------------------------------------------
+        
     
     elseif inputName == "report" then
         print("[WARPATH]")
@@ -38,12 +54,6 @@ function ENT:AcceptInput(inputName, activator, called, data)
         print("Currently controlled by "..team.GetName(self.ownerteam))
         print("[END]")
     
-	elseif inputName == "DisableCapture" then
-		self.allowcap = false
-	
-	elseif inputName == "EnableCapture" then
-		self.allowcap = true
-	
     end
     
 end
@@ -113,7 +123,7 @@ function ENT:Touch(activator)
             
         else*/
         if activator:GetWarTeam() ~= 5 then
-            if !self.occupied and self.allowcap then
+            if !self.occupied then
                 if self.cooldown < CurTime() then
                     self:Input("capture", activator, activator, activator:GetWarTeam())
                     SpawnpointChange() -- setup_npc.lua

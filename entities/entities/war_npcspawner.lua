@@ -66,7 +66,7 @@ function ENT:KeyValue(key, value)
 end
 
 function ENT:Think()
-    if self.complete then
+    if self.complete and RoundActive() then
         if CurTime() >= self.next_spawn then
             print("")
             print("[DEBUG] ["..self:GetName().."] Checking for spawn possibility..."..tostring(self.livingmobs).."/"..tostring(self.maxmobs))
