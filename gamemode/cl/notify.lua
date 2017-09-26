@@ -13,9 +13,9 @@ net.Receive("SV_Capture", function(len, ply)
     elseif cteam == 2 then
         align = "red_captured"
     elseif cteam == 3 then
-        align = "green_captured"
-    elseif cteam == 4 then
         align = "yellow_captured"
+    elseif cteam == 4 then
+        align = "green_captured"
     else
         align = "enemy_captured"
     end

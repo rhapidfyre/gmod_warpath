@@ -5,8 +5,8 @@
 	[
 		1 : "Blue"
 		2 : "Red"
-		3 : "Green"
-		4 : "Yellow"
+		3 : "Yellow"
+		4 : "Green"
 		5 : "None"
 	] 
 ]
@@ -22,8 +22,8 @@
 	[
 		1 : "Blue"
 		2 : "Red"
-		3 : "Green"
-		4 : "Yellow"
+		3 : "Yellow"
+		4 : "Green"
 		5 : "None"
 	]
 	pointnumber(choices) : "Point Number" : 1 : "Control Point Number - Must be unique, you do not have to use all nine." =
