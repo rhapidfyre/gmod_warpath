@@ -1,13 +1,13 @@
 
 -- Variables that are used on both client and server
 
-SWEP.PrintName		    = "Pistol"		-- 'Nice' Weapon name (Shown on HUD)
-SWEP.Author			    = ""
-SWEP.Contact		    = ""
-SWEP.Purpose		    = ""
-SWEP.Instructions	    = ""
-SWEP.Base 		        = "weapon_base"
-SWEP.HoldType		    = "Pistol"
+SWEP.PrintName		= "Pistol"		-- 'Nice' Weapon name (Shown on HUD)
+SWEP.Author		= ""
+SWEP.Contact		= ""
+SWEP.Purpose		= ""
+SWEP.Instructions	= ""
+SWEP.Base 		= "weapon_base"
+SWEP.HoldType		= "Pistol"
     
 SWEP.ViewModelFOV	    = 62
 SWEP.ViewModelFlip	    = false
@@ -20,7 +20,6 @@ SWEP.AdminOnly			= false
 
 SWEP.Category = "Weapons"
 
-SWEP.Primary.Sound = Sound("")
 SWEP.Primary.Damage = 15
 SWEP.Primary.TakeAmmo = 1
 SWEP.Primary.ClipSize = 6
