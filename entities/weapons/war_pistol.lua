@@ -1,18 +1,18 @@
 
 -- Variables that are used on both client and server
 
-SWEP.PrintName		= "Pistol"		-- 'Nice' Weapon name (Shown on HUD)
-SWEP.Author			= ""
-SWEP.Contact		= ""
-SWEP.Purpose		= ""
-SWEP.Instructions	= ""
-SWEP.Base 		= "weapon_base"
-SWEP.HoldType		= "Pistol"
-
-SWEP.ViewModelFOV	= 62
-SWEP.ViewModelFlip	= false
-SWEP.ViewModel		= "models/weapons/v_Pistol.mdl"
-SWEP.WorldModel		= "models/weapons/w_Pistol.mdl"
+SWEP.PrintName		    = "Pistol"		-- 'Nice' Weapon name (Shown on HUD)
+SWEP.Author			    = ""
+SWEP.Contact		    = ""
+SWEP.Purpose		    = ""
+SWEP.Instructions	    = ""
+SWEP.Base 		        = "weapon_base"
+SWEP.HoldType		    = "Pistol"
+    
+SWEP.ViewModelFOV	    = 62
+SWEP.ViewModelFlip	    = false
+SWEP.ViewModel		    = "models/weapons/v_Pistol.mdl"
+SWEP.WorldModel		    = "models/weapons/w_Pistol.mdl"
 
 SWEP.Spawnable			= true
 SWEP.AdminSpawnable		= true
@@ -80,4 +80,7 @@ end
 function SWEP:Reload()
 self:EmitSound(Sound(self.ReloadSound))
 self.Weapon:DefaultReload( ACT_VM_RELOAD );
+end
+
+function SWEP:Think()
 end
