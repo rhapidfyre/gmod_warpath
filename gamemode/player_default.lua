@@ -29,6 +29,13 @@ PLAYER.UseVMHands			= true		-- Uses viewmodel hands
 -- Ret1:
 --
 function PLAYER:SetupDataTables()
+	self:NetworkVar("Float", 0, "Cash")
+	self:NetworkVar("String", 0, "Weapons")
+	self:NetworkVar("Int", 0, "HPLevel")
+	self:NetworkVar("Int", 1, "DMGLevel")
+	self:NetworkVar("Int", 2, "ReloadSpeed")
+	self:NetworkVar("Int", 3, "RunSpeed")
+	self:NetworkVar("Int", 4, "HPRegen")
 end
 
 --

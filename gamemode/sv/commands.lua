@@ -1,3 +1,23 @@
+--Forces supplied player to given team #
+concommand.Add("war_admin_setteam", function(ply, cmd, args)
+end)
+
+-- Sets given control point to given team #
+concommand.Add("war_admin_setcontrol", function(ply, cmd, args)
+end)
+
+-- Kills all NPCs
+concommand.Add("war_admin_killnpc", function(ply, cmd, args)
+end)
+
+-- Kills all Players
+concommand.Add("war_admin_killall", function(ply, cmd, args)
+end)
+
+-- Forces given team # to win
+-- If no team given, game acts as if time expired
+concommand.Add("war_admin_force", function(ply, cmd, args)
+end)
 
 concommand.Add("war_setteam", function(ply, cmd, args)
     ply:SetTeam(args[1])
