@@ -63,20 +63,20 @@ function ENT:Think()
     if self.complete and RoundActive() then
         if CurTime() >= self.next_spawn then
             print("")
-            if self.livingmobs < self.maxmobs and self.WarTeam ~= 5 then
+            if self.livingmobs < self.maxmobs and self.WarTeam ~= 0 then
                 
                 self.next_spawn = CurTime() + spawn_gap
                 self.last_spawn = CurTime()
                 
                 --self.WarTeam = self.nearest:GetKeyValues()["TeamNum"]
-                local npc = ents.Create("npc_combine_s")
+                local npc = ents.Create("npc_citizen")
                 
                 -- Setting unique name for debugging purposes
                 npc:SetName("SPW"..self:MapCreationID().."_"..npc:EntIndex())
                 
                 -- If the NPC is a gun fighter, give them a gun to use
                 --if self.npcclass == "npc_combine_s" or self.npcclass == "npc_citizen" then
-                    npc:SetKeyValue("additionalequipment", "weapon_ar2")
+                    npc:SetKeyValue("additionalequipment", "weapon_shotgun")
                     if self.model == "rebel" and self.npcclass == "npc_citizen" then npc:SetKeyValue("type", "Rebel") end
                     npc:SetKeyValue("spawnflags", "1073664")	-- Don't drop gun, Fade Corpse, and don't let rebels follow players, don't allow player to push (8192, 512, 1048576, 16384)
                 --end
