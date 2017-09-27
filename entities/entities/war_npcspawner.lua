@@ -75,11 +75,13 @@ function ENT:Think()
                 npc:SetName("SPW"..self:MapCreationID().."_"..npc:EntIndex())
                 
                 -- If the NPC is a gun fighter, give them a gun to use
-                --if self.npcclass == "npc_combine_s" or self.npcclass == "npc_citizen" then
+                if npc:GetClass() == "npc_citizen" or npc:GetClass() == "npc_combine_s" then
                     npc:SetKeyValue("additionalequipment", "weapon_shotgun")
-                    if self.model == "rebel" and self.npcclass == "npc_citizen" then npc:SetKeyValue("type", "Rebel") end
+                    if npc:GetClass() == "npc_citizen" then npc:SetKeyValue("citizentype", "3") end
                     npc:SetKeyValue("spawnflags", "1073664")	-- Don't drop gun, Fade Corpse, and don't let rebels follow players, don't allow player to push (8192, 512, 1048576, 16384)
-                --end
+                end
+                
+                PrintTable(npc:GetKeyValues())
                 
                 -- Add input so that when the mob dies, the spawner it belongs to will spawn another
                 npc:Input("AddOutput", npc, ply, "OnDeath "..self:GetName()..":DecreaseCount:1::-1")
