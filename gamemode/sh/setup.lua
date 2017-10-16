@@ -1,21 +1,21 @@
-    
+
 --[[---------------------------------------------------------
    Name: OnEntityCreated
    Desc: Called right after the Entity has been made visible to Lua
 -----------------------------------------------------------]]
-function GM:OnEntityCreated( Ent )
+function GM:OnEntityCreated( ent )
 
     -- Removes client-side Ragdolls
 	if CLIENT then
-	if Ent:GetClass() == "class C_ClientRagdoll" then
-		Ent:Remove()
+	if ent:GetClass() == "class C_ClientRagdoll" then
+		ent:Remove()
 	end
 	end
     
-    -- If Ent is an NPC, set up WarTeam variable (checks NPC's team)
-    if Ent:IsNPC() then
-		Ent:InstallDataTable()
-		Ent:NetworkVar("Int",0,"WarTeam")
+    -- If ent is an NPC, set up WarTeam variable (checks NPC's team)
+    if ent:IsNPC() then
+		ent:InstallDataTable()
+		ent:NetworkVar("Int",0,"WarTeam")
         
     end
 end
