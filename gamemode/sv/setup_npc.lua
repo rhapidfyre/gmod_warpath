@@ -16,6 +16,7 @@ end
 function Hostility()
 
     for _,npc in pairs (ents.FindByClass("npc_*")) do
+		--[[
         for _,ent in pairs (ents.FindByClass("npc_*")) do
             if npc ~= ent then
                 
@@ -31,7 +32,7 @@ function Hostility()
                     
                 end
             end
-        end
+        end]]
         
         for _,ply in pairs (player.GetAll()) do
         
