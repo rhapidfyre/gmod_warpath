@@ -20,9 +20,9 @@ end
   Called when context menu is trying to be opened.
    Return false to dissallow it.
 -----------------------------------------------------------]]
-function GM:ContextMenuOpen()
+--[[function GM:ContextMenuOpen()
 	return false
-end
+end]]
 
 --[[---------------------------------------------------------
   Called to populate the Scripted Tool menu. Overridden
