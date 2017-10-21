@@ -128,7 +128,7 @@ function ENT:Touch(activator)
             self.last_command = CurTime() + 5
             
         else*/
-        if (activator:GetWarTeam() ~= 5) and (activator:GetWarTeam() ~= self.ownerteam) then
+        if ((activator:GetWarTeam() > 0 and activator:GetWarTeam() < 3) and (activator:GetWarTeam() ~= self.ownerteam)) then
             if !self.occupied then
                 if self.cooldown < CurTime() then
                     self:Input("capture", activator, activator, activator:GetWarTeam())
