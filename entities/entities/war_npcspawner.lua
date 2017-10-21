@@ -28,7 +28,7 @@ end
 function ENT:Initialize()
 
 	if self.livingmobs == nil then self.livingmobs = 0 end
-	if self.maxmobs == nil then self.maxmobs = 5 end
+	if self.maxmobs == nil then self.maxmobs = 3 end
     
 	self:SetName("SPWNR_"..self:MapCreationID())
     self.radius = 0
@@ -63,13 +63,20 @@ function ENT:Think()
     if self.complete and RoundActive() then
         if CurTime() >= self.next_spawn then
             print("")
-            if self.livingmobs < self.maxmobs and self.WarTeam ~= 0 then
+            if self.livingmobs < self.maxmobs and self.WarTeam ~= 0 and self.WarTeam ~= 5 then
                 
                 self.next_spawn = CurTime() + spawn_gap
                 self.last_spawn = CurTime()
                 
+                local npc = nil
+                if self.WarTeam == 1 then
+                    npc = ents.Create("npc_combine_s")
+                else
+                    npc = ents.Create("npc_citizen")
+                end
+                
                 --self.WarTeam = self.nearest:GetKeyValues()["TeamNum"]
-                local npc = ents.Create("npc_citizen")
+                --local npc = ents.Create("npc_citizen")
                 
                 -- Setting unique name for debugging purposes
                 npc:SetName("SPW"..self:MapCreationID().."_"..npc:EntIndex())
