@@ -28,7 +28,7 @@ end
 function ENT:Initialize()
 
 	if self.livingmobs == nil then self.livingmobs = 0 end
-	if self.maxmobs == nil then self.maxmobs = 6 end
+	if self.maxmobs == nil then self.maxmobs = 2 end
 	if self.spawnmobs == nil then self.spawnmobs = 2 end
     
 	self:SetName("SPWNR_"..self:MapCreationID())
@@ -64,18 +64,18 @@ function ENT:Think()
     if self.complete and RoundActive() then
         if CurTime() >= self.next_spawn then
             print("")
-            if self.livingmobs < self.maxmobs and self.WarTeam ~= 0 /*and self.WarTeam ~= 5*/ then
+            if self.livingmobs < self.maxmobs and self.WarTeam ~= 0 then
                 
                 self.next_spawn = CurTime() + spawn_gap
                 self.last_spawn = CurTime()
-                for i=1,self.spawnmobs do
+                --for i=1,self.spawnmobs do
 					local npc = nil
 					if self.WarTeam == 2 then
 						npc = ents.Create("npc_combine_s")
-					elseif self.WarTeam == 1 then
-						npc = ents.Create("npc_citizen")
+                    elseif self.WarTeam == 5 then
+                        npc = ents.Create("npc_fastzombie")
 					else
-						npc = ents.Create("npc_combine_s")
+						npc = ents.Create("npc_citizen")
 					end
 					
 					--self.WarTeam = self.nearest:GetKeyValues()["TeamNum"]
@@ -101,20 +101,7 @@ function ENT:Think()
 					
 					--[DEBUG]
 					--if ShowTeamColor == 1 then
-					if self.WarTeam == 5 then
-						npc:SetColor(Color(0,0,0))
-						timer.Simple(0.1, function()
-						npc:SetMaxHealth(100/*Insert Health Calculation*/)
-						npc:SetHealth(npc:GetMaxHealth())
-						end)
-					else
 						npc:SetColor(team.GetColor(self.WarTeam))
-						timer.Simple(0.1, function()
-						npc:SetMaxHealth(50/*Insert Health Calculation*/)
-						npc:SetHealth(npc:GetMaxHealth())
-						end)
-					end
-
 					--end
 					npc:SetCollisionGroup(COLLISION_GROUP_DEBRIS_TRIGGER)
 					
@@ -126,13 +113,18 @@ function ENT:Think()
 					-- Randomly spawn within given radius by map
 					npc:SetPos(self:GetPos() + Vector(0,0,0))
 					--npc:SetAngles(Angle(0,math.random(1,360),0))
-				
+					
+					timer.Simple(0.1, function()
+						npc:SetMaxHealth(50/*Insert Health Calculation*/)
+						npc:SetHealth(npc:GetMaxHealth())
+						--AssaultPoint(npc)
+					end)
 					
 					-- Change this spawners # of mobs alive (to prevent crowding/server overloading)
 					self.livingmobs = self.livingmobs + 1
 				
-					Hostility()
-				end
+					Hostility(npc, self.WarTeam)
+				--end
 	
                 
             else
