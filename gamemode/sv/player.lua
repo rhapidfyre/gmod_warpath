@@ -274,7 +274,8 @@ function GM:PlayerSpawn( pl )
     local colors = team.GetColor(pl:Team())
     pl:SetPlayerColor(Vector(colors.r/255, colors.g/255, colors.b/255))
     
-
+    HostilityPly(pl)
+    
 end
 
 --[[---------------------------------------------------------

@@ -13,42 +13,36 @@ end
 --
 -- Loops through each NPC for each NPC, and builds a hate list based on team
 --
-function Hostility()
-
-    for _,npc in pairs (ents.FindByClass("npc_*")) do
-        --[[
-        for _,ent in pairs (ents.FindByClass("npc_*")) do
-            if npc ~= ent then
-                
-                print("[DEBUG] Checking "..tostring(npc).." (TEAM "..tostring(npc:GetWarTeam())..") against "..tostring(ent).." (TEAM "..tostring(ent:GetWarTeam())..")")
-                
-                if (npc:GetWarTeam() == ent:GetWarTeam()) then
-                    npc:AddEntityRelationship(ent, D_LI, 99)
-                    print("[DEBUG] Relationship: [FRIENDLY]")
-                    
-                else
-                    npc:AddEntityRelationship(ent, D_HT, 99)
-                    print("[DEBUG] Relationship: [HOSTILE]")
-                    
-                end
-            end
-        end]]
-        
+function Hostility(npc, npcTeam)
+    if npc:GetWarTeam() ~= 5 and npc:GetWarTeam() ~= 0 then
         for _,ply in pairs (player.GetAll()) do
         
-            MsgC(Color(255,255,255), "[DEBUG] Checking "..tostring(npc).." against "..tostring(ply))
-            if npc:GetWarTeam() == ply:Team() then
+            if ply:Team() == npcTeam then
                 npc:AddEntityRelationship(ply, D_LI, 99)
-                MsgC(Color(80,255,80), " [FRIENDLY]\n")
             
             else
                 npc:AddEntityRelationship(ply, D_HT, 99)
-                MsgC(Color(255,80,80), " [ENEMY]\n")
                 
             end
         
         end
-        
+    end
+end
+
+function HostilityPly(pl)
+    if IsValid(pl) then
+        local plTeam = pl:Team()
+        for _,npc in pairs (ents.FindByClass("npc_combine_s")) do
+            if IsValid(npc) then
+                if npc:GetWarTeam() == plTeam then
+                    npc:AddEntityRelationship(pl, D_LI, 99)
+                
+                else
+                    npc:AddEntityRelationship(pl, D_HT, 99)
+                    
+                end
+            end
+        end
     end
 end
 
@@ -111,8 +105,9 @@ local function CombatSchedules(npc)
 end
 
 function AssaultPoint(npc)
+    print("Running AssaultPoint(npc) on "..tostring(npc))
     if IsValid(npc) and npc ~= nil then
-        if npc:GetWarTeam() ~= 5 then
+        if npc:GetWarTeam() ~= 5 and npc:GetWarTeam() ~= 0 then
             if !(CombatSchedules(npc)) then
                 
                 /*
