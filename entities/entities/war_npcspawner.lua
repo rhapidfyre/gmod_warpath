@@ -98,8 +98,9 @@ function ENT:Think()
 					
 					
 					--[DEBUG]
-					npc:SetColor(team.GetColor(self.WarTeam))
-					
+					--if ShowTeamColor == 1 then
+						npc:SetColor(team.GetColor(self.WarTeam))
+					--end
 					
 					-- Weapon Accuracy / Rate of Spread
 					npc:SetCurrentWeaponProficiency(WEAPON_PROFICIENCY_GOOD)

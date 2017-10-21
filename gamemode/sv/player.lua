@@ -196,7 +196,7 @@ function GM:PlayerDeath( ply, inflictor, attacker )
 
 	if (IsValid(attacker) && (attacker:Health() < attacker:GetMaxHealth())) then
 		attacker:SetHealth(attacker:GetMaxHealth())
-		print("NPC Healed")
+		print("Healed to Full")
 	end
 	
 	

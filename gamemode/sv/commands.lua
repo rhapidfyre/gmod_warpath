@@ -1,3 +1,5 @@
+--local ShowTeamColor = 1
+
 --Forces supplied player to given team #
 concommand.Add("war_admin_setteam", function(ply, cmd, args)
 end)
@@ -33,3 +35,8 @@ concommand.Add("war_printspawns", function(ply, cmd, args)
         print("\n")
     end
 end)
+--[[
+concommand.Add("war_showteamcolor", function(ply, cmd, args)
+	ShowTeamColor = args[1]
+end)
+]]

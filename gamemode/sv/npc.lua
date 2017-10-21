@@ -51,12 +51,11 @@ function GM:OnNPCKilled( ent, attacker, inflictor )
 			
 			if (IsValid(attacker) && (attacker:Health() >= attacker:GetMaxHealth()*.9)) then
 					attacker:SetHealth(attacker:GetMaxHealth())
+					print("Player Healed")
 			elseif (IsValid(attacker) && (attacker:Health() < attacker:GetMaxHealth())) then
 					attacker:SetHealth(attacker:Health() + attacker:GetMaxHealth()*0.1)
-			
+					print("Player Healed")
 			end
-
-			print("Player Healed")
 
 			return
 		end
@@ -64,16 +63,23 @@ function GM:OnNPCKilled( ent, attacker, inflictor )
 	end
 
 	if ( ent:GetClass() == "npc_turret_floor" ) then AttackerClass = ent:GetClass() end
-
-	net.Start( "NPCKilledNPC" )
-	
-		net.WriteString( ent:GetClass() )
-		net.WriteString( InflictorClass )
-		net.WriteString( AttackerClass )
-	
-	net.Broadcast()
-	
-
+	if (attacker:IsNPC()) then
+		net.Start( "NPCKilledNPC" )
+		
+			net.WriteString( ent:GetClass() )
+			net.WriteString( InflictorClass )
+			net.WriteString( AttackerClass )
+		
+		net.Broadcast()
+					
+		if (IsValid(attacker) && (attacker:Health() >= attacker:GetMaxHealth()*.9)) then
+				attacker:SetHealth(attacker:GetMaxHealth())
+				print("NPC Healed")
+		elseif (IsValid(attacker) && (attacker:Health() < attacker:GetMaxHealth())) then
+				attacker:SetHealth(attacker:Health() + attacker:GetMaxHealth()*0.1)
+				print("NPC Healed")
+		end
+	end
 
 end
 
