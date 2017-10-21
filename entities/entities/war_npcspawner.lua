@@ -101,6 +101,7 @@ function ENT:Think()
 					--if ShowTeamColor == 1 then
 						npc:SetColor(team.GetColor(self.WarTeam))
 					--end
+					npc:SetCollisionGroup(COLLISION_GROUP_DEBRIS_TRIGGER)
 					
 					-- Weapon Accuracy / Rate of Spread
 					npc:SetCurrentWeaponProficiency(WEAPON_PROFICIENCY_GOOD)
@@ -112,7 +113,7 @@ function ENT:Think()
 					--npc:SetAngles(Angle(0,math.random(1,360),0))
 					
 					timer.Simple(0.1, function()
-						npc:SetMaxHealth(100/*Insert Health Calculation*/)
+						npc:SetMaxHealth(50/*Insert Health Calculation*/)
 						npc:SetHealth(npc:GetMaxHealth())
 						--AssaultPoint(npc)
 					end)
