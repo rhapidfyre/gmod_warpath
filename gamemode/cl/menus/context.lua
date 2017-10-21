@@ -1,7 +1,6 @@
 local CMenu = nil
 local NPC_Points = 0
 local PLY_Points = 0
-
 -- local NPCUpgrades (upgrade) return end
 	
 	
@@ -9,6 +8,7 @@ function GM:ContextMenuOpen() return true end
 
 function GM:OnContextMenuOpen() 
 	if !IsValid(CMenu) then 
+	
 			CMenu = vgui.Create("DFrame")
 			CMenu:SetPos(24,ScrH()*0.25)
 			CMenu:SetSize( 300, 300 )
@@ -21,11 +21,11 @@ function GM:OnContextMenuOpen()
 			CSheet:Dock(FILL)
 			
 			local panel1 = vgui.Create( "DPanel", CSheet )
-			panel1.Paint = function( self, w, h ) draw.RoundedBox( 4, 0, 0, w, h, Color( 0, 128, 255, self:GetAlpha() ) ) end
+			panel1.Paint = function( self, w, h ) draw.RoundedBox( 4, 0, 0, w, h, Color( 125, 125, 125, self:GetAlpha() ) ) end
 			CSheet:AddSheet( "NPC", panel1 )
 
 			local panel2 = vgui.Create( "DPanel", CSheet )
-			panel2.Paint = function( self, w, h ) draw.RoundedBox( 4, 0, 0, w, h, Color( 255, 128, 0, self:GetAlpha() ) ) end
+			panel2.Paint = function( self, w, h ) draw.RoundedBox( 4, 0, 0, w, h, Color( 125, 125, 125, self:GetAlpha() ) ) end
 			CSheet:AddSheet( "Player", panel2 )
 			
 			local TeamPoints = vgui.Create("DLabel", panel1)

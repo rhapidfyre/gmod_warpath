@@ -22,6 +22,7 @@ SWEP.Category = "Weapons"
 
 SWEP.Primary.Damage = 10
 SWEP.Primary.TakeAmmo = 1
+SWEP.Primary.Clip1 = 25
 SWEP.Primary.ClipSize = 25
 SWEP.Primary.Ammo = "ar2"
 SWEP.Primary.DefaultClip = 25
@@ -77,8 +78,9 @@ function SWEP:SecondaryAttack()
 end
 
 function SWEP:Reload()
-self:EmitSound(Sound(self.ReloadSound))
-self.Weapon:DefaultReload( ACT_VM_RELOAD );
+		self:EmitSound(Sound(self.ReloadSound))
+		self.Weapon:DefaultReload( ACT_VM_RELOAD );
+
 end
 
 function SWEP:Think()
