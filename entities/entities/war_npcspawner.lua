@@ -69,7 +69,7 @@ function ENT:Think()
                 self.last_spawn = CurTime()
                 
                 local npc = nil
-                if self.WarTeam == 1 then
+                if self.WarTeam == 2 then
                     npc = ents.Create("npc_combine_s")
                 else
                     npc = ents.Create("npc_citizen")
@@ -101,7 +101,7 @@ function ENT:Think()
                 
                 
                 -- Weapon Accuracy / Rate of Spread
-                npc:SetCurrentWeaponProficiency(WEAPON_PROFICIENCY_VERY_GOOD)
+                npc:SetCurrentWeaponProficiency(WEAPON_PROFICIENCY_GOOD)
                 
                 npc:SetWarTeam(self.WarTeam)
                 
@@ -110,7 +110,7 @@ function ENT:Think()
                 --npc:SetAngles(Angle(0,math.random(1,360),0))
                 
                 timer.Simple(0.1, function()
-                    npc:SetMaxHealth(npc:GetMaxHealth()/*Insert Health Calculation*/)
+                    npc:SetMaxHealth(100/*Insert Health Calculation*/)
                     npc:SetHealth(npc:GetMaxHealth())
                     --AssaultPoint(npc)
                 end)
