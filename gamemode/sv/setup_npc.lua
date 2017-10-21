@@ -107,7 +107,7 @@ end
 function AssaultPoint(npc)
     print("Running AssaultPoint(npc) on "..tostring(npc))
     if IsValid(npc) and npc ~= nil then
-        if npc:GetWarTeam() ~= 5 and npc:GetWarTeam() ~= 0 then
+        if npc:GetWarTeam() < 3 and npc:GetWarTeam() > 0 then
             if !(CombatSchedules(npc)) then
                 
                 /*
