@@ -9,14 +9,13 @@ function GM:ContextMenuOpen() return true end
 
 function GM:OnContextMenuOpen() 
 	if !IsValid(CMenu) then 
-			local CMenu = vgui.Create("DFrame")
+			CMenu = vgui.Create("DFrame")
 			CMenu:SetPos(5,5)
 			CMenu:SetSize( 300, 300 )
 			CMenu:SetTitle( "Upgrade Window" )
 			CMenu:SetVisible( true )
 			CMenu:SetDraggable( true )
 			CMenu:ShowCloseButton( true )
-			CMenu:MakePopup()
 	
 			local CSheet = vgui.Create("DPropertySheet", CMenu)
 			CSheet:Dock(FILL)
@@ -67,6 +66,9 @@ function GM:OnContextMenuOpen()
 	end
 	if IsValid(CMenu) then 
 	
+        CMenu:Show()
+        CMenu:MakePopup()
+		surface.PlaySound("garrysmod/content_downloaded.wav")
 	
 	end
 
@@ -78,6 +80,7 @@ function GM:OnContextMenuClose()
 	if IsValid(CMenu) then 
 		CMenu:Remove()
 		CMenu = nil
+		surface.PlaySound("garrysmod/ui_return.wav")
 		
 	end
 end
