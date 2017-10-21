@@ -10,8 +10,14 @@ function GM:EntityTakeDamage( ent, info )
     end
 
     if ent:IsNPC() then
-        if (ent:IsCurrentSchedule(SCHED_FORCED_GO)) or (ent:IsCurrentSchedule(SCHED_FORCED_GO_RUN)) then
-            ent:SetSchedule(SCHED_ALERT_FACE)
+        if !(info:GetAttacker():IsNPC()) then
+            if ent:GetWarTeam() == info:GetAttacker():Team() then
+                info:SetDamage(0)
+            else
+                if (ent:IsCurrentSchedule(SCHED_FORCED_GO)) or (ent:IsCurrentSchedule(SCHED_FORCED_GO_RUN)) then
+                    ent:SetSchedule(SCHED_ALERT_FACE)
+                end
+            end
         end
     end
 end
