@@ -16,7 +16,6 @@ function GM:OnContextMenuOpen()
 			CMenu:SetVisible( true )
 			CMenu:SetDraggable( true )
 			CMenu:ShowCloseButton( true )
-			CMenu:MakePopup()
 	
 			local CSheet = vgui.Create("DPropertySheet", CMenu)
 			CSheet:Dock(FILL)
@@ -66,7 +65,9 @@ function GM:OnContextMenuOpen()
 	
 	end
 	if IsValid(CMenu) then 
-	
+		CMenu:Show()
+		CMenu:MakePopup()
+		print("CMenu Opened")
 	
 	end
 
