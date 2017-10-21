@@ -1,5 +1,11 @@
 --local ShowTeamColor = 1
 
+-- (DEBUG) Command for debugging only
+concommand.Add("setmodel", function(ply, cmd, args)
+    print(args[1])
+    ply:SetModel("models/player/"..args[1])
+end)
+
 --Forces supplied player to given team #
 concommand.Add("war_admin_setteam", function(ply, cmd, args)
 end)

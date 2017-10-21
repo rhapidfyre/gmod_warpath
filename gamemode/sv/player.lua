@@ -182,13 +182,6 @@ function GM:PlayerDeath( ply, inflictor, attacker )
 		
 		MsgAll( attacker:Nick() .. " killed " .. ply:Nick() .. " using " .. inflictor:GetClass() .. "\n" )
 		
-		if (IsValid(attacker) && (attacker:Health() >= attacker:GetMaxHealth()*.75)) then
-				attacker:SetHealth(attacker:GetMaxHealth())
-				print("NPC Healed")
-		elseif (IsValid(attacker) && (attacker:Health() < attacker:GetMaxHealth())) then
-				attacker:SetHealth(attacker:Health() + attacker:GetMaxHealth()*0.25)
-				print("NPC Healed")
-		end
 	return end
 	
 	net.Start( "PlayerKilled" )
@@ -200,13 +193,12 @@ function GM:PlayerDeath( ply, inflictor, attacker )
 	net.Broadcast()
 	
 	MsgAll( ply:Nick() .. " was killed by " .. attacker:GetClass() .. "\n" )
-	
-		if (IsValid(attacker) && attacker:IsNPC()) then
-				attacker:SetMaxHealth(attacker:GetMaxHealth()*2)
-				attacker:SetHealth(attacker:GetMaxHealth())
-				print("NPC Killed Player!")
-		end
 
+	if (IsValid(attacker) && (attacker:Health() < attacker:GetMaxHealth())) then
+		attacker:SetHealth(attacker:GetMaxHealth())
+		print("Healed to Full")
+	end
+	
 	
 end
 
@@ -274,6 +266,9 @@ function GM:PlayerSpawn( pl )
 	
 	-- Set player model
 	hook.Call( "PlayerSetModel", GAMEMODE, pl )
+    
+    local colors = team.GetColor(pl:Team())
+    pl:SetPlayerColor(Vector(colors.r/255, colors.g/255, colors.b/255))
 
 end
 
