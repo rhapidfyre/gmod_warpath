@@ -10,7 +10,7 @@ function GM:ContextMenuOpen() return true end
 function GM:OnContextMenuOpen() 
 	if !IsValid(CMenu) then 
 			CMenu = vgui.Create("DFrame")
-			CMenu:SetPos(5,5)
+			CMenu:SetPos(24,ScrH()*0.25)
 			CMenu:SetSize( 300, 300 )
 			CMenu:SetTitle( "Upgrade Window" )
 			CMenu:SetVisible( true )

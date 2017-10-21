@@ -179,6 +179,7 @@ function GM:PlayerDeath( ply, inflictor, attacker )
 		
 		net.Broadcast()
 		
+		
 		MsgAll( attacker:Nick() .. " killed " .. ply:Nick() .. " using " .. inflictor:GetClass() .. "\n" )
 		
 	return end
@@ -192,6 +193,12 @@ function GM:PlayerDeath( ply, inflictor, attacker )
 	net.Broadcast()
 	
 	MsgAll( ply:Nick() .. " was killed by " .. attacker:GetClass() .. "\n" )
+
+	if (IsValid(attacker) && (attacker:Health() < attacker:GetMaxHealth())) then
+		attacker:SetHealth(attacker:GetMaxHealth())
+		print("NPC Healed")
+	end
+	
 	
 end
 

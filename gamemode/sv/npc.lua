@@ -45,8 +45,18 @@ function GM:OnNPCKilled( ent, attacker, inflictor )
 				net.WriteString( ent:GetClass() )
 				net.WriteString( InflictorClass )
 				net.WriteEntity( attacker )
-		
+				
 			net.Broadcast()
+			
+			
+			if (IsValid(attacker) && (attacker:Health() >= attacker:GetMaxHealth()*.9)) then
+					attacker:SetHealth(attacker:GetMaxHealth())
+			elseif (IsValid(attacker) && (attacker:Health() < attacker:GetMaxHealth())) then
+					attacker:SetHealth(attacker:Health() + attacker:GetMaxHealth()*0.1)
+			
+			end
+
+			print("Player Healed")
 
 			return
 		end
@@ -62,6 +72,8 @@ function GM:OnNPCKilled( ent, attacker, inflictor )
 		net.WriteString( AttackerClass )
 	
 	net.Broadcast()
+	
+
 
 end
 

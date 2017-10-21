@@ -28,7 +28,8 @@ end
 function ENT:Initialize()
 
 	if self.livingmobs == nil then self.livingmobs = 0 end
-	if self.maxmobs == nil then self.maxmobs = 3 end
+	if self.maxmobs == nil then self.maxmobs = 6 end
+	if self.spawnmobs == nil then self.spawnmobs = 2 end
     
 	self:SetName("SPWNR_"..self:MapCreationID())
     self.radius = 0
@@ -67,58 +68,60 @@ function ENT:Think()
                 
                 self.next_spawn = CurTime() + spawn_gap
                 self.last_spawn = CurTime()
-                
-                local npc = nil
-                if self.WarTeam == 2 then
-                    npc = ents.Create("npc_combine_s")
-                else
-                    npc = ents.Create("npc_citizen")
-                end
-                
-                --self.WarTeam = self.nearest:GetKeyValues()["TeamNum"]
-                --local npc = ents.Create("npc_citizen")
-                
-                -- Setting unique name for debugging purposes
-                npc:SetName("SPW"..self:MapCreationID().."_"..npc:EntIndex())
-                
-                -- If the NPC is a gun fighter, give them a gun to use
-                if npc:GetClass() == "npc_citizen" or npc:GetClass() == "npc_combine_s" then
-                    npc:SetKeyValue("additionalequipment", "weapon_shotgun")
-                    if npc:GetClass() == "npc_citizen" then npc:SetKeyValue("citizentype", "3") end
-                    npc:SetKeyValue("spawnflags", "1073664")	-- Don't drop gun, Fade Corpse, and don't let rebels follow players, don't allow player to push (8192, 512, 1048576, 16384)
-                end
-                
-                PrintTable(npc:GetKeyValues())
-                
-                -- Add input so that when the mob dies, the spawner it belongs to will spawn another
-                npc:Input("AddOutput", npc, ply, "OnDeath "..self:GetName()..":DecreaseCount:1::-1")
-        
-                npc:Spawn()
-                
-                
-                --[DEBUG]
-                npc:SetColor(team.GetColor(self.WarTeam))
-                
-                
-                -- Weapon Accuracy / Rate of Spread
-                npc:SetCurrentWeaponProficiency(WEAPON_PROFICIENCY_GOOD)
-                
-                npc:SetWarTeam(self.WarTeam)
-                
-                -- Randomly spawn within given radius by map
-                npc:SetPos(self:GetPos() + Vector(0, 0, 0))
-                --npc:SetAngles(Angle(0,math.random(1,360),0))
-                
-                timer.Simple(0.1, function()
-                    npc:SetMaxHealth(100/*Insert Health Calculation*/)
-                    npc:SetHealth(npc:GetMaxHealth())
-                    --AssaultPoint(npc)
-                end)
-                
-                -- Change this spawners # of mobs alive (to prevent crowding/server overloading)
-                self.livingmobs = self.livingmobs + 1
-                
-                Hostility()
+                for i=1,self.spawnmobs do
+					local npc = nil
+					if self.WarTeam == 2 then
+						npc = ents.Create("npc_combine_s")
+					else
+						npc = ents.Create("npc_citizen")
+					end
+					
+					--self.WarTeam = self.nearest:GetKeyValues()["TeamNum"]
+					--local npc = ents.Create("npc_citizen")
+					
+					-- Setting unique name for debugging purposes
+					npc:SetName("SPW"..self:MapCreationID().."_"..npc:EntIndex())
+					
+					-- If the NPC is a gun fighter, give them a gun to use
+					if npc:GetClass() == "npc_citizen" or npc:GetClass() == "npc_combine_s" then
+						npc:SetKeyValue("additionalequipment", "weapon_ar2")
+						if npc:GetClass() == "npc_citizen" then npc:SetKeyValue("citizentype", "3") end
+						npc:SetKeyValue("spawnflags", "1073664")	-- Don't drop gun, Fade Corpse, and don't let rebels follow players, don't allow player to push (8192, 512, 1048576, 16384)
+					end
+					
+					PrintTable(npc:GetKeyValues())
+					
+					-- Add input so that when the mob dies, the spawner it belongs to will spawn another
+					npc:Input("AddOutput", npc, ply, "OnDeath "..self:GetName()..":DecreaseCount:1::-1")
+
+					npc:Spawn()
+					
+					
+					--[DEBUG]
+					npc:SetColor(team.GetColor(self.WarTeam))
+					
+					
+					-- Weapon Accuracy / Rate of Spread
+					npc:SetCurrentWeaponProficiency(WEAPON_PROFICIENCY_GOOD)
+					
+					npc:SetWarTeam(self.WarTeam)
+										
+					-- Randomly spawn within given radius by map
+					npc:SetPos(self:GetPos() + Vector(0,0,0))
+					--npc:SetAngles(Angle(0,math.random(1,360),0))
+					
+					timer.Simple(0.1, function()
+						npc:SetMaxHealth(100/*Insert Health Calculation*/)
+						npc:SetHealth(npc:GetMaxHealth())
+						--AssaultPoint(npc)
+					end)
+					
+					-- Change this spawners # of mobs alive (to prevent crowding/server overloading)
+					self.livingmobs = self.livingmobs + 1
+				
+					Hostility()
+				end
+	
                 
             else
                 self.next_spawn = CurTime() + spawn_gap
