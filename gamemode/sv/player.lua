@@ -182,6 +182,14 @@ function GM:PlayerDeath( ply, inflictor, attacker )
 		
 		MsgAll( attacker:Nick() .. " killed " .. ply:Nick() .. " using " .. inflictor:GetClass() .. "\n" )
 		
+			if (IsValid(attacker) && (attacker:Health() >= attacker:GetMaxHealth()*.75)) then
+					attacker:SetHealth(attacker:GetMaxHealth())
+					print("Player Healed")
+			elseif (IsValid(attacker) && (attacker:Health() < attacker:GetMaxHealth())) then
+					attacker:SetHealth(attacker:Health() + attacker:GetMaxHealth()*0.25)
+					print("Player Healed")
+			end
+		
 	return end
 	
 	net.Start( "PlayerKilled" )
