@@ -1,9 +1,18 @@
 --local ShowTeamColor = 1
 
+-- Called when F3 (+showspare1) is struck
+function GM:ShowSpare1(ply)
+    ply:ConCommand("war_modelselect")
+end
+
 -- (DEBUG) Command for debugging only
 concommand.Add("setmodel", function(ply, cmd, args)
     print(args[1])
     ply:SetModel("models/player/"..args[1])
+end)
+
+concommand.Add("getmodel", function(ply, cmd, args)
+    print(ply:GetModel())
 end)
 
 --Forces supplied player to given team #

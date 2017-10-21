@@ -267,8 +267,13 @@ function GM:PlayerSpawn( pl )
 	-- Set player model
 	hook.Call( "PlayerSetModel", GAMEMODE, pl )
     
+    if pl:GetModel() == "models/player.mdl" then
+        pl:SetModel("models/player/kleiner.mdl")
+    end
+    
     local colors = team.GetColor(pl:Team())
     pl:SetPlayerColor(Vector(colors.r/255, colors.g/255, colors.b/255))
+    
 
 end
 
