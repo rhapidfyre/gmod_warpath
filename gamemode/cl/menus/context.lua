@@ -14,7 +14,7 @@ function GM:OnContextMenuOpen()
 			CMenu:SetSize( 300, 300 )
 			CMenu:SetTitle( "Upgrade Window" )
 			CMenu:SetVisible( true )
-			CMenu:SetDraggable( false )
+			CMenu:SetDraggable( true )
 			CMenu:ShowCloseButton( true )
 			CMenu:MakePopup()
 	
@@ -77,6 +77,7 @@ end
 function GM:OnContextMenuClose() 
 	if IsValid(CMenu) then 
 		CMenu:Remove()
+		CMenu = nil
 		
 	end
 end
