@@ -221,7 +221,7 @@ end
 function RoundActive()
     return round.in_progress
 end
-
+--[[
 timer.Create("AwardPoints", 1, 0, function()
 
     if round.status = ROUND_ACTIVE then
@@ -241,7 +241,7 @@ timer.Create("AwardPoints", 1, 0, function()
 
 end)
 
-
+]]
 
 
 

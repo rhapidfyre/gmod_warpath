@@ -3,12 +3,26 @@ local NPC_Points = 0
 local PLY_Points = 0
 -- local NPCUpgrades (upgrade) return end
 	
-	
+------------------------------------------------------------
+-- Updates the client of the team's upgrade point balance --
+local function UpdatePoints()                             --
+    PLY_Points = LocalPlayer():GetPoints()                --
+    net.Start("SV_Points")                                --
+        net.SendToServer()                                --
+end                                                       --
+                                                          --
+net.Receive("SV_YourPoints", function()                   --
+    NPC_Points = net.ReadInt(32)                          --
+end)                                                      --
+------------------------------------------------------------
+
 function GM:ContextMenuOpen() return true end
 
 function GM:OnContextMenuOpen() 
 	if !IsValid(CMenu) then 
 	
+            UpdatePoints()
+    
 			CMenu = vgui.Create("DFrame")
 			CMenu:SetPos(24,ScrH()*0.25)
 			CMenu:SetSize( 300, 300 )
@@ -35,7 +49,7 @@ function GM:OnContextMenuOpen()
 			local TeamPointsValue = vgui.Create("DLabel", panel1)
 			TeamPointsValue:SetPos(67,10)
 			TeamPointsValue:SetTextColor(Color(0, 255, 0))
-			TeamPointsValue:SetText(LocalPlayer():GetPoints())
+			TeamPointsValue:SetText(PLY_Points)
 	
 			local HPLabel = vgui.Create("DLabel", panel1)
 			HPLabel:SetPos(20,30)

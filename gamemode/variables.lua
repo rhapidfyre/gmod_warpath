@@ -21,10 +21,9 @@
     
     POINT_DEAD_NPC      = 1        -- NPC Dies (Any method)
     POINT_DEAD_PLY      = 1        -- Player Dies (Any method)
-    
-    POINT_KILL_NPC      = 1        -- Extra point given for killing an enemy NPC
-    POINT_KILL_PLY      = 1        -- Extra point given for killing an enemy Player
-    
+
+    POINT_SUICIDE       = -1       -- Points given for killing self
+    POINT_DEATH         = 0        -- Points given for dying
     
     -- SCORE GIVEN TO TEAM'S OVERHEAD SCORE
     -- This is just for team based gameplay score keeping

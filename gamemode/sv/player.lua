@@ -17,14 +17,25 @@ function GM:DoPlayerDeath( ply, attacker, dmginfo )
 	
 	if ( attacker:IsValid() && attacker:IsPlayer() ) then
 	
-		if ( attacker == ply ) then attacker:AddFrags( -1 )
-		else                        attacker:AddFrags(  1 )
+		if ( attacker == ply ) then
+            attacker:AddFrags( -1 )
+            ply:SetPoints(ply:GetPoints() + POINT_SUICIDE)
+            
+		else
+            attacker:AddFrags(  1 )
+            ply:SetPoints(ply:GetPoints() + POINT_DEATH) -- (Deduct?) point from dead player
+            attacker:SetPoints(ply:GetPoints() + POINT_KILL_PLY) -- Award killer with personal point
+            
 		end
 	
-        upgrades[i]["points"] = upgrades[i]["points"] + POINT_KILL_PLY
+        -- Award player's team with upgrade points
+        upgrades[attacker:Team()]["points"] = upgrades[attacker:Team()]["points"] + POINT_KILL_PLY
         
     elseif ( attacker:IsValid() && attacker:IsNPC() ) then
-        upgrades[i]["points"] = upgrades[i]["points"] + POINT_KILL_NPC
+    
+        -- Award NPC's team with upgrade points
+        local npcTeam = attacker:GetKeyValues()["TeamNum"]
+        upgrades[npcTeam]["points"] = upgrades[npcTeam]["points"] + POINT_KILL_NPC
     
 	end
 

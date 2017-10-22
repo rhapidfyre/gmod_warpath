@@ -4,8 +4,8 @@
    Desc: The entity has received damage
 -----------------------------------------------------------]]
 local function Redirect(npc)
-    if (ent:IsCurrentSchedule(SCHED_FORCED_GO)) or (ent:IsCurrentSchedule(SCHED_FORCED_GO_RUN)) then
-        ent:SetSchedule(SCHED_ALERT_FACE)
+    if (npc:IsCurrentSchedule(SCHED_FORCED_GO)) or (npc:IsCurrentSchedule(SCHED_FORCED_GO_RUN)) then
+        npc:SetSchedule(SCHED_ALERT_FACE)
     end
 end
 
@@ -20,10 +20,10 @@ function GM:EntityTakeDamage( ent, info )
             if ent:GetWarTeam() == info:GetAttacker():Team() then
                 info:SetDamage(0)
             else
-                Redirect(npc)
+                Redirect(ent)
             end
         else
-            Redirect(npc)
+            Redirect(ent)
         end
     end
 end

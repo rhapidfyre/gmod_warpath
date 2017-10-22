@@ -44,7 +44,7 @@ function ENT:AcceptInput(inputName, activator, called, data)
         
         if counter >= #capzones then
         
-            Round.Victory(self.ownerteam)
+            round.Victory(self.ownerteam)
             net.Start("SV_Victory")
                 net.WriteInt(self.ownerteam, 8)
                 net.Broadcast()

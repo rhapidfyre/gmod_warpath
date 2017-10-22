@@ -18,30 +18,29 @@ end)
     -- Level Definitions
 upgrade_info = {}
     upgrade_info["perc"] = {
-        1  = 0.00,
-        2  = 0.25,
-        3  = 0.50,
-        4  = 0.75,
-        5  = 1.00,
-        6  = 1.25,
-        7  = 1.50,
-        8  = 1.75,
-        9  = 2.00,
-        10 = 5.00
+        [1]  = 0.00,
+        [2]  = 0.25,
+        [3]  = 0.50,
+        [4]  = 0.75,
+        [5]  = 1.00,
+        [6]  = 1.25,
+        [7]  = 1.50,
+        [8]  = 1.75,
+        [9]  = 2.00,
+        [10] = 5.00
     }
     upgrade_info["accu"] = {
-        1  = WEAPON_PROFICIENCY_POOR,
-        2  = WEAPON_PROFICIENCY_AVERAGE,
-        3  = WEAPON_PROFICIENCY_GOOD,
-        4  = WEAPON_PROFICIENCY_VERY_GOOD,
-        5  = WEAPON_PROFICIENCY_PERFECT
+        [1]  = WEAPON_PROFICIENCY_POOR,
+        [2]  = WEAPON_PROFICIENCY_AVERAGE,
+        [3]  = WEAPON_PROFICIENCY_GOOD,
+        [4]  = WEAPON_PROFICIENCY_VERY_GOOD,
+        [5]  = WEAPON_PROFICIENCY_PERFECT
     }
 
     -- Team Levels
 upgrades = {}
     upgrades[1] = {}
         upgrades[1]["points"]   = POINT_START
-        upgrades[1]["points"]   = 5
         upgrades[1]["health"]   = 1
         upgrades[1]["damage"]   = 1
         upgrades[1]["accuracy"] = 1

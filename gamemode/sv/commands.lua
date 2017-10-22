@@ -5,15 +5,24 @@ function GM:ShowSpare1(ply)
     ply:ConCommand("war_modelselect")
 end
 
--- (DEBUG) Command for debugging only
+-------------------------------------------
+-- (DEBUG) Commands for debugging only
 concommand.Add("setmodel", function(ply, cmd, args)
     print(args[1])
     ply:SetModel("models/player/"..args[1])
 end)
-
 concommand.Add("getmodel", function(ply, cmd, args)
     print(ply:GetModel())
 end)
+concommand.Add("checkpoints", function(ply, cmd, args)
+    print(upgrades[1]["points"])
+    print(upgrades[2]["points"])
+    print(upgrades[3]["points"])
+    print(upgrades[4]["points"])
+end)
+
+------------------------------------------
+
 
 --Forces supplied player to given team #
 concommand.Add("war_admin_setteam", function(ply, cmd, args)
