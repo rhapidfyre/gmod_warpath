@@ -104,11 +104,14 @@ function ENT:Think()
 					
 					
                     if self.WarTeam == 5 then
+						npc:SetColor(Color(math.Rand(50,255),math.Rand(50,255),math.Rand(50,255)))
 						timer.Simple(0.1, function()
 						npc:SetMaxHealth(100/*Insert Health Calculation*/)
 						npc:SetHealth(npc:GetMaxHealth())
 						end)
 					else
+						npc:SetColor(Color(math.Rand(50,255),math.Rand(50,255),math.Rand(50,255)))
+						--npc:SetColor(team.GetColor(self.WarTeam))
 						timer.Simple(0.1, function()
 						npc:SetMaxHealth(50/*Insert Health Calculation*/)
 						npc:SetHealth(npc:GetMaxHealth())
@@ -117,12 +120,12 @@ function ENT:Think()
 					
 					--(DEBUG)
 					--if ShowTeamColor == 1 then
-						npc:SetColor(team.GetColor(self.WarTeam))
+
 					--end
 					npc:SetCollisionGroup(COLLISION_GROUP_DEBRIS_TRIGGER)
 					
 					-- Weapon Accuracy / Rate of Spread
-					npc:SetCurrentWeaponProficiency(WEAPON_PROFICIENCY_GOOD)
+					npc:SetCurrentWeaponProficiency(WEAPON_PROFICIENCY_POOR)
 					
 					npc:SetWarTeam(self.WarTeam)
 										

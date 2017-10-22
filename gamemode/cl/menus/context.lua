@@ -66,7 +66,9 @@ function GM:OnContextMenuOpen()
 			HPButton:SetPos(185,30)
 			HPButton:SetSize(75,20)
 			HPButton.DoClick = function()
-				print("Health Upgraded!")
+				net.Start("CL_NPCUpgrade")
+				net.WriteString("Health")
+				net.SendToServer()
 			end
 			
 			local DmgLabel = vgui.Create("DLabel", panel1)
@@ -79,7 +81,54 @@ function GM:OnContextMenuOpen()
 			DmgButton:SetPos(185,55)
 			DmgButton:SetSize(75,20)
 			DmgButton.DoClick = function()
-				print("Damage Upgraded!")
+				net.Start("CL_NPCUpgrade")
+				net.WriteString("Damage")
+				net.SendToServer()
+			end
+			
+			local DmgLabel = vgui.Create("DLabel", panel1)
+			DmgLabel:SetPos(20,80)
+			DmgLabel:SetText("Speed")
+			
+			local DmgButton = vgui.Create("DButton", panel1)
+			DmgButton:SetText("Upgrade!")
+			DmgButton:SetTextColor(Color(0, 0, 0))
+			DmgButton:SetPos(185,80)
+			DmgButton:SetSize(75,20)
+			DmgButton.DoClick = function()
+				net.Start("CL_NPCUpgrade")
+				net.WriteString("Speed")
+				net.SendToServer()
+			end
+			
+			local DmgLabel = vgui.Create("DLabel", panel1)
+			DmgLabel:SetPos(20,105)
+			DmgLabel:SetText("Accuracy")
+			
+			local DmgButton = vgui.Create("DButton", panel1)
+			DmgButton:SetText("Upgrade!")
+			DmgButton:SetTextColor(Color(0, 0, 0))
+			DmgButton:SetPos(185,105)
+			DmgButton:SetSize(75,20)
+			DmgButton.DoClick = function()
+				net.Start("CL_NPCUpgrade")
+				net.WriteString("Accuracy")
+				net.SendToServer()
+			end
+			
+			local DmgLabel = vgui.Create("DLabel", panel1)
+			DmgLabel:SetPos(20,130)
+			DmgLabel:SetText("Weapon")
+			
+			local DmgButton = vgui.Create("DButton", panel1)
+			DmgButton:SetText("Upgrade!")
+			DmgButton:SetTextColor(Color(0, 0, 0))
+			DmgButton:SetPos(185,130)
+			DmgButton:SetSize(75,20)
+			DmgButton.DoClick = function()
+				net.Start("CL_NPCUpgrade")
+				net.WriteString("Weapon")
+				net.SendToServer()
 			end
 	
 	end
