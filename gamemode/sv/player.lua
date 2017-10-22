@@ -198,10 +198,10 @@ function GM:PlayerDeath( ply, inflictor, attacker )
 		
 			if (IsValid(attacker) && (attacker:Health() >= attacker:GetMaxHealth()*.75)) then
 					attacker:SetHealth(attacker:GetMaxHealth())
-					print("Player Healed")
+                    
 			elseif (IsValid(attacker) && (attacker:Health() < attacker:GetMaxHealth())) then
 					attacker:SetHealth(attacker:Health() + attacker:GetMaxHealth()*0.25)
-					print("Player Healed")
+                    
 			end
 		
 	return end
@@ -218,7 +218,7 @@ function GM:PlayerDeath( ply, inflictor, attacker )
 
 	if (IsValid(attacker) && (attacker:Health() < attacker:GetMaxHealth())) then
 		attacker:SetHealth(attacker:GetMaxHealth())
-		print("Healed to Full")
+        
 	end
 	
 	

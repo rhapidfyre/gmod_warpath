@@ -78,12 +78,10 @@ function ENT:KeyValue(key, value)
 	if key == "pointnumber" then
         self.pointnumber = tonumber(value )
         self:SetName("CAP_POINT_"..tostring(self.pointnumber))
-        print("[DEBUG] [war_capture_zone] Capture Point #"..tostring(self.pointnumber).."\n")
     
 	elseif key == "startteam" then
         self.ownerteam = tonumber(value)
         self:SetKeyValue("TeamNum", value)
-        print("[DEBUG] [war_capture_zone] Setting start team to Team #"..tostring(self.ownerteam))
         
 	elseif key == "angles" then
         self:SetAngles(util.StringToType(value, "Angle"))
@@ -102,7 +100,6 @@ function ENT:StartTouch(ent)
         if entTeam == self.ownerteam then
             self.occupied = true
             self.count = self.count + 1
-            print("[DEBUG] ("..tostring(self:GetName())..") is now occupied.")
         end
         
     end
@@ -120,7 +117,6 @@ function ENT:EndTouch(ent)
             if entTeam == self.ownerteam then
             self.count = 0
             self.occupied = false
-            print("[DEBUG] ("..tostring(self:GetName())..") is now vacant.")
             end
             
         end

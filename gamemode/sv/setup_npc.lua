@@ -105,12 +105,12 @@ local function CombatSchedules(npc)
 end
 
 function AssaultPoint(npc)
-    print("Running AssaultPoint(npc) on "..tostring(npc))
     if IsValid(npc) and npc ~= nil then
         if npc:GetWarTeam() < 3 and npc:GetWarTeam() > 0 then
             if !(CombatSchedules(npc)) then
                 
                 /*
+                -- Sends NPCs to the nearest control point that they don't control
                 local flag = false
                 local minimum = nil
                 for _,zone in pairs (ents.FindByClass("war_capture_zone")) do
@@ -129,6 +129,7 @@ function AssaultPoint(npc)
                     end
                 end
                 */
+                -- Sends NPCs to a random control points that they don't control
                 local flag = false
                 local minimum = {}
                 

@@ -91,30 +91,15 @@ function ENT:Think()
 						npc:SetKeyValue("spawnflags", "1073664")	-- Don't drop gun, Fade Corpse, and don't let rebels follow players, don't allow player to push (8192, 512, 1048576, 16384)
 					end
 					
-					PrintTable(npc:GetKeyValues())
-					
 					-- Add input so that when the mob dies, the spawner it belongs to will spawn another
 					npc:Input("AddOutput", npc, ply, "OnDeath "..self:GetName()..":DecreaseCount:1::-1")
 
 					npc:Spawn()
 					
 					
-					--[DEBUG]
+					--(DEBUG)
 					--if ShowTeamColor == 1 then
-					if self.WarTeam == 5 then
-						npc:SetColor(Color(0,0,0))
-						timer.Simple(0.1, function()
-						npc:SetMaxHealth(100/*Insert Health Calculation*/)
-						npc:SetHealth(npc:GetMaxHealth())
-						end)
-                    else
-						npc:SetColor(team.GetColor(self.WarTeam))
-						timer.Simple(0.1, function()
-						npc:SetMaxHealth(50/*Insert Health Calculation*/)
-						npc:SetHealth(npc:GetMaxHealth())
-						end)
-
-					end
+						--npc:SetColor(team.GetColor(self.WarTeam))
 					--end
 					npc:SetCollisionGroup(COLLISION_GROUP_DEBRIS_TRIGGER)
 					
@@ -126,7 +111,12 @@ function ENT:Think()
 					-- Randomly spawn within given radius by map
 					npc:SetPos(self:GetPos() + Vector(0,0,0))
 					--npc:SetAngles(Angle(0,math.random(1,360),0))
-
+					
+					timer.Simple(0.1, function()
+						npc:SetMaxHealth(50/*Insert Health Calculation*/)
+						npc:SetHealth(npc:GetMaxHealth())
+						--AssaultPoint(npc)
+					end)
 					
 					-- Change this spawners # of mobs alive (to prevent crowding/server overloading)
 					self.livingmobs = self.livingmobs + 1

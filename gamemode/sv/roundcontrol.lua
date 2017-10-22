@@ -18,7 +18,6 @@ round.count			= 0
 ]]
 function round.Prep()
 
-    print("[DEBUG] [RoundControl] Beginning preparation round...")
 	-- Round Controller
 	round.status 	    = ROUND_PREP
 	round.timeleft 	    = TIME_PREP
@@ -64,7 +63,6 @@ end
 ]]
 function round.Begin()
 
-    print("[DEBUG] [RoundControl] Control Points unlocked. The round has begun!")
 	-- Round Controller
 	round.status 	    = ROUND_ACTIVE
 	round.timeleft	    = TIME_ROUND
@@ -93,7 +91,6 @@ end
 ]]
 function round.End()
 
-    print("[DEBUG] [RoundControl] The round has ended.")
 	-- Round Controller
 	round.status 	    = ROUND_END
 	round.timeleft 	    = TIME_END
@@ -156,15 +153,11 @@ function round.Stale()
 	round.in_progress = false
 	
 	if CheckReady() then
-        print("[DEBUG] [RoundControl] A player is waiting, the game will begin!")
 		round.timeleft 	= TIME_PREP
 		round.status 	= ROUND_PREP
 		
 		if  timer.Exists("RoundStale")      then timer.Remove("RoundStale") end
 		if !timer.Exists("RoundControl")    then timer.Create("RoundControl", 1, 0, round.Controller) end
-        
-	else
-        print("[DEBUG] [RoundControl] Game Stale - No Players Waiting!")
         
 	end
 
@@ -205,7 +198,6 @@ timer.Create("RoundControl", 1, 0, round.Controller)
 ]]
 function round.clock()
 	
-    print("[DEBUG] [TimeLeft] Time remaining (in seconds): "..tostring(round.timeleft))
 	-- Never allow a round time to exceed 10 minutes
 	if round.timeleft > 600 then round.timeleft = 600 end
 	
