@@ -41,12 +41,20 @@ function ENT:AcceptInput(inputName, activator, called, data)
                 counter = counter + 1            
             end
         end
+        
         if counter >= #capzones then
-            hook.Call("EndRound")
+        
+            Round.Victory(self.ownerteam)
             net.Start("SV_Victory")
                 net.WriteInt(self.ownerteam, 8)
                 net.Broadcast()
         else
+        
+            -- Issues points to NPC or Player based on who captured it
+            if activator:IsNPC() then upgrades[self.ownerteam]["points"] = upgrades[self.ownerteam]["points"] + POINT_CAPTURE_NPC
+            else                      upgrades[self.ownerteam]["points"] = upgrades[self.ownerteam]["points"] + POINT_CAPTURE
+            end
+        
             net.Start("SV_Capture")
                 net.WriteInt( self.pointnumber, 8)
                 net.WriteInt( self.ownerteam, 8)
