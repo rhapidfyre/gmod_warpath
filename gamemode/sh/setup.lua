@@ -16,7 +16,11 @@ function GM:OnEntityCreated( Ent )
     if Ent:IsNPC() then
 		Ent:InstallDataTable()
 		Ent:NetworkVar("Int",0,"WarTeam")
-        
+    end
+    
+    if Ent:IsPlayer() then
+        Ent:InstallDataTable()
+        Ent:NetworkVar("Int",0,"Points")
     end
 end
 

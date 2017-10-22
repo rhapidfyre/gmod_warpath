@@ -75,6 +75,15 @@ function round.Begin()
 		zone:Input("EnableCapture")
 	end
 	
+    -- Resets Upgrades to Level 1 & points to POINTS_START(variables.lua)
+    for i = 1, 4, 1 do
+        upgrades[i]["points"]   = POINT_START
+        upgrades[i]["health"]   = 1
+        upgrades[i]["damage"]   = 1
+        upgrades[i]["accuracy"] = 1
+        upgrades[i]["speed"]    = 1
+    end
+    
 end
 
 --[[
@@ -118,12 +127,20 @@ end
 	round.Victory()
 	Awards the winning team points then calls round.End()
 ]]
-function round.Victory()
+function round.Victory(winteam)
+
+    PrintMessage(HUD_PRINTTALK, team.GetName().." has won round #"..round.count.."!")
+    
+    -- Distributes points (variables.lua)
+    for k,v in pairs(player.GetAll()) do
+        if v:Team() == winteam then team.SetScore(v, team.GetScore(v) + SCORE_WIN)
+        else                        team.SetScore(v, team.GetScore(v) + SCORE_LOSE)
+        end
+    end
+    
     round.End()
+    
 end
-hook.Add("EndRound", "EndRound", function()
-    round.Victory()
-end)
 
 --[[
 	round.Stale()
@@ -205,8 +222,24 @@ function RoundActive()
     return round.in_progress
 end
 
+timer.Create("AwardPoints", 1, 0, function()
 
+    if round.status = ROUND_ACTIVE then
+    
+        if ((CurTime() % 30) == 0) then
+        
+            for k,v in pairs(ents.FindByClass("war_capture_zone")) do
+            
+                local temp = v:GetKeyValues()["TeamNum"]
+                upgrades[temp]["points"] = upgrades[temp]["points"] + POINT_TIME
+            
+            end
+        
+        end
+    
+    end
 
+end)
 
 
 

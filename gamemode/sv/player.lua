@@ -13,19 +13,22 @@ end
 function GM:DoPlayerDeath( ply, attacker, dmginfo )
 
 	ply:CreateRagdoll()
-	
 	ply:AddDeaths( 1 )
 	
 	if ( attacker:IsValid() && attacker:IsPlayer() ) then
 	
-		if ( attacker == ply ) then
-			attacker:AddFrags( -1 )
-		else
-			attacker:AddFrags( 1 )
+		if ( attacker == ply ) then attacker:AddFrags( -1 )
+		else                        attacker:AddFrags(  1 )
 		end
 	
+        upgrades[i]["points"] = upgrades[i]["points"] + POINT_KILL_PLY
+        
+    elseif ( attacker:IsValid() && attacker:IsNPC() ) then
+        upgrades[i]["points"] = upgrades[i]["points"] + POINT_KILL_NPC
+    
 	end
 
+    
 end
 
 --[[---------------------------------------------------------

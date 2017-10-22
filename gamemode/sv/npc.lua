@@ -81,6 +81,14 @@ function GM:OnNPCKilled( ent, attacker, inflictor )
 		end
 	end
 
+    -- Award points
+    if (attacker:IsNPC()) then
+        upgrades[i]["points"] = upgrades[i]["points"] + POINT_DEAD_NPC
+        
+    elseif (attacker:IsPlayer()) or (inflictor:IsPlayer()) then
+        upgrades[i]["points"] = upgrades[i]["points"] + POINT_DEAD_PLY
+    end
+    
 end
 
 --[[---------------------------------------------------------
