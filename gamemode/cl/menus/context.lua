@@ -49,7 +49,12 @@ function GM:OnContextMenuOpen()
 			local TeamPointsValue = vgui.Create("DLabel", panel1)
 			TeamPointsValue:SetPos(67,10)
 			TeamPointsValue:SetTextColor(Color(0, 255, 0))
-			TeamPointsValue:SetText(PLY_Points)
+			TeamPointsValue:SetText("TEAM: "..NPC_Points)
+            
+			local NPCPointsValue = vgui.Create("DLabel", panel1)
+			NPCPointsValue:SetPos(67,20)
+			NPCPointsValue:SetTextColor(Color(0, 255, 0))
+			NPCPointsValue:SetText("SELF:  "..PLY_Points)
 	
 			local HPLabel = vgui.Create("DLabel", panel1)
 			HPLabel:SetPos(20,30)

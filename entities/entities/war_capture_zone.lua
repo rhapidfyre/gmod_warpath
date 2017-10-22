@@ -18,7 +18,6 @@ function ENT:AcceptInput(inputName, activator, called, data)
 
 	if inputName == "capture" then
     
-        PrintMessage(HUD_PRINTTALK, tostring(activator).." (TEAM "..tostring(activator:GetWarTeam())..") captured Control Point "..tostring(self.pointnumber))
         self.ownerteam = data
         self:SetKeyValue("TeamNum", data)
         SetGlobalInt("CmdPoint"..self.pointnumber, self.ownerteam)

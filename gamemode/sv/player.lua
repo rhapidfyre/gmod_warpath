@@ -29,13 +29,13 @@ function GM:DoPlayerDeath( ply, attacker, dmginfo )
 		end
 	
         -- Award player's team with upgrade points
-        upgrades[attacker:Team()]["points"] = upgrades[attacker:Team()]["points"] + POINT_KILL_PLY
+        upgrades[attacker:Team()]["points"] = upgrades[attacker:Team()]["points"] + POINT_DEAD_PLY
         
     elseif ( attacker:IsValid() && attacker:IsNPC() ) then
     
         -- Award NPC's team with upgrade points
-        local npcTeam = attacker:GetKeyValues()["TeamNum"]
-        upgrades[npcTeam]["points"] = upgrades[npcTeam]["points"] + POINT_KILL_NPC
+        local npcTeam = attacker:GetWarTeam()
+        upgrades[npcTeam]["points"] = upgrades[npcTeam]["points"] + POINT_DEAD_PLY
     
 	end
 

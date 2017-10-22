@@ -5,7 +5,7 @@ points[2] = 5
 points[3] = 5
 points[4] = 5
 
-local round 		= {}
+round 		        = {}
 round.timeleft 		= -1
 round.status		= ROUND_END
 round.in_progress	= false
@@ -51,7 +51,17 @@ function round.Prep()
         end
 	end
     
-    --SetGlobalString("CmdPoints", util.TableToJSON(points))
+    -- Resets Upgrades to Level 1 & points to POINTS_START(variables.lua)
+    for k,v in pairs(player.GetAll()) do
+        v:SetPoints(0)
+    end
+    for i = 1, 4, 1 do
+        upgrades[i]["points"]   = POINT_START
+        upgrades[i]["health"]   = 1
+        upgrades[i]["damage"]   = 1
+        upgrades[i]["accuracy"] = 1
+        upgrades[i]["speed"]    = 1
+    end
     
 	
 end
@@ -72,15 +82,6 @@ function round.Begin()
 	for _,zone in pairs (ents.FindByClass("war_capture_zone")) do
 		zone:Input("EnableCapture")
 	end
-	
-    -- Resets Upgrades to Level 1 & points to POINTS_START(variables.lua)
-    for i = 1, 4, 1 do
-        upgrades[i]["points"]   = POINT_START
-        upgrades[i]["health"]   = 1
-        upgrades[i]["damage"]   = 1
-        upgrades[i]["accuracy"] = 1
-        upgrades[i]["speed"]    = 1
-    end
     
 end
 
@@ -126,7 +127,7 @@ end
 ]]
 function round.Victory(winteam)
 
-    PrintMessage(HUD_PRINTTALK, team.GetName().." has won round #"..round.count.."!")
+    PrintMessage(HUD_PRINTTALK, team.GetName(winteam).." wins Round #"..round.count.."!")
     
     -- Distributes points (variables.lua)
     for k,v in pairs(player.GetAll()) do
@@ -138,6 +139,7 @@ function round.Victory(winteam)
     round.End()
     
 end
+hook.Add("RoundWin", round.Victory, winteam)
 
 --[[
 	round.Stale()
@@ -213,27 +215,23 @@ end
 function RoundActive()
     return round.in_progress
 end
---[[
-timer.Create("AwardPoints", 1, 0, function()
 
-    if round.status = ROUND_ACTIVE then
+timer.Create("AwardPoints", 10, 0, function()
+
+    if round.status == ROUND_ACTIVE then
     
-        if ((CurTime() % 30) == 0) then
         
-            for k,v in pairs(ents.FindByClass("war_capture_zone")) do
-            
-                local temp = v:GetKeyValues()["TeamNum"]
+        for _,v in pairs(ents.FindByClass("war_capture_zone")) do
+        
+            local temp = v:GetKeyValues()["TeamNum"]
+            if temp == 1 or temp == 2 then
                 upgrades[temp]["points"] = upgrades[temp]["points"] + POINT_TIME
-            
             end
-        
         end
     
     end
 
 end)
-
-]]
 
 
 

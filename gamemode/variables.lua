@@ -21,6 +21,7 @@
     
     POINT_DEAD_NPC      = 1        -- NPC Dies (Any method)
     POINT_DEAD_PLY      = 1        -- Player Dies (Any method)
+    POINT_KILL_PLY      = 1        -- Extra point for player killing player
 
     POINT_SUICIDE       = -1       -- Points given for killing self
     POINT_DEATH         = 0        -- Points given for dying

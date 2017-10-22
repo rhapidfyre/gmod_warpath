@@ -56,8 +56,6 @@ function GM:OnNPCKilled( ent, attacker, inflictor )
 					attacker:SetHealth(attacker:Health() + attacker:GetMaxHealth()*0.1)
 					print("Player Healed")
 			end
-
-			return
 		end
 
 	end
@@ -83,10 +81,12 @@ function GM:OnNPCKilled( ent, attacker, inflictor )
 	end
 
     -- Award points to team upgrades for every dead NPC (Any method)
-    upgrades[i]["points"] = upgrades[i]["points"] + POINT_DEAD_NPC
+    local teamWin = 1
+    if ent:GetWarTeam() == 1 then teamWin = 2 end
+    upgrades[teamWin]["points"] = upgrades[teamWin]["points"] + POINT_DEAD_NPC
     
     -- If killer is a player, give personal points
-    if attacker:IsPlayer() then
+    if attacker:IsPlayer() or inflictor:IsPlayer() then
         attacker:SetPoints(attacker:GetPoints() + POINT_DEAD_NPC)
     end
     
