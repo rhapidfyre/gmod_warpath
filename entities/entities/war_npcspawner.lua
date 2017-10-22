@@ -101,7 +101,20 @@ function ENT:Think()
 					
 					--[DEBUG]
 					--if ShowTeamColor == 1 then
+					if self.WarTeam == 5 then
+						npc:SetColor(Color(0,0,0))
+						timer.Simple(0.1, function()
+						npc:SetMaxHealth(100/*Insert Health Calculation*/)
+						npc:SetHealth(npc:GetMaxHealth())
+						end)
+                    else
 						npc:SetColor(team.GetColor(self.WarTeam))
+						timer.Simple(0.1, function()
+						npc:SetMaxHealth(50/*Insert Health Calculation*/)
+						npc:SetHealth(npc:GetMaxHealth())
+						end)
+
+					end
 					--end
 					npc:SetCollisionGroup(COLLISION_GROUP_DEBRIS_TRIGGER)
 					
@@ -113,12 +126,7 @@ function ENT:Think()
 					-- Randomly spawn within given radius by map
 					npc:SetPos(self:GetPos() + Vector(0,0,0))
 					--npc:SetAngles(Angle(0,math.random(1,360),0))
-					
-					timer.Simple(0.1, function()
-						npc:SetMaxHealth(50/*Insert Health Calculation*/)
-						npc:SetHealth(npc:GetMaxHealth())
-						--AssaultPoint(npc)
-					end)
+
 					
 					-- Change this spawners # of mobs alive (to prevent crowding/server overloading)
 					self.livingmobs = self.livingmobs + 1
