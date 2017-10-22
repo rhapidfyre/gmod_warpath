@@ -15,7 +15,7 @@ function GM:ShowTeam()
 	local y = 30
 	for ID, TeamInfo in pairs ( AllTeams ) do
 	
-		if ( ID != TEAM_CONNECTING && ID != TEAM_UNASSIGNED ) then
+		if ( ID > 0 and ID < 3) or (ID == TEAM_SPECTATOR) then
 	
 			local Team = vgui.Create( "DButton", self.TeamSelectFrame )
 			function Team.DoClick() self:HideTeam() RunConsoleCommand( "changeteam", ID ) end

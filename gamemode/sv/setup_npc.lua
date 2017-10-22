@@ -172,8 +172,10 @@ end
 -- DEBUG : Find a better way to implement this
 timer.Create("SendAll", 6, 0, function()
     for _,npc in pairs (ents.FindByClass("npc_*")) do
-        if !(npc:IsCurrentSchedule(SCHED_FORCED_GO)) and !(npc:IsCurrentSchedule(SCHED_FORCED_GO_RUN)) then
-            AssaultPoint(npc)
+        if IsValid(npc) then
+            if !(npc:IsCurrentSchedule(SCHED_FORCED_GO)) and !(npc:IsCurrentSchedule(SCHED_FORCED_GO_RUN)) then
+                AssaultPoint(npc)
+            end
         end
     end
 end)

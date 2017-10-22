@@ -57,6 +57,7 @@ function round.Prep()
     end
     for i = 1, 4, 1 do
         upgrades[i]["points"]   = POINT_START
+        upgrades[i]["spent"]    = 0
         upgrades[i]["health"]   = 1
         upgrades[i]["damage"]   = 1
         upgrades[i]["accuracy"] = 1

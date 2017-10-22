@@ -14,11 +14,8 @@ end)
 concommand.Add("getmodel", function(ply, cmd, args)
     print(ply:GetModel())
 end)
-concommand.Add("checkpoints", function(ply, cmd, args)
-    print(upgrades[1]["points"])
-    print(upgrades[2]["points"])
-    print(upgrades[3]["points"])
-    print(upgrades[4]["points"])
+concommand.Add("check", function(ply, cmd, args)
+    PrintTable(upgrade_info)
 end)
 
 ------------------------------------------

@@ -69,9 +69,10 @@ function ENT:Think()
                 self.next_spawn = CurTime() + spawn_gap
                 self.last_spawn = CurTime()
                 --for i=1,self.spawnmobs do
+                
 					local npc = nil
 					if self.WarTeam == 2 then
-						npc = ents.Create("npc_combine_s")
+                        npc = ents.Create("npc_combine_s")
                     elseif self.WarTeam == 5 then
                         npc = ents.Create("npc_fastzombie")
 					else
@@ -86,10 +87,15 @@ function ENT:Think()
 					
 					-- If the NPC is a gun fighter, give them a gun to use
 					if npc:GetClass() == "npc_citizen" or npc:GetClass() == "npc_combine_s" then
-						npc:SetKeyValue("additionalequipment", "weapon_ar2")
+                    
+                        local upg = upgrades[self.WarTeam]["weapon"]
+                        npc:SetKeyValue("additionalequipment", upgrade_info["weapon"][upg])
+                        -- Set Citizens to use Rebel models
 						if npc:GetClass() == "npc_citizen" then npc:SetKeyValue("citizentype", "3") end
+                        
 						npc:SetKeyValue("spawnflags", "1073664")	-- Don't drop gun, Fade Corpse, and don't let rebels follow players, don't allow player to push (8192, 512, 1048576, 16384)
-					end
+					
+                    end
 					
 					-- Add input so that when the mob dies, the spawner it belongs to will spawn another
 					npc:Input("AddOutput", npc, ply, "OnDeath "..self:GetName()..":DecreaseCount:1::-1")

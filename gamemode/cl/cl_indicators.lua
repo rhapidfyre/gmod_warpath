@@ -13,17 +13,6 @@ function DrawFlagIndc(flag,r,g,b)
 	end
 end
 
-function FlagIndicator()
-	if player_manager.GetPlayerClass(LocalPlayer()) == "SCOUT" then
-	
-		for _, cp in pairs(ents.FindByClass("war_capture_point")) do
-            local teamCol = team.GetColor(cp:GetKeyValues()["TeamNum"])
-			DrawFlagIndc(cp,teamCol.r,teamCol.g,teamCol.b)
-		end
-        
-	end
-end
-
 function HoveringNames()
 	
 	local flash = 255 - math.abs( math.sin(CurTime()) * 0.5 ) * 255
@@ -45,5 +34,3 @@ function HoveringNames()
 end
 
 hook.Add("HUDPaint", "HoveringNames", HoveringNames)
-
-hook.Add("HUDPaint", "FlagIndicator", FlagIndicator)

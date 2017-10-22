@@ -255,6 +255,7 @@ function GM:PlayerSpawnAsSpectator( pl )
 
 	pl:SetTeam( TEAM_SPECTATOR )
 	pl:Spectate( OBS_MODE_ROAMING )
+    pl:SetNoTarget(true)
 
 end
 
@@ -277,6 +278,7 @@ function GM:PlayerSpawn( pl )
 
 	-- Stop observer mode
 	pl:UnSpectate()
+    pl:SetNoTarget(false)
 
 	pl:SetupHands()
 

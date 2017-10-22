@@ -95,16 +95,13 @@ end
 	
 	
 	
-function GM:OnContextMenuClose() 
+function GM:OnContextMenuClose()
+
 	if IsValid(CMenu) then 
 		CMenu:Remove()
 		CMenu = nil
 		surface.PlaySound("garrysmod/ui_return.wav")
 		
 	end
+    
 end
-
-net.Receive("SV_Point_Update", function()
-	NPC_Points = net.ReadInt(12)
-	PLY_Points = net.ReadInt(12)
-	end)

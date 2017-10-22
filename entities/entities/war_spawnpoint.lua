@@ -20,9 +20,6 @@ function ENT:EstablishTeam()
         end
     end
     
-    print("[WARPATH] Player Spawnpoint ("..tostring(self:GetName()).." @ "..tostring(self:GetPos())..") now belongs to "..team.GetName(self.WarTeam).." ("..tostring(self.WarTeam)..")")
-    print("[WARPATH] Nearest Capture Point: "..tostring(self.nearest:GetName()).." @ "..tostring(self.nearest:GetPos()))
-    
     self:SetKeyValue("TeamNum", self.WarTeam)
     self:SetName("SPAWN_"..tostring(self.nearest:GetName()))
 end
