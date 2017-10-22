@@ -30,12 +30,12 @@ function GM:OnContextMenuOpen()
 			
 			local TeamPoints = vgui.Create("DLabel", panel1)
 			TeamPoints:SetPos(20,10)
-			TeamPoints:SetText("Points:  $")
+			TeamPoints:SetText("Points:  ")
 	
 			local TeamPointsValue = vgui.Create("DLabel", panel1)
 			TeamPointsValue:SetPos(67,10)
 			TeamPointsValue:SetTextColor(Color(0, 255, 0))
-			TeamPointsValue:SetText(NPC_Points)
+			TeamPointsValue:SetText(LocalPlayer():GetPoints())
 	
 			local HPLabel = vgui.Create("DLabel", panel1)
 			HPLabel:SetPos(20,30)
