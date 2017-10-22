@@ -6,7 +6,7 @@
 	ROUND_END		= 3
 	
 	TIME_PREP		= 8			-- Time to prepare, in seconds
-	TIME_ROUND		= 300		-- Time per round, in seconds
+	TIME_ROUND		= 600		-- Time per round, in seconds
 	TIME_END		= 12		-- Time after round concludes until next prep round
 	
 	MAX_ROUNDS		= 10		-- Max rounds until map change
