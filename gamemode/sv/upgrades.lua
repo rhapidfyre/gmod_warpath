@@ -14,13 +14,48 @@ net.Receive("CL_PLYUpgrade", function(len, ply)
 
 end)
 
-local function CheckPoints(ply, upgrade, upType)
-    if upType == "PLY" then
+local function NPCUpgrading(ply, upgrade)
+
+    local teamnum = ply:Team()
     
+    -- Assigns current point count to "pts"
+    local pts = upgrades[teamnum]["points"]
+    
+    -- Retrieves current upgrade level to "curr"
+    local curr = upgrades[teamnum][upgrade]
+    
+    -- Assigns cost of next upgrade level to "cost"
+    local cost = upgrade_cost[upgrade][curr]
+
+    if cost <= pts then
+    
+        if curr < 10 then
+            upgrades[teamnum][upgrade] = curr + 1
+            net.Start("SV_UpgradeSuccess")
+                net.Send(ply)
+                
+        else
+            net.Start("SV_UpgradeFail")
+                net.WriteString("This ability is already maximized!!")
+                net.Send(ply)
+        end
+        
+        -- Subtract the cost from the team's points pool
+        upgrades[teamnum]["points"] = pts - cost
+        
     else
-    
+        net.Start("SV_UpgradeFail")
+            net.WriteString("Your team does not have enough points for that upgrade!!")
+            net.Send(ply)
+            
     end
+    
 end
+
+-- Runs NPCUpgrading
+net.Receive("CL_NPCUpgrade", function(len, ply)
+    NPCUpgrading(ply, net.ReadString())
+end)
 
 upgrade_cost = {}
     upgrade_cost["health"] = {
@@ -32,14 +67,16 @@ upgrade_cost = {}
         [6]  = 6, [7]  = 7, [8]  = 8, [9]  = 9, [10] = 10
     }
     upgrade_cost["accuracy"] = {
-        [1]  = 1, [2]  = 2, [3]  = 3, [4]  = 4, [5]  = 5
+        [1]  = 1, [2]  = 2, [3]  = 3, [4]  = 4, [5]  = 5,
+        [6]  = 6, [7]  = 7, [8]  = 8, [9]  = 9, [10] = 10
     }
     upgrade_cost["speed"] = {
         [1]  = 1, [2]  = 2, [3]  = 3, [4]  = 4, [5]  = 5,
         [6]  = 6, [7]  = 7, [8]  = 8, [9]  = 9, [10] = 10
     }
     upgrade_cost["weapon"] = {
-        [1]  = 1, [2]  = 2, [3]  = 3, [4]  = 4, [5]  = 5
+        [1]  = 1, [2]  = 2, [3]  = 3, [4]  = 4, [5]  = 5,
+        [6]  = 6, [7]  = 7, [8]  = 8, [9]  = 9, [10] = 10
     }
     
     -- Level Definitions
@@ -58,17 +95,27 @@ upgrade_info = {}
     }
     upgrade_info["accu"] = {
         [1]  = WEAPON_PROFICIENCY_POOR,
-        [2]  = WEAPON_PROFICIENCY_AVERAGE,
-        [3]  = WEAPON_PROFICIENCY_GOOD,
-        [4]  = WEAPON_PROFICIENCY_VERY_GOOD,
-        [5]  = WEAPON_PROFICIENCY_PERFECT
+        [2]  = WEAPON_PROFICIENCY_POOR,
+        [3]  = WEAPON_PROFICIENCY_AVERAGE,
+        [4]  = WEAPON_PROFICIENCY_AVERAGE,
+        [5]  = WEAPON_PROFICIENCY_GOOD,
+        [6]  = WEAPON_PROFICIENCY_GOOD,
+        [7]  = WEAPON_PROFICIENCY_VERY_GOOD,
+        [8]  = WEAPON_PROFICIENCY_VERY_GOOD,
+        [9]  = WEAPON_PROFICIENCY_VERY_GOOD,
+        [10]  = WEAPON_PROFICIENCY_PERFECT
     }
     upgrade_info["weapon"] = {
         [1]  = "weapon_smg1",
         [2]  = "weapon_smg1",
         [3]  = "weapon_smg1",
-        [4]  = "weapon_ar2",
-        [5]  = "weapon_ar2"
+        [4]  = "weapon_smg1",
+        [5]  = "weapon_smg1",
+        [6]  = "weapon_smg1",
+        [7]  = "weapon_ar2",
+        [8]  = "weapon_ar2",
+        [9]  = "weapon_ar2",
+        [10]  = "weapon_ar2"
     }
 
     -- Team Levels
@@ -80,7 +127,7 @@ upgrades = {}
         upgrades[1]["damage"]   = 1
         upgrades[1]["accuracy"] = 1
         upgrades[1]["speed"]    = 1
-        upgrades[1]["weapon"]    = 1
+        upgrades[1]["weapon"]   = 1
     upgrades[2] = {}
         upgrades[2]["points"]   = POINT_START
         upgrades[2]["spent"]    = 0

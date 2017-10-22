@@ -67,7 +67,7 @@ function GM:OnContextMenuOpen()
 			HPButton:SetSize(75,20)
 			HPButton.DoClick = function()
 				net.Start("CL_NPCUpgrade")
-				net.WriteString("Health")
+				net.WriteString("health")
 				net.SendToServer()
 			end
 			
@@ -82,7 +82,7 @@ function GM:OnContextMenuOpen()
 			DmgButton:SetSize(75,20)
 			DmgButton.DoClick = function()
 				net.Start("CL_NPCUpgrade")
-				net.WriteString("Damage")
+				net.WriteString("damage")
 				net.SendToServer()
 			end
 			
@@ -97,13 +97,13 @@ function GM:OnContextMenuOpen()
 			DmgButton:SetSize(75,20)
 			DmgButton.DoClick = function()
 				net.Start("CL_NPCUpgrade")
-				net.WriteString("Speed")
+				net.WriteString("speed")
 				net.SendToServer()
 			end
 			
 			local DmgLabel = vgui.Create("DLabel", panel1)
 			DmgLabel:SetPos(20,105)
-			DmgLabel:SetText("Accuracy")
+			DmgLabel:SetText("accuracy")
 			
 			local DmgButton = vgui.Create("DButton", panel1)
 			DmgButton:SetText("Upgrade!")
@@ -112,7 +112,7 @@ function GM:OnContextMenuOpen()
 			DmgButton:SetSize(75,20)
 			DmgButton.DoClick = function()
 				net.Start("CL_NPCUpgrade")
-				net.WriteString("Accuracy")
+				net.WriteString("accuracy")
 				net.SendToServer()
 			end
 			
@@ -127,7 +127,7 @@ function GM:OnContextMenuOpen()
 			DmgButton:SetSize(75,20)
 			DmgButton.DoClick = function()
 				net.Start("CL_NPCUpgrade")
-				net.WriteString("Weapon")
+				net.WriteString("weapon")
 				net.SendToServer()
 			end
 	

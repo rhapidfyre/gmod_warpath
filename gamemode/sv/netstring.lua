@@ -3,6 +3,8 @@ util.AddNetworkString("SV_Capture")
 util.AddNetworkString("SV_Victory")
 util.AddNetworkString("SV_Clock")
 util.AddNetworkString("SV_Points")
+util.AddNetworkString("SV_UpgradeSuccess")
+util.AddNetworkString("SV_UpgradeFail")
 
 util.AddNetworkString("CL_NPCUpgrade")
 util.AddNetworkString("CL_PLYUpgrade")
