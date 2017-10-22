@@ -7,11 +7,11 @@ local PLY_Points = 0
 -- Updates the client of the team's upgrade point balance --
 local function UpdatePoints()                             --
     PLY_Points = LocalPlayer():GetPoints()                --
-    net.Start("SV_Points")                                --
+    net.Start("CL_Points")                                --
         net.SendToServer()                                --
 end                                                       --
                                                           --
-net.Receive("SV_YourPoints", function()                   --
+net.Receive("SV_Points", function()                   --
     NPC_Points = net.ReadInt(32)                          --
 end)                                                      --
 ------------------------------------------------------------
