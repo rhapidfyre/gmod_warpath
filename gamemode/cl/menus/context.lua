@@ -35,26 +35,12 @@ function GM:OnContextMenuOpen()
 			CSheet:Dock(FILL)
 			
 			local panel1 = vgui.Create( "DPanel", CSheet )
-			panel1.Paint = function( self, w, h ) draw.RoundedBox( 4, 0, 0, w, h, Color( 125, 125, 125, self:GetAlpha() ) ) end
-			CSheet:AddSheet( "NPC", panel1 )
+			panel1.Paint = function( self, w, h ) draw.RoundedBox( 4, 0, 0, w, h, team.GetColor(LocalPlayer():Team()) ) end
+			CSheet:AddSheet( "Player", panel1 )
 
-			local panel2 = vgui.Create( "DPanel", CSheet )
-			panel2.Paint = function( self, w, h ) draw.RoundedBox( 4, 0, 0, w, h, Color( 125, 125, 125, self:GetAlpha() ) ) end
-			CSheet:AddSheet( "Player", panel2 )
-			
 			local TeamPoints = vgui.Create("DLabel", panel1)
 			TeamPoints:SetPos(20,10)
-			TeamPoints:SetText("Points:  ")
-	
-			local TeamPointsValue = vgui.Create("DLabel", panel1)
-			TeamPointsValue:SetPos(67,10)
-			TeamPointsValue:SetTextColor(Color(0, 255, 0))
-			TeamPointsValue:SetText("TEAM: "..NPC_Points)
-            
-			local NPCPointsValue = vgui.Create("DLabel", panel1)
-			NPCPointsValue:SetPos(67,20)
-			NPCPointsValue:SetTextColor(Color(0, 255, 0))
-			NPCPointsValue:SetText("SELF:  "..PLY_Points)
+			TeamPoints:SetText("Points:  "..PLY_Points)            
 	
 			local HPLabel = vgui.Create("DLabel", panel1)
 			HPLabel:SetPos(20,30)
@@ -66,7 +52,7 @@ function GM:OnContextMenuOpen()
 			HPButton:SetPos(185,30)
 			HPButton:SetSize(75,20)
 			HPButton.DoClick = function()
-				net.Start("CL_NPCUpgrade")
+				net.Start("CL_PLYUpgrade")
 				net.WriteString("health")
 				net.SendToServer()
 			end
@@ -81,7 +67,7 @@ function GM:OnContextMenuOpen()
 			DmgButton:SetPos(185,55)
 			DmgButton:SetSize(75,20)
 			DmgButton.DoClick = function()
-				net.Start("CL_NPCUpgrade")
+				net.Start("CL_PLYUpgrade")
 				net.WriteString("damage")
 				net.SendToServer()
 			end
@@ -96,7 +82,7 @@ function GM:OnContextMenuOpen()
 			DmgButton:SetPos(185,80)
 			DmgButton:SetSize(75,20)
 			DmgButton.DoClick = function()
-				net.Start("CL_NPCUpgrade")
+				net.Start("CL_PLYUpgrade")
 				net.WriteString("speed")
 				net.SendToServer()
 			end
@@ -111,7 +97,7 @@ function GM:OnContextMenuOpen()
 			DmgButton:SetPos(185,105)
 			DmgButton:SetSize(75,20)
 			DmgButton.DoClick = function()
-				net.Start("CL_NPCUpgrade")
+				net.Start("CL_PLYUpgrade")
 				net.WriteString("accuracy")
 				net.SendToServer()
 			end
@@ -126,10 +112,77 @@ function GM:OnContextMenuOpen()
 			DmgButton:SetPos(185,130)
 			DmgButton:SetSize(75,20)
 			DmgButton.DoClick = function()
-				net.Start("CL_NPCUpgrade")
+				net.Start("CL_PLYUpgrade")
 				net.WriteString("weapon")
 				net.SendToServer()
 			end
+			
+			local DmgButton = vgui.Create("DButton", panel1)
+			DmgButton:SetText("Shotgun")
+			DmgButton:SetTextColor(Color(0, 0, 0))
+			DmgButton:SetPos(200,20)
+			DmgButton:SetSize(40,40)
+			DmgButton.DoClick = function()
+				net.Start("CL_PLYUpgrade")
+				net.WriteString("shotgun")
+				net.SendToServer()
+			end
+			
+			local DmgButton = vgui.Create("DButton", panel1)
+			DmgButton:SetText("AR2")
+			DmgButton:SetTextColor(Color(0, 0, 0))
+			DmgButton:SetPos(200,60)
+			DmgButton:SetSize(40,40)
+			DmgButton.DoClick = function()
+				net.Start("CL_PLYUpgrade")
+				net.WriteString("ar2")
+				net.SendToServer()
+			end
+			
+			local DmgButton = vgui.Create("DButton", panel1)
+			DmgButton:SetText("Crossbow")
+			DmgButton:SetTextColor(Color(0, 0, 0))
+			DmgButton:SetPos(200,100)
+			DmgButton:SetSize(40,40)
+			DmgButton.DoClick = function()
+				net.Start("CL_PLYUpgrade")
+				net.WriteString("crossbow")
+				net.SendToServer()
+			end
+			
+			local DmgButton = vgui.Create("DButton", panel1)
+			DmgButton:SetText("HealGun")
+			DmgButton:SetTextColor(Color(0, 0, 0))
+			DmgButton:SetPos(300,20)
+			DmgButton:SetSize(40,40)
+			DmgButton.DoClick = function()
+				net.Start("CL_PLYUpgrade")
+				net.WriteString("healgun")
+				net.SendToServer()
+			end
+			
+			local DmgButton = vgui.Create("DButton", panel1)
+			DmgButton:SetText("Scavenge")
+			DmgButton:SetTextColor(Color(0, 0, 0))
+			DmgButton:SetPos(300,60)
+			DmgButton:SetSize(40,40)
+			DmgButton.DoClick = function()
+				net.Start("CL_PLYUpgrade")
+				net.WriteString("scavenge")
+				net.SendToServer()
+			end
+			
+			local DmgButton = vgui.Create("DButton", panel1)
+			DmgButton:SetText("Capture")
+			DmgButton:SetTextColor(Color(0, 0, 0))
+			DmgButton:SetPos(300,100)
+			DmgButton:SetSize(40,40)
+			DmgButton.DoClick = function()
+				net.Start("CL_PLYUpgrade")
+				net.WriteString("capture")
+				net.SendToServer()
+			end
+			
 	
 	end
 	if IsValid(CMenu) then 
