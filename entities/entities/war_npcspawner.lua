@@ -88,13 +88,28 @@ function ENT:Think()
 					-- If the NPC is a gun fighter, give them a gun to use
 					if npc:GetClass() == "npc_citizen" or npc:GetClass() == "npc_combine_s" then
                     
+						--[[
                         local upg = upgrades[self.WarTeam]["weapon"]
                         npc:SetKeyValue("additionalequipment", upgrade_info["weapon"][upg])
                         -- Set Citizens to use Rebel models
 						if npc:GetClass() == "npc_citizen" then npc:SetKeyValue("citizentype", "3") end
-                        
-						npc:SetKeyValue("spawnflags", "1073664")	-- Don't drop gun, Fade Corpse, and don't let rebels follow players, don't allow player to push (8192, 512, 1048576, 16384)
-					
+                        ]]
+						
+						local weapons_table = {}
+						for k,v in pairs (upweapons[self.WarTeam]) do
+						
+							if v then
+								table.insert(weapons_table, k)
+							end
+						
+						end
+						
+						local use_weapon = table.Random(weapons_table)
+						npc:SetKeyValue("additionalequipment", use_weapon)
+						
+						-- Don't drop gun, Fade Corpse, and don't let rebels follow players, don't allow player to push (8192, 512, 1048576, 16384)
+						npc:SetKeyValue("spawnflags", "1073664")	
+						
                     end
 					
 					-- Add input so that when the mob dies, the spawner it belongs to will spawn another
@@ -113,7 +128,10 @@ function ENT:Think()
 						npc:SetColor(Color(math.Rand(50,255),math.Rand(50,255),math.Rand(50,255)))
 						--npc:SetColor(team.GetColor(self.WarTeam))
 						timer.Simple(0.1, function()
-						npc:SetMaxHealth(50 + (100*upgrade_info["perc"][upgrades[self.WarTeam]["health"]]))
+						
+						local HPLevel   = upgrades[self.WarTeam]["health"]
+						local HPUpgrade = upgrade_info["perc"][HPLevel]
+						npc:SetMaxHealth(50 + (100* HPUpgrade))
 						npc:SetHealth(npc:GetMaxHealth())
 						print(npc:GetMaxHealth())
 						end)
@@ -128,7 +146,9 @@ function ENT:Think()
 					npc:SetCollisionGroup(COLLISION_GROUP_DEBRIS_TRIGGER)
 					
 					-- Weapon Accuracy / Rate of Spread
-					npc:SetCurrentWeaponProficiency(upgrade_info["accu"][upgrades[self.WarTeam]["accuracy"]])
+					local curr = upgrades[self.WarTeam]["accuracy"]
+					local new  = upgrade_info["accu"][curr]
+					npc:SetCurrentWeaponProficiency(new)
 					
 					npc:SetWarTeam(self.WarTeam)
 										
