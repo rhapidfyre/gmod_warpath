@@ -40,11 +40,11 @@ function GM:CreateTeams()
 	
         teamcolor[1]= Color(40,40,255,225)    --blue
         teamcolor[2]= Color(255,40,40,255)   --red
-        teamcolor[3]=Color(255,255,40,255)	  --yellow
-        teamcolor[4]=Color(40,255,40,255)	  --green
-        teamcolor[5]=Color(66, 244, 220,255) --cyan
-		teamcolor[6]=Color(255, 140, 0,255)  --orange
-		teamcolor[7]=Color(216, 0, 255, 255)  --magenta
+        teamcolor[3]= Color(255,255,40,255)	  --yellow
+        teamcolor[4]= Color(40,255,40,255)	  --green
+        teamcolor[5]= Color(66, 244, 220,255) --cyan
+		teamcolor[6]= Color(255, 140, 0,255)  --orange
+		teamcolor[7]= Color(216, 0, 255, 255)  --magenta
 		
 		local teamcolor1 = math.random(1,7)
 			print(teamcolor1)
@@ -59,6 +59,7 @@ function GM:CreateTeams()
 		
 		end 
 		print (teamcolor[teamcolor1])
+		print (teamcolor[teamcolor2])
 		
 		
     local teams = {
@@ -69,7 +70,6 @@ function GM:CreateTeams()
         {5,		"Neutral Team",	Color(255,255,255,255),	false,	"info_player_deathmatch" }
     }
 
-	
 	
     for n,r in pairs(teams) do
         --          #,name,color,joinable
