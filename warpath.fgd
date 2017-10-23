@@ -15,6 +15,10 @@
 [
 ]
 
+@SolidClass base(Trigger, Angles) studio("models/items/ammocrate_smg1.mdl") = war_ammosupply : ""
+[
+]
+
 @SolidClass base(Trigger, Targetname, Angles) studio("models/items/ammocrate_smg2.mdl") = war_capture_zone :
 	"Used to detect NPC captures"
 [

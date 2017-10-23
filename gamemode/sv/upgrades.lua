@@ -14,6 +14,19 @@ net.Receive("CL_PLYUpgrade", function(len, ply)
 
 end)
 
+local function NPCWeaponUp(ply, weaponname)
+
+	local teamnum = ply:Team()
+	local pts     = upgrades[teamnum]["points"]
+	local cost    = weapon_cost["NPC"][weaponname]
+	
+	if cost <= pts then
+		upweapons[teamnum][weaponname] = true
+		upgrades[teamnum]["points"] = pts - cost
+	end
+
+end
+
 local function NPCUpgrading(ply, upgrade)
 
     local teamnum = ply:Team()
@@ -29,20 +42,20 @@ local function NPCUpgrading(ply, upgrade)
 
     if cost <= pts then
     
-        if curr < 10 then
-
-            upgrades[teamnum][upgrade] = curr + 1
-            net.Start("SV_UpgradeSuccess")
-                net.Send(ply)
-                
-        else
-            net.Start("SV_UpgradeFail")
-                net.WriteString("This ability is already maximized!!")
-                net.Send(ply)
+		if curr < 10 then
+	
+			upgrades[teamnum][upgrade] = curr + 1
+			net.Start("SV_UpgradeSuccess")
+				net.Send(ply)
 				
-        end
-        
-        -- Subtract the cost from the team's points pool
+		else
+			net.Start("SV_UpgradeFail")
+				net.WriteString("This ability is already maximized!!")
+				net.Send(ply)
+				
+		end
+			
+			-- Subtract the cost from the team's points pool
         upgrades[teamnum]["points"] = pts - cost
         
     else
@@ -56,8 +69,20 @@ end
 
 -- Runs NPCUpgrading
 net.Receive("CL_NPCUpgrade", function(len, ply)
-    NPCUpgrading(ply, net.ReadString())
+	local upgrade = net.ReadString()
+	if upgrade == "weapon" then
+		local wpn = net.ReadString()
+		NPCWeaponUp(ply, wpn)
+	else
+		NPCUpgrading(ply, net.ReadString())
+	end
 end)
+
+weapon_cost = {}
+	weapon_cost["NPC"] = {}
+	weapon_cost["NPC"]["weapon_ar2"]	  = 1
+	weapon_cost["NPC"]["weapon_shotgun"]  = 1
+	weapon_cost["NPC"]["weapon_crossbow"] = 1
 
 upgrade_cost = {}
     upgrade_cost["health"] = {
