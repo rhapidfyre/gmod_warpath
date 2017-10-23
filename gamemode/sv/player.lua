@@ -206,20 +206,23 @@ function GM:PlayerDeath( ply, inflictor, attacker )
 		
 	return end
 	
-	net.Start( "PlayerKilled" )
-	
-		net.WriteEntity( ply )
-		net.WriteString( inflictor:GetClass() )
-		net.WriteString( attacker:GetClass() )
+	if (attacker:IsNPC() ) then
+		net.Start( "PlayerKilled" )
+		
+			net.WriteEntity( ply )
+			net.WriteString( inflictor:GetClass() )
+			net.WriteString( attacker:GetClass() )
 
-	net.Broadcast()
-	
-	MsgAll( ply:Nick() .. " was killed by " .. attacker:GetClass() .. "\n" )
+		net.Broadcast()
+		
+		MsgAll( ply:Nick() .. " was killed by " .. attacker:GetClass() .. "\n" )
 
-	if (IsValid(attacker) && (attacker:Health() < attacker:GetMaxHealth())) then
-		attacker:SetHealth(attacker:GetMaxHealth())
-        
-	end
+		if (IsValid(attacker)) then
+			attacker:SetMaxHealth(attacker:GetMaxHealth()*2)
+			attacker:SetHealth(attacker:GetMaxHealth())
+			
+		end
+	return end
 	
 	
 end
@@ -341,10 +344,10 @@ function GM:PlayerLoadout( pl )
 	player_manager.RunClass( pl, "Loadout" )
     pl:Give("weapon_crowbar")
     pl:Give("war_pistol")
-    pl:Give("war_rifle")
+    pl:Give("war_shotgun")
     pl:Give("weapon_frag")
     pl:GiveAmmo(90, "Pistol", true)
-    pl:GiveAmmo(250, "ar2", true)
+    pl:GiveAmmo(250, "buckshot", true)
 
 end
 
