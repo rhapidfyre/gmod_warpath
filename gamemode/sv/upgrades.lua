@@ -196,3 +196,8 @@ upweapons = {}
 		upweapons[4]["weapon_ar2"] 		= false
 		upweapons[4]["weapon_shotgun"] 	= false
 		upweapons[4]["weapon_crossbow"] = false
+		
+	SetGlobalString("upgrades", 	util.TableToJSON(upgrades))
+	SetGlobalString("upgrade_info", util.TableToJSON(upgrade_info))
+	SetGlobalString("upgrade_cost", util.TableToJSON(upgrade_cost))
+	SetGlobalString("weapon_cost",  util.TableToJSON(weapon_cost))
