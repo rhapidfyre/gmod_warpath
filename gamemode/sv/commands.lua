@@ -5,6 +5,10 @@ function GM:ShowSpare1(ply)
     ply:ConCommand("war_modelselect")
 end
 
+function GM:ShowSpare2(ply)
+	ply:ConCommand("war_npcupgrades")
+end
+
 -------------------------------------------
 -- (DEBUG) Commands for debugging only
 concommand.Add("setmodel", function(ply, cmd, args)
