@@ -1,7 +1,7 @@
 
 ENT.Type = "point"
 
-local spawn_gap = 10
+local spawn_gap = 15
 
 function ENT:EstablishTeam()
 
@@ -113,10 +113,13 @@ function ENT:Think()
 						npc:SetColor(Color(math.Rand(50,255),math.Rand(50,255),math.Rand(50,255)))
 						--npc:SetColor(team.GetColor(self.WarTeam))
 						timer.Simple(0.1, function()
-						npc:SetMaxHealth(50 + (100*upgrade_info["health"][upgrades[self.WarTeam]["health"]]))
+						npc:SetMaxHealth(50 + (100*upgrade_info["perc"][upgrades[self.WarTeam]["health"]]))
 						npc:SetHealth(npc:GetMaxHealth())
+						print(npc:GetMaxHealth())
 						end)
 					end
+					
+					
 					
 					--(DEBUG)
 					--if ShowTeamColor == 1 then
@@ -125,7 +128,7 @@ function ENT:Think()
 					npc:SetCollisionGroup(COLLISION_GROUP_DEBRIS_TRIGGER)
 					
 					-- Weapon Accuracy / Rate of Spread
-					npc:SetCurrentWeaponProficiency(upgrade_info["accu"][upgrades[self.WarTeam]["accuracy"]])
+					npc:SetCurrentWeaponProficiency(upgrade_info["perc"][upgrades[self.WarTeam]["accuracy"]])
 					
 					npc:SetWarTeam(self.WarTeam)
 										

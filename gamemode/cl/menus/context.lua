@@ -58,7 +58,7 @@ function GM:OnContextMenuOpen()
 	
 			local HPLabel = vgui.Create("DLabel", panel1)
 			HPLabel:SetPos(20,30)
-			HPLabel:SetText("HP")
+			HPLabel:SetText("HP :")
 			
 			local HPButton = vgui.Create("DButton", panel1)
 			HPButton:SetText("Upgrade!")
@@ -73,7 +73,7 @@ function GM:OnContextMenuOpen()
 			
 			local DmgLabel = vgui.Create("DLabel", panel1)
 			DmgLabel:SetPos(20,55)
-			DmgLabel:SetText("Damage")
+			DmgLabel:SetText("Damage :")
 			
 			local DmgButton = vgui.Create("DButton", panel1)
 			DmgButton:SetText("Upgrade!")
@@ -88,7 +88,7 @@ function GM:OnContextMenuOpen()
 			
 			local DmgLabel = vgui.Create("DLabel", panel1)
 			DmgLabel:SetPos(20,80)
-			DmgLabel:SetText("Speed")
+			DmgLabel:SetText("Speed :")
 			
 			local DmgButton = vgui.Create("DButton", panel1)
 			DmgButton:SetText("Upgrade!")
@@ -103,7 +103,7 @@ function GM:OnContextMenuOpen()
 			
 			local DmgLabel = vgui.Create("DLabel", panel1)
 			DmgLabel:SetPos(20,105)
-			DmgLabel:SetText("accuracy")
+			DmgLabel:SetText("Accuracy :")
 			
 			local DmgButton = vgui.Create("DButton", panel1)
 			DmgButton:SetText("Upgrade!")
