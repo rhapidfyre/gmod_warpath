@@ -128,7 +128,7 @@ function ENT:Think()
 					npc:SetCollisionGroup(COLLISION_GROUP_DEBRIS_TRIGGER)
 					
 					-- Weapon Accuracy / Rate of Spread
-					npc:SetCurrentWeaponProficiency(upgrade_info["perc"][upgrades[self.WarTeam]["accuracy"]])
+					npc:SetCurrentWeaponProficiency(upgrade_info["accu"][upgrades[self.WarTeam]["accuracy"]])
 					
 					npc:SetWarTeam(self.WarTeam)
 										
