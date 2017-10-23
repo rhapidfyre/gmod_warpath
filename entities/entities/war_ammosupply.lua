@@ -111,7 +111,7 @@ local function MaxAmmunition(gun)
 	local AMMO = gun:GetPrimaryAmmoType()
 	
 	if AMMO > 0 then
-	
+		print(gun)
 		local AMMOCOUNT = gun:Ammo1()
 		
 		if AMMOCOUNT < AmmoType[AMMO] then
