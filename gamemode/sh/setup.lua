@@ -38,29 +38,37 @@ function GM:CreateTeams()
     
 	local teamcolor = {}
 	
-        teamcolor[1]= Color(40,40,255,225)	
-         teamcolor[2]= Color(255,40,40,255)	
-         teamcolor[3]=Color(255,255,40,255)	
-         teamcolor[4]=Color(40,255,40,255)	
-         teamcolor[5]=Color(66, 244, 220,255)
-		 teamcolor[6]=Color(255, 140, 0,255)
+        teamcolor[1]= Color(40,40,255,225)    --blue
+        teamcolor[2]= Color(255,40,40,255)   --red
+        teamcolor[3]=Color(255,255,40,255)	  --yellow
+        teamcolor[4]=Color(40,255,40,255)	  --green
+        teamcolor[5]=Color(66, 244, 220,255) --cyan
+		teamcolor[6]=Color(255, 140, 0,255)  --orange
+		teamcolor[7]=Color(216, 0, 255, 255)  --magenta
+		
+		local teamcolor1 = math.random(1,7)
+			print(teamcolor1)
 
-	
-	print(teamcolor[1])
-	local teamcolor1 = math.random(1,6)
-	local teamcolor2 = math.random(1,6)
-	
-	while (teamcolor2 == teamcolor1) do 
-		teamcolor2 = math.random(1,6) 
-	end 
-	
+		local teamcolor2 = math.random(1,7)
+			print(teamcolor2)
+
+			
+		if (teamcolor2 == teamcolor1) then 
+			teamcolor2 = math.random(1,7) 
+			print(teamcolor2)
+		
+		end 
+		print (teamcolor[teamcolor1])
+		
+		
     local teams = {
-        {1,		"Alpha Team",	teamcolor[teamcolor1],	true,	"info_player_blue"},	
-        {2,		"Beta Team",	teamcolor[teamcolor2],	true,	"info_player_red"},		
+        {1,		"Team Alpha",	teamcolor[teamcolor1],	true,	"info_player_blue"},	
+        {2,		"Team Bravo",	teamcolor[teamcolor2],	true,	"info_player_red"},		
         {3,		"Yellow Team",	Color(255,255,40,255),	false,	"info_player_yellow" },	
         {4,		"Green Team",	Color(40,255,40,255),	false,	"info_player_green" },	
         {5,		"Neutral Team",	Color(255,255,255,255),	false,	"info_player_deathmatch" }
     }
+
 	
 	
     for n,r in pairs(teams) do
