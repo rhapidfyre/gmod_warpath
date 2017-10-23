@@ -123,8 +123,8 @@ function ENT:Think()
 						npc:SetHealth(npc:GetMaxHealth())
 						end)
 					else
-						npc:SetColor(Color(math.Rand(50,255),math.Rand(50,255),math.Rand(50,255)))
-						--npc:SetColor(team.GetColor(self.WarTeam))
+						--npc:SetColor(Color(math.Rand(50,255),math.Rand(50,255),math.Rand(50,255)))
+						npc:SetColor(team.GetColor(self.WarTeam))
 						timer.Simple(0.1, function()
 						
 						local HPLevel   = upgrades[self.WarTeam]["health"]

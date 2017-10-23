@@ -344,10 +344,10 @@ function GM:PlayerLoadout( pl )
 	player_manager.RunClass( pl, "Loadout" )
     pl:Give("weapon_crowbar")
     pl:Give("war_pistol")
-    pl:Give("war_shotgun")
+    pl:Give("war_rifle")
     pl:Give("weapon_frag")
     pl:GiveAmmo(90, "Pistol", true)
-    pl:GiveAmmo(250, "buckshot", true)
+    pl:GiveAmmo(250, "ar2", true)
 
 end
 
