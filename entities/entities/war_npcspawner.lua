@@ -19,9 +19,6 @@ function ENT:EstablishTeam()
         end
     end
     
-    print("[WARPATH] NPC Spawner ("..tostring(self:GetName()).." @ "..tostring(self:GetPos())..") now belongs to "..team.GetName(self.WarTeam).." ("..tostring(self.WarTeam)..")")
-    print("[WARPATH] Nearest Capture Point: "..tostring(self.nearest:GetName()).." @ "..tostring(self.nearest:GetPos()))
-    
     self.complete = true
 end
 
@@ -63,7 +60,6 @@ end
 function ENT:Think()
     if self.complete and RoundActive() then
         if CurTime() >= self.next_spawn then
-            print("")
             if self.livingmobs < self.maxmobs and self.WarTeam ~= 0 then
                 
                 self.next_spawn = CurTime() + spawn_gap
@@ -96,8 +92,10 @@ function ENT:Think()
                         ]]
 						
 						local weapons_table = {}
+						table.insert(weapons_table, "weapon_smg1")
 						for k,v in pairs (upweapons[self.WarTeam]) do
-						
+							print("KEY = "..tostring(k))
+							print("VAL = "..tostring(v))
 							if v then
 								table.insert(weapons_table, k)
 							end
@@ -145,10 +143,12 @@ function ENT:Think()
 					--end
 					npc:SetCollisionGroup(COLLISION_GROUP_DEBRIS_TRIGGER)
 					
-					-- Weapon Accuracy / Rate of Spread
-					local curr = upgrades[self.WarTeam]["accuracy"]
-					local new  = upgrade_info["accu"][curr]
-					npc:SetCurrentWeaponProficiency(new)
+					if self.WarTeam > 0 and self.WarTeam < 5 then
+						-- Weapon Accuracy / Rate of Spread
+						local curr = upgrades[self.WarTeam]["accuracy"]
+						local new  = upgrade_info["accu"][curr]
+						npc:SetCurrentWeaponProficiency(new)
+					end
 					
 					npc:SetWarTeam(self.WarTeam)
 										

@@ -128,6 +128,7 @@ function GM:OnContextMenuOpen()
 			DmgButton.DoClick = function()
 				net.Start("CL_NPCUpgrade")
 				net.WriteString("weapon")
+				net.WriteString("weapon_crossbow")
 				net.SendToServer()
 			end
 	

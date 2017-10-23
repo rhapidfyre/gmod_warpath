@@ -29,6 +29,11 @@ function ENT:AcceptInput(inputName, activator, called, data)
                 spawn:Input("change")
             end
         end
+        for _,spawn in pairs (ents.FindByClass("war_ammosupply")) do
+            if spawn:GetName() == "Crate_"..tostring(self:GetName()) then
+                spawn:Input("change")
+            end
+        end
         
         --------------------------------------------------------------
         -- Checks upon capture if all command points are controlled --
