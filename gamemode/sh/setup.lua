@@ -36,35 +36,31 @@ function GM:CreateTeams()
 	if ( !GAMEMODE.TeamBased ) then return end
 
     
-	local teamcolor = {}
-	
-        teamcolor[1]= Color(40,40,255,225)    --blue
-        teamcolor[2]= Color(255,40,40,255)   --red
-        teamcolor[3]= Color(255,255,40,255)	  --yellow
-        teamcolor[4]= Color(40,255,40,255)	  --green
-        teamcolor[5]= Color(66, 244, 220,255) --cyan
-		teamcolor[6]= Color(255, 140, 0,255)  --orange
-		teamcolor[7]= Color(216, 0, 255, 255)  --magenta
+	local teamcolor_alpha = {}
+        	teamcolor_alpha[1]= Color(40,40,255,225)    --blue
+        	teamcolor_alpha[2]= Color(40,255,40,255)    --green
+        	teamcolor_alpha[3]= Color(66, 244, 220,255) --cyan
+		teamcolor_alpha[4]= Color(216, 0, 255, 255)  --magenta
 		
-		local teamcolor1 = math.random(1,7)
-			print(teamcolor1)
+	local teamcolor_bravo = {}
+        	teamcolor_bravo[1]= Color(255,40,40,255)   --red
+        	teamcolor_bravo[2]= Color(255,255,40,255)   --yellow
+		teamcolor_bravo[3]= Color(255, 140, 0,255)  --orange
+		teamcolor_bravo[4] = Color(76, 47, 12, 255) --brown
 
-		local teamcolor2 = math.random(1,7)
-			print(teamcolor2)
+	local teamcolor1 = math.random(1,4)
+		print(teamcolor1)
+		team.SetColor(1, teamcolor_alpha[teamcolor1])
 
-			
-		if (teamcolor2 == teamcolor1) then 
-			teamcolor2 = math.random(1,7) 
-			print(teamcolor2)
-		
-		end 
-		print (teamcolor[teamcolor1])
-		print (teamcolor[teamcolor2])
+	local teamcolor2 = math.random(1,4)
+		print(teamcolor2)
+		team.SetColor(2, teamcolor_bravo[teamcolor2])
+
 		
 		
     local teams = {
-        {1,		"Team Alpha",	teamcolor[teamcolor1],	true,	"info_player_blue"},	
-        {2,		"Team Bravo",	teamcolor[teamcolor2],	true,	"info_player_red"},		
+        {1,		"Team Impact",	teamcolor_alpha[teamcolor1],	true,	"info_player_blue"},	
+        {2,		"Team Havoc",	teamcolor_bravo[teamcolor2],	true,	"info_player_red"},		
         {3,		"Yellow Team",	Color(255,255,40,255),	false,	"info_player_yellow" },	
         {4,		"Green Team",	Color(40,255,40,255),	false,	"info_player_green" },	
         {5,		"Neutral Team",	Color(255,255,255,255),	false,	"info_player_deathmatch" }

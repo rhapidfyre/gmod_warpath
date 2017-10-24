@@ -127,12 +127,10 @@ function ENT:Think()
 						npc:SetColor(team.GetColor(self.WarTeam))
 						print(team.GetColor(self.WarTeam))
 						timer.Simple(0.1, function()
-						
 						local HPLevel   = upgrades[self.WarTeam]["health"]
 						local HPUpgrade = upgrade_info["perc"][HPLevel]
 						npc:SetMaxHealth(50 + (100* HPUpgrade))
 						npc:SetHealth(npc:GetMaxHealth())
-						print(npc:GetMaxHealth())
 						end)
 					end
 					

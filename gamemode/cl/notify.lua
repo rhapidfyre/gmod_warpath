@@ -29,7 +29,7 @@ net.Receive("SV_Victory", function(len, ply)
 
     local cteam = net.ReadInt(8)
     if cteam == LocalPlayer():Team() then
-        surface.PlaySound("vox/all_secure.wav")
+        surface.PlaySound("vox/all_secured.wav")
     else
         surface.PlaySound("vox/all_captured.wav")
     end
