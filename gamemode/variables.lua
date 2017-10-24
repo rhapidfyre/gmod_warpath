@@ -4,6 +4,8 @@
 	ROUND_ACTIVE 		= 1
 	ROUND_PREP	 		= 2
 	ROUND_END			= 3
+	
+	NEXT_MAP			= "war_dev_fivepoint"
 		
 	TIME_PREP			= 8			-- Time to prepare, in seconds
 	TIME_ROUND			= 600		-- Time per round, in seconds

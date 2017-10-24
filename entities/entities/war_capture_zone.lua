@@ -1,5 +1,6 @@
 
 -- This controls capture points
+local TIME_COOLDOWN = 30
 
 ENT.Type = "brush"
 
@@ -21,7 +22,7 @@ function ENT:AcceptInput(inputName, activator, called, data)
         self.ownerteam = data
         self:SetKeyValue("TeamNum", data)
         SetGlobalInt("CmdPoint"..self.pointnumber, self.ownerteam)
-        self.cooldown = CurTime() + 20
+        self.cooldown = CurTime() + TIME_COOLDOWN
         
         -- Changes the cooresponding spawn points
         for _,spawn in pairs (ents.FindByClass("war_spawnpoint")) do

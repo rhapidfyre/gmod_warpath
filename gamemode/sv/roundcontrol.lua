@@ -163,7 +163,21 @@ timer.Create("AwardPoints", POINT_DIST, 0, function()
 
 end)
 
+timer.Create("CheckEndGame", 30, 0, function()
 
+	if (round.count >= MAX_ROUNDS) or (CurTime() >= MAX_TIME) then
+	
+		-- Show Scoreboard
+		-- Voice Announcement
+		
+		-- 3 second delay
+		-- Show map vote option
+		
+			-- If there is only one "war_" map detected, restart current map.
+	
+	end
+
+end)
 
 
 
