@@ -26,7 +26,18 @@ function round.Prep()
 	-- Reset Map
 	game.CleanUpMap(false)
 	
-	-- Reset Upgrades
+    -- Resets Upgrades to Level 1 & points to POINT_START (variables.lua)
+    for k,v in pairs(player.GetAll()) do
+        v:SetPoints(0)
+    end
+    for i = 1, 4, 1 do
+        upgrades[i]["points"]   = POINT_START
+        upgrades[i]["spent"]    = 0
+        upgrades[i]["health"]   = 1
+        upgrades[i]["damage"]   = 1
+        upgrades[i]["accuracy"] = 1
+        upgrades[i]["speed"]    = 1
+    end
 	
     timer.Simple(1, function()
         for _,ply in pairs (player.GetAll()) do
@@ -39,6 +50,13 @@ function round.Prep()
 			ply:StripAmmo()
             
             -- Disperse Weaponry (Loadout)
+            ply:Give("weapon_crowbar")
+            ply:Give("war_pistol")
+            if ply:GetHasAR2()      then ply:Give("war_rifle") end
+            if ply:GetHasShotty()   then ply:Give("weapon_shotgun") end
+            if ply:GetHasBow()      then ply:Give("weapon_crossbow") end
+            if ply:GetHasFrag()     then ply:Give("weapon_frag") end
+            
             
         end
     end)
@@ -52,19 +70,6 @@ function round.Prep()
         else                                         SetGlobalInt("CmdPoint5", zone:GetKeyValues()["TeamNum"])
         end
 	end
-    
-    -- Resets Upgrades to Level 1 & points to POINT_START (variables.lua)
-    for k,v in pairs(player.GetAll()) do
-        v:SetPoints(0)
-    end
-    for i = 1, 4, 1 do
-        upgrades[i]["points"]   = POINT_START
-        upgrades[i]["spent"]    = 0
-        upgrades[i]["health"]   = 1
-        upgrades[i]["damage"]   = 1
-        upgrades[i]["accuracy"] = 1
-        upgrades[i]["speed"]    = 1
-    end
     
 	timer.Simple(TIME_PREP, round.Begin)
 	

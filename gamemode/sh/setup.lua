@@ -21,6 +21,10 @@ function GM:OnEntityCreated( Ent )
     if Ent:IsPlayer() then
         Ent:InstallDataTable()
         Ent:NetworkVar("Int",0,"Points")
+        Ent:NetworkVar("Bool",0,"HasAR2")
+        Ent:NetworkVar("Bool",1,"HasBow")
+        Ent:NetworkVar("Bool",2,"HasShotty")
+        Ent:NetworkVar("Bool",3,"HasFrag")
     end
 end
 
