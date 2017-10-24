@@ -127,13 +127,12 @@ hook.Add("RoundWin", round.Victory, winteam)
 function round.Stale()
 
 	
-	round.timeleft = 0
 	round.status = ROUND_STALE
 	round.in_progress = false
 	
 	if CheckReady() then
-		round.timeleft 	= TIME_PREP
-		round.status 	= ROUND_PREP
+    
+        round.Prep()
 		
         -- Remove the stale timer
 		if timer.Exists("RoundStale") then timer.Remove("RoundStale") end

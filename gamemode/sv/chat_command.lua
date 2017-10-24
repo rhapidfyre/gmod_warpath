@@ -5,7 +5,7 @@ hook.Add( "OnPlayerChat", "HelloCommand", function( ply, strText, bTeam, bDead )
 	if (strText == "timeleft" or strText == "!timeleft" or strText == "/timeleft") then
 	
 		local time_remain = MAX_TIME - CurTime()
-		if time_remain < 0 then time_remain == 0 end
+		if time_remain < 0 then time_remain = 0 end
 		
 		PrintMessage(HUD_PRINTTALK, "Time Remaining -> "..string.FormattedTime(time_remain, "%02imin %02isec"))
 		return false
