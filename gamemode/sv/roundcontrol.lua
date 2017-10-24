@@ -79,6 +79,7 @@ function round.Begin()
 	-- Round Controller
 	round.status 	    = ROUND_ACTIVE
     round.in_progress   = true
+    round.count         = round.count + 1
 	
 end
 
@@ -88,6 +89,9 @@ end
 	Sends input to [war_capture_zone] to disable control point capturing
 ]]
 function round.End()
+
+    -- If there's no players when this round ends, go stale.
+    if !CheckReady() then round.Stale() end
 
 	-- Round Controller
 	round.status 	    = ROUND_END
@@ -122,8 +126,6 @@ hook.Add("RoundWin", round.Victory, winteam)
 ]]
 function round.Stale()
 
-	if timer.Exists("RoundControl") then timer.Remove("RoundControl") end
-	if !timer.Exists("RoundStale")  then timer.Create("RoundStale", 1, 0, round.Stale) end
 	
 	round.timeleft = 0
 	round.status = ROUND_STALE
@@ -133,10 +135,16 @@ function round.Stale()
 		round.timeleft 	= TIME_PREP
 		round.status 	= ROUND_PREP
 		
-		if  timer.Exists("RoundStale")      then timer.Remove("RoundStale") end
-		if !timer.Exists("RoundControl")    then timer.Create("RoundControl", 1, 0, round.Controller) end
+        -- Remove the stale timer
+		if timer.Exists("RoundStale") then timer.Remove("RoundStale") end
         
+    else
+    
+        -- If nobody is ready, run this function every 3 seconds.
+        if !timer.Exists("RoundStale")  then timer.Create("RoundStale", 3, 0, round.Stale) end
+    
 	end
+    
 
 end
 
@@ -179,10 +187,7 @@ timer.Create("CheckEndGame", 30, 0, function()
 
 end)
 
-
-
-
-
+round.Stale()
 
 
 
