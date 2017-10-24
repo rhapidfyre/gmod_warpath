@@ -25,7 +25,8 @@ function GM:DoPlayerDeath( ply, attacker, dmginfo )
             attacker:AddFrags(  1 )
             ply:SetPoints(ply:GetPoints() + POINT_DEATH) -- (Deduct?) point from dead player
             attacker:SetPoints(ply:GetPoints() + POINT_KILL_PLY) -- Award killer with personal point
-            
+            team.SetScore(ply:Team(), team.GetScore(ply:Team()) + SCORE_KILL)
+			
 		end
 	
         -- Award player's team with upgrade points
@@ -36,6 +37,7 @@ function GM:DoPlayerDeath( ply, attacker, dmginfo )
         -- Award NPC's team with upgrade points
         local npcTeam = attacker:GetWarTeam()
         upgrades[npcTeam]["points"] = upgrades[npcTeam]["points"] + POINT_DEAD_PLY
+        team.SetScore(npcTeam, team.GetScore(npcTeam + SCORE_KILL))
     
 	end
 

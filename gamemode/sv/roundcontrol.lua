@@ -1,4 +1,5 @@
 
+-- What does this variable do? (DEBUG)
 points = {}
 points[1] = 5
 points[2] = 5
@@ -20,7 +21,6 @@ function round.Prep()
 
 	-- Round Controller
 	round.status 	    = ROUND_PREP
-	round.timeleft 	    = TIME_PREP
     round.in_progress   = false
 
 	-- Reset Map
@@ -30,19 +30,21 @@ function round.Prep()
 	
     timer.Simple(1, function()
         for _,ply in pairs (player.GetAll()) do
-            -- Respawn
+		
+            -- Respawn/Reset Players
             if IsPlaying(ply) then ply:Spawn() end
             
             -- Weapon Strip 
+			ply:StripWeapons()
+			ply:StripAmmo()
             
-            -- Disperse Weaponry
+            -- Disperse Weaponry (Loadout)
             
         end
     end)
 	
-	-- Disable Control Point Capturing & Build HUD Info
+	-- Build HUD Info
 	for _,zone in pairs (ents.FindByClass("war_capture_zone")) do
-		zone:Input("DisableCapture")
         if      zone:GetName() == "CAP_POINT_1" then SetGlobalInt("CmdPoint1", zone:GetKeyValues()["TeamNum"])
         elseif  zone:GetName() == "CAP_POINT_2" then SetGlobalInt("CmdPoint2", zone:GetKeyValues()["TeamNum"])
         elseif  zone:GetName() == "CAP_POINT_3" then SetGlobalInt("CmdPoint3", zone:GetKeyValues()["TeamNum"])
@@ -51,7 +53,7 @@ function round.Prep()
         end
 	end
     
-    -- Resets Upgrades to Level 1 & points to POINTS_START(variables.lua)
+    -- Resets Upgrades to Level 1 & points to POINT_START (variables.lua)
     for k,v in pairs(player.GetAll()) do
         v:SetPoints(0)
     end
@@ -64,26 +66,20 @@ function round.Prep()
         upgrades[i]["speed"]    = 1
     end
     
+	timer.Simple(TIME_PREP, round.Begin)
 	
 end
 
 --[[
 	round.Begin()
 	Respawns all dead players and begins the round
-	Sends input to [war_capture_zone] to re-enable control point capturing
 ]]
 function round.Begin()
 
 	-- Round Controller
 	round.status 	    = ROUND_ACTIVE
-	round.timeleft	    = TIME_ROUND
     round.in_progress   = true
 	
-	-- Enable Control Point Capturing
-	for _,zone in pairs (ents.FindByClass("war_capture_zone")) do
-		zone:Input("EnableCapture")
-	end
-    
 end
 
 --[[
@@ -95,30 +91,8 @@ function round.End()
 
 	-- Round Controller
 	round.status 	    = ROUND_END
-	round.timeleft 	    = TIME_END
     round.in_progress   = false
-
-	-- Disable Player Spawning
-
-	-- Disable Capturing
-	for _,zone in pairs (ents.FindByClass("war_capture_zone")) do
-		zone:Input("DisableCapture")
-	end
-	
-	-- Announce Winners
-	
-	-- Check if game is complete
-	if (MAX_TIME < CurTime() or MAX_ROUNDS > round.count) and !(FOREVER_GAME) then
-		
-		-- Stop the round controller
-		timer.Remove("RoundControl")
-		
-		-- Call a map vote
-		hook.Call("WAR_MapVote")
-		
-	end
-    
-    -- Check for Victors
+	timer.Simple(TIME_END, round.Prep)
 	
 end
 
@@ -128,7 +102,7 @@ end
 ]]
 function round.Victory(winteam)
 
-    PrintMessage(HUD_PRINTTALK, team.GetName(winteam).." wins Round #"..round.count.."!")
+    PrintMessage(HUD_PRINTTALK, team.GetName(winteam).." captured all command points!")
     
     -- Distributes points (variables.lua)
     for k,v in pairs(player.GetAll()) do
@@ -166,70 +140,25 @@ function round.Stale()
 
 end
 
---[[
-	round.Controller()
-	Controls timeleft and round status
-]]
-function round.Controller()
-	
-    
-	-- If time expires change round status
-	if round.timeleft <= 0 then
-	
-		if 		round.status == ROUND_STALE then	--Do Nothing
-		elseif 	round.status == ROUND_END 	then 	round.Prep()
-		elseif 	round.status == ROUND_PREP 	then 	round.Begin()
-		else 										round.End()
-		end
-	
-	end
-    
-    if !CheckReady() then
-        round.Stale()
-    end
-	
-	round.clock() -- Should this go at the top of the function? Test it. [DEBUG]
-    round.timeleft = round.timeleft - 1
-	
-end
-
-timer.Create("RoundControl", 1, 0, round.Controller)
-
---[[
-	round.Clock()
-	Sends the timeleft counter to clients
-]]
-function round.clock()
-	
-	-- Never allow a round time to exceed 10 minutes
-	if round.timeleft > 600 then round.timeleft = 600 end
-	
-	-- Send clients the current time
-	net.Start("SV_Clock")
-		net.WriteInt(round.timeleft, 12)
-        net.WriteInt(round.status, 8)
-		net.Broadcast()
-    SetGlobalInt("RoundTimeLeft", round.timeleft)
-    SetGlobalInt("RoundStatus", round.status)
-end
-
 function RoundActive()
     return round.in_progress
 end
 
-timer.Create("AwardPoints", 10, 0, function()
+timer.Create("AwardPoints", POINT_DIST, 0, function()
 
     if round.status == ROUND_ACTIVE then
-    
-        
+	
         for _,v in pairs(ents.FindByClass("war_capture_zone")) do
-        
-            local temp = v:GetKeyValues()["TeamNum"]
-            if temp == 1 or temp == 2 then
-                upgrades[temp]["points"] = upgrades[temp]["points"] + POINT_TIME
+            local teamNum = v:GetKeyValues()["TeamNum"]
+            if teamNum == 1 or teamNum == 2 then
+			
+				local pts = upgrades[teamNum]["points"]
+                upgrades[teamNum]["points"] = pts + POINT_TIME
+				team.SetScore(teamNum, team.GetScore(teamNum) + 1)
+				
             end
         end
-    
+		
     end
 
 end)
