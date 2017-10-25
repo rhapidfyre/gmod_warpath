@@ -94,13 +94,14 @@ function GM:OnContextMenuOpen()
 			DmgLabel:SetText("Accuracy :")
 			
 			local DmgButton = vgui.Create("DButton", panel1)
-			DmgButton:SetText("Upgrade!")
+			DmgButton:SetText("Upgrade222!")
 			DmgButton:SetTextColor(Color(0, 0, 0))
 			DmgButton:SetPos(185,105)
 			DmgButton:SetSize(75,20)
 			DmgButton.DoClick = function()
 				net.Start("CL_PLYUpgrade")
-				net.WriteString("accuracy")
+				net.WriteString("health_base")
+				net.WriteString("upgrade")
 				net.SendToServer()
 			end
 			
