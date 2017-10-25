@@ -65,30 +65,22 @@ function GM:CreateTeams()
 			SetGlobalVector("TCol2", veccy2)
 			teamcol1 = tcol_impact[teamcolor1]
 			teamcol2 = tcol_havoc[teamcolor2]
+			
+			AssignTeams(teamcol1, teamcol2)
 	end
 	if CLIENT then
-		timer.Simple(1, function()
+		timer.Simple(.01, function()
 			teamcol1 = GetGlobalVector("TCol1"):ToColor()
 			teamcol2 = GetGlobalVector("TCol2"):ToColor()
 			print(teamcol1)
 			print(teamcol2)
-	
-		local teams = {
-			{1,		"Team Impact",	teamcol1,	true,	"info_player_blue"},	
-			{2,		"Team Havoc",	teamcol2,	true,	"info_player_red"},		
-			{3,		"Yellow Team",	Color(255,255,40,255),	false,	"info_player_yellow" },	
-			{4,		"Green Team",	Color(40,255,40,255),	false,	"info_player_green" },	
-			{5,		"Neutral Team",	Color(255,255,255,255),	false,	"info_player_deathmatch" }
-		}
-		
-		
-			for n,r in pairs(teams) do
-				--          #,name,color,joinable
-				team.SetUp( n, r[2], r[3], r[4] )
-				team.SetSpawnPoint(n,r[5])
-			end
+			
+			AssignTeams(teamcol1, teamcol2)
 		end)
 	else
+	end
+end
+function AssignTeams(teamcol1, teamcol2)
 	
 		local teams = {
 			{1,		"Team Impact",	teamcol1,	true,	"info_player_blue"},	
@@ -104,5 +96,5 @@ function GM:CreateTeams()
 			team.SetUp( n, r[2], r[3], r[4] )
 			team.SetSpawnPoint(n,r[5])
 		end
-	end
+
 end

@@ -4,7 +4,7 @@
    Desc:
 -----------------------------------------------------------]]
 function GM:ShowTeam()
-
+	timer.Simple(.1,function()
 	if ( IsValid( self.TeamSelectFrame ) ) then return end
 	
 	-- Simple team selection box
@@ -48,7 +48,7 @@ function GM:ShowTeam()
 	self.TeamSelectFrame:Center()
 	self.TeamSelectFrame:MakePopup()
 	self.TeamSelectFrame:SetKeyboardInputEnabled( false )
-
+	end)
 end
 
 --[[---------------------------------------------------------
