@@ -87,7 +87,8 @@ function GM:OnNPCKilled( ent, attacker, inflictor )
     
     -- If killer is a player, give personal points
     if attacker:IsPlayer() or inflictor:IsPlayer() then
-		if attacker ~= inflictor then attacker = inflictor end
+		if attacker ~= inflictor then inflictor = attacker end
+        print(attacker)
         attacker:SetPoints(attacker:GetPoints() + POINT_DEAD_NPC)
 		team.SetScore(attacker:Team(), team.GetScore(attacker:Team()) + SCORE_KILLNPC)
     end

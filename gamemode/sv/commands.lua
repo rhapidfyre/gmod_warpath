@@ -29,6 +29,11 @@ end)
 concommand.Add("war_admin_setteam", function(ply, cmd, args)
 end)
 
+concommand.Add("debug_setpoints", function(ply, cmd, args)
+    ply:SetPoints(args[1])
+    print(ply:GetPoints())
+end)
+
 -- Sets given control point to given team #
 concommand.Add("war_admin_setcontrol", function(ply, cmd, args)
 end)
