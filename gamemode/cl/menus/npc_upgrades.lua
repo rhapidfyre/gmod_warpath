@@ -3,17 +3,8 @@ local F4Menu = nil
 
 local categories = {"health", "accuracy", "damage", "speed"}
 local catweapons = {"weapon_crossbow", "weapon_ar2", "weapon_frag", "weapon_shotgun", "weapon_rpg"}
-local upgrades = {}
-local upgrade_info = {}
-local upgrade_cost = {}
-local weapon_cost = {}
 
 local function GameF4Menu()
-
-	upgrades 	 = GetGlobalString("upgrades")
-	upgrade_info = GetGlobalString("upgrade_info")
-	upgrade_cost = GetGlobalString("upgrade_cost")
-	weapon_cost  = GetGlobalString("weapon_cost")
 	
 	if F4Menu == nil then
 		F4Menu = vgui.Create("DFrame")
@@ -48,16 +39,21 @@ local function GameF4Menu()
 			draw.RoundedBox(4,0,0,LeftMenu:GetWide(),LeftMenu:GetTall(),Color(20,20,20))
 		end
 		
-		for k,v in pairs (categories) do
-		
-			local selector  = vgui.Create("DButton", LeftMenu)
-			selector:SetSize(LeftMenu:GetWide() - 12, 24)
-			selector:SetPos(6,8)
-			selector:SetText(k)
-		
+		PrintTable(upgrades)
+		if IsValid(upgrades) then
+			local x = 6
+			local y = 8
+			for k,v in pairs (upgrades) do
+			
+				local selector  = vgui.Create("DButton", LeftMenu)
+				selector:SetSize(LeftMenu:GetWide() - 12, 24)
+				selector:SetPos(x, y)
+				selector:SetText(v)
+				
+				y = y + 32
+			
+			end
 		end
-		
-		
 		gui.EnableScreenClicker(true)
 		
 	else
@@ -70,3 +66,4 @@ local function GameF4Menu()
 		end
 	end
 end
+concommand.Add("war_npcupgrades", GameF4Menu)

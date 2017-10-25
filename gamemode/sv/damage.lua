@@ -30,16 +30,17 @@ function GM:EntityTakeDamage( ent, info )
 	
 	
 	-- Damage Upgrade Modifier
-	if ent:IsNPC() or ent:IsPlayer() or ent:IsBot() then
+	if ent:IsNPC() or ent:IsPlayer() then
 
 		local attacker = info:GetAttacker()
 		if IsValid(attacker) then
 			if attacker:IsNPC() then
 					
+				if attacker:GetWarTeam() > 0 and attacker:GetWarTeam() < 5 then
 					local teamnum = attacker:GetWarTeam()
 					local level = upgrades[teamnum]["damage"]
 					info:ScaleDamage(upgrade_info["perc"][level])
-					
+				end
 					
 			elseif attacker:IsPlayer() then
 			
