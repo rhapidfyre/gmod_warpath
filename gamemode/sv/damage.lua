@@ -28,7 +28,7 @@ function GM:EntityTakeDamage( ent, info )
         end
     end
 	
-	
+	--[[
 	-- Damage Upgrade Modifier
 	if ent:IsNPC() or ent:IsPlayer() then
 
@@ -53,5 +53,5 @@ function GM:EntityTakeDamage( ent, info )
 	
 	end	
 	
-	
+	]]
 end

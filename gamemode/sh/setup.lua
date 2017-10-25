@@ -41,43 +41,68 @@ function GM:CreateTeams()
 	-- gamemode you should override this function in your gamemode
 
 	if ( !GAMEMODE.TeamBased ) then return end
+	teamcol1 = color_white
+	teamcol2 = color_white
+	if SERVER then
+		local tcol_impact = {}
+				tcol_impact[1]= Color(40,40,255,225)    --blue
+				tcol_impact[2]= Color(40,255,40,255)    --green
+				tcol_impact[3]= Color(66, 244, 220,255) --cyan
+			tcol_impact[4]= Color(216, 0, 255, 255)  --magenta
+			
+		local tcol_havoc = {}
+				tcol_havoc[1]= Color(255,40,40,255)   --red
+				tcol_havoc[2]= Color(255,255,40,255)   --yellow
+			tcol_havoc[3]= Color(255, 140, 0,255)  --orange
+			tcol_havoc[4] = Color(76, 47, 12, 255) --brown
 
-    
-	local teamcolor_alpha = {}
-        	teamcolor_alpha[1]= Color(40,40,255,225)    --blue
-        	teamcolor_alpha[2]= Color(40,255,40,255)    --green
-        	teamcolor_alpha[3]= Color(66, 244, 220,255) --cyan
-		teamcolor_alpha[4]= Color(216, 0, 255, 255)  --magenta
-		
-	local teamcolor_bravo = {}
-        	teamcolor_bravo[1]= Color(255,40,40,255)   --red
-        	teamcolor_bravo[2]= Color(255,255,40,255)   --yellow
-		teamcolor_bravo[3]= Color(255, 140, 0,255)  --orange
-		teamcolor_bravo[4] = Color(76, 47, 12, 255) --brown
+		local teamcolor1 = math.random(1,4)
+		local teamcolor2 = math.random(1,4)
 
-	local teamcolor1 = math.random(1,4)
-		print(teamcolor1)
-		team.SetColor(1, teamcolor_alpha[teamcolor1])
-
-	local teamcolor2 = math.random(1,4)
-		print(teamcolor2)
-		team.SetColor(2, teamcolor_bravo[teamcolor2])
-
-		
-		
-    local teams = {
-        {1,		"Team Impact",	teamcolor_alpha[teamcolor1],	true,	"info_player_blue"},	
-        {2,		"Team Havoc",	teamcolor_bravo[teamcolor2],	true,	"info_player_red"},		
-        {3,		"Yellow Team",	Color(255,255,40,255),	false,	"info_player_yellow" },	
-        {4,		"Green Team",	Color(40,255,40,255),	false,	"info_player_green" },	
-        {5,		"Neutral Team",	Color(255,255,255,255),	false,	"info_player_deathmatch" }
-    }
-
+			local veccy1 = Vector(tcol_impact[teamcolor1].r/255,tcol_impact[teamcolor1].g/255,tcol_impact[teamcolor1].b/255)
+			local veccy2 = Vector(tcol_havoc[teamcolor2].r/255,tcol_havoc[teamcolor2].g/255,tcol_havoc[teamcolor2].b/255)
+			SetGlobalVector("TCol1", veccy1)
+			SetGlobalVector("TCol2", veccy2)
+			teamcol1 = tcol_impact[teamcolor1]
+			teamcol2 = tcol_havoc[teamcolor2]
+	end
+	if CLIENT then
+		timer.Simple(1, function()
+			teamcol1 = GetGlobalVector("TCol1"):ToColor()
+			teamcol2 = GetGlobalVector("TCol2"):ToColor()
+			print(teamcol1)
+			print(teamcol2)
 	
-    for n,r in pairs(teams) do
-        --          #,name,color,joinable
-        team.SetUp( n, r[2], r[3], r[4] )
-        team.SetSpawnPoint(n,r[5])
-    end
-
+		local teams = {
+			{1,		"Team Impact",	teamcol1,	true,	"info_player_blue"},	
+			{2,		"Team Havoc",	teamcol2,	true,	"info_player_red"},		
+			{3,		"Yellow Team",	Color(255,255,40,255),	false,	"info_player_yellow" },	
+			{4,		"Green Team",	Color(40,255,40,255),	false,	"info_player_green" },	
+			{5,		"Neutral Team",	Color(255,255,255,255),	false,	"info_player_deathmatch" }
+		}
+		
+		
+			for n,r in pairs(teams) do
+				--          #,name,color,joinable
+				team.SetUp( n, r[2], r[3], r[4] )
+				team.SetSpawnPoint(n,r[5])
+			end
+		end)
+	else
+	
+		local teams = {
+			{1,		"Team Impact",	teamcol1,	true,	"info_player_blue"},	
+			{2,		"Team Havoc",	teamcol2,	true,	"info_player_red"},		
+			{3,		"Yellow Team",	Color(255,255,40,255),	false,	"info_player_yellow" },	
+			{4,		"Green Team",	Color(40,255,40,255),	false,	"info_player_green" },	
+			{5,		"Neutral Team",	Color(255,255,255,255),	false,	"info_player_deathmatch" }
+		}
+		
+		
+		for n,r in pairs(teams) do
+			--          #,name,color,joinable
+			team.SetUp( n, r[2], r[3], r[4] )
+			team.SetSpawnPoint(n,r[5])
+		end
+	end
 end
