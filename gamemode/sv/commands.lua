@@ -28,7 +28,9 @@ end)
 --Forces supplied player to given team #
 concommand.Add("war_admin_setteam", function(ply, cmd, args)
 end)
-
+concommand.Add("abcid", function(ply, cmd, args)
+print(ply:SteamID64())
+end)
 concommand.Add("debug_setpoints", function(ply, cmd, args)
     ply:SetPoints(args[1])
     print(ply:GetPoints())
