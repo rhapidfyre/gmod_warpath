@@ -126,10 +126,10 @@ function DrawWeapon()
 end
 
 local hidetable = {
-	CHudHealth = true,
-	CHudBattery = true,
-	CHudAmmo = true,
-	CHudSecondaryAmmo = true
+	CHudHealth 			= true,
+	CHudBattery 		= true,
+	CHudAmmo		 	= true,
+	CHudSecondaryAmmo 	= true
 }
 hook.Add("HUDShouldDraw", "HideDefault", function(hudtype)
 	if(hidetable[hudtype]) then return false end

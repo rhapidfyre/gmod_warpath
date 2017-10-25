@@ -1,14 +1,15 @@
 
---[[---------------------------------------------------------
-   Name: gamemode:EntityTakeDamage( ent, info )
-   Desc: The entity has received damage
------------------------------------------------------------]]
+-- Redirect takes NPCs who are NOT in combat, and makes them ENGAGE TARGETS
 local function Redirect(npc)
     if (npc:IsCurrentSchedule(SCHED_FORCED_GO)) or (npc:IsCurrentSchedule(SCHED_FORCED_GO_RUN)) then
         npc:SetSchedule(SCHED_ALERT_FACE)
     end
 end
 
+--[[---------------------------------------------------------
+   Name: gamemode:EntityTakeDamage( ent, info )
+   Desc: The entity has received damage
+-----------------------------------------------------------]]
 function GM:EntityTakeDamage( ent, info )
 
     if info:GetDamageType() == DMG_CLUB then
@@ -26,4 +27,30 @@ function GM:EntityTakeDamage( ent, info )
             Redirect(ent)
         end
     end
+	
+	
+	-- Damage Upgrade Modifier
+	if ent:IsNPC() or ent:IsPlayer() or ent:IsBot() then
+
+		local attacker = info:GetAttacker()
+		if IsValid(attacker) then
+			if attacker:IsNPC() then
+					
+					local teamnum = attacker:GetWarTeam()
+					local level = upgrades[teamnum]["damage"]
+					info:ScaleDamage(upgrade_info["perc"][level])
+					
+					
+			elseif attacker:IsPlayer() then
+			
+					local teamnum = attacker:Team()
+					local level = upgrades[teamnum]["damage"]
+					info:ScaleDamage(upgrade_info["perc"][level])
+					
+			end
+		end
+	
+	end	
+	
+	
 end
