@@ -45,7 +45,7 @@ function GM:HUDDrawTargetID()
 	
 	y = y + h + 5
 	
-	local text = trace.Entity:Health() .. "%"
+	local text = trace.Entity:Health()
 	local font = "TargetIDSmall"
 	
 	surface.SetFont( font )

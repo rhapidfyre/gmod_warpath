@@ -198,7 +198,7 @@ function GM:PlayerDeath( ply, inflictor, attacker )
 		
 		MsgAll( attacker:Nick() .. " killed " .. ply:Nick() .. " using " .. inflictor:GetClass() .. "\n" )
 		
-			if (IsValid(attacker) && (attacker:Health() >= attacker:GetMaxHealth()*.75)) then
+				if (IsValid(attacker) && (attacker:Health() >= attacker:GetMaxHealth()*.75)) then
 					attacker:SetHealth(attacker:GetMaxHealth())
                     
 			elseif (IsValid(attacker) && (attacker:Health() < attacker:GetMaxHealth())) then
@@ -346,7 +346,7 @@ function GM:PlayerLoadout( pl )
 	player_manager.RunClass( pl, "Loadout" )
     pl:Give("weapon_crowbar")
     pl:Give("war_pistol")
-    pl:GiveAmmo(30, "Pistol", false)
+    pl:GiveAmmo(90, "Pistol", false)
 
 end
 
