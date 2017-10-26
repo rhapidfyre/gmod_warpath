@@ -44,27 +44,27 @@ function GM:CreateTeams()
 	teamcol1 = color_white
 	teamcol2 = color_white
 	if SERVER then
-		local tcol_impact = {}
-				tcol_impact[1]= Color(40,40,255,225)    --blue
-				tcol_impact[2]= Color(40,255,40,255)    --green
-				tcol_impact[3]= Color(66, 244, 220,255) --cyan
-			tcol_impact[4]= Color(216, 0, 255, 255)  --magenta
-			
-		local tcol_havoc = {}
-				tcol_havoc[1]= Color(255,40,40,255)   --red
-				tcol_havoc[2]= Color(255,255,40,255)   --yellow
-			tcol_havoc[3]= Color(255, 140, 0,255)  --orange
-			tcol_havoc[4] = Color(76, 47, 12, 255) --brown
+		local tcol1 = {}
+			tcol1[1]= Color(40,40,255,225)    --blue
+			tcol1[2]= Color(40,255,40,255)    --green
+			tcol1[3]= Color(66, 244, 220,255) --cyan
+			tcol1[4]= Color(216, 0, 255, 255)  --magenta
+		
+		local tcol2 = {}
+			tcol2[1]= Color(255,40,40,255)   --red
+			tcol2[2]= Color(255,255,40,255)   --yellow
+			tcol2[3]= Color(255, 140, 0,255)  --orange
+			tcol2[4] = Color(76, 47, 12, 255) --brown
 
-		local teamcolor1 = math.random(1,4)
-		local teamcolor2 = math.random(1,4)
+		local tc1 = math.random(1,4)
+		local tc2 = math.random(1,4)
 
-			local veccy1 = Vector(tcol_impact[teamcolor1].r/255,tcol_impact[teamcolor1].g/255,tcol_impact[teamcolor1].b/255)
-			local veccy2 = Vector(tcol_havoc[teamcolor2].r/255,tcol_havoc[teamcolor2].g/255,tcol_havoc[teamcolor2].b/255)
+			local veccy1 = Vector(tcol1[tc1].r/255,tcol1[tc1].g/255,tcol1[tc1].b/255)
+			local veccy2 = Vector(tcol2[tc2].r/255,tcol2[tc2].g/255,tcol2[tc2].b/255)
 			SetGlobalVector("TCol1", veccy1)
 			SetGlobalVector("TCol2", veccy2)
-			teamcol1 = tcol_impact[teamcolor1]
-			teamcol2 = tcol_havoc[teamcolor2]
+			teamcol1 = tcol1[tc1]
+			teamcol2 = tcol2[tc2]
 			
 			AssignTeams(teamcol1, teamcol2)
 	end

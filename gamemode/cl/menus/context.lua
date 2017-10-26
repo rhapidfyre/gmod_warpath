@@ -91,7 +91,7 @@ function GM:OnContextMenuOpen()
 			
 			local DmgLabel = vgui.Create("DLabel", panel1)
 			DmgLabel:SetPos(20,105)
-			DmgLabel:SetText("Accuracy :")
+			DmgLabel:SetText("Ammo  :")
 			
 			local DmgButton = vgui.Create("DButton", panel1)
 			DmgButton:SetText("Upgrade222!")
