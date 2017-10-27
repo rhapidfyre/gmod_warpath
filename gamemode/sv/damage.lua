@@ -16,9 +16,9 @@ function GM:EntityTakeDamage( ent, info )
         info:SetDamage(10)
     end
 
-    if ent:IsNPC() || ent:IsPlayer() then
+    if ent:IsNPC() then
         if info:GetAttacker():IsPlayer() then
-            if ent:GetWarTeam() == info:GetAttacker():Team() then
+            if (ent:GetWarTeam() == info:GetAttacker():Team()) then
 		local dmg=info:GetDamage()
 		print(dmg*.1)
                 info:SetDamage(0)
@@ -27,21 +27,47 @@ function GM:EntityTakeDamage( ent, info )
 				ent:SetHealth( ent:Health()+(dmg*.1))
 			else
 				ent:SetHealth(ent:GetMaxHealth())
-				Redirect(ent)
+
 			end
 		else
 			ent:SetHealth(ent:GetMaxHealth())
-			Redirect(ent)
 		end
 		print ("NPC now has "..ent:Health().." Health!") 
+                Redirect(ent)
             else
                 Redirect(ent)
             end
         else
             Redirect(ent)
         end
-    end
-	
+    else
+	if info:GetAttacker():IsPlayer() then
+	    if (ent:Team() == info:GetAttacker():Team()) then
+		local dmg=info:GetDamage()
+		print(dmg*.1)
+	        info:SetDamage(0)
+		if ent:Health() < ent:GetMaxHealth() then 
+			if ((ent:Health()+dmg*.1)>ent:GetMaxHealth()) then
+				ent:SetHealth( ent:Health()+(dmg*.1))
+			else
+				ent:SetHealth(ent:GetMaxHealth())
+
+			end
+		else
+			ent:SetHealth(ent:GetMaxHealth())
+		end
+		print ("Player now has "..ent:Health().." Health!") 
+
+	    else
+
+	    end
+	else
+
+     end
+
+end
+
+
 	--[[
 	-- Damage Upgrade Modifier
 	if ent:IsNPC() or ent:IsPlayer() then

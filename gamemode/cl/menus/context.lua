@@ -25,7 +25,7 @@ function GM:OnContextMenuOpen()
     
 			CMenu = vgui.Create("DFrame")
 			CMenu:SetPos(24,ScrH()*0.25)
-			CMenu:SetSize( 300, 300 )
+			CMenu:SetSize( 500, 300 )
 			CMenu:SetTitle( "Upgrade Window" )
 			CMenu:SetVisible( true )
 			CMenu:SetDraggable( true )
@@ -155,13 +155,13 @@ function GM:OnContextMenuOpen()
 			end
 			
 			local DmgButton = vgui.Create("DButton", panel1)
-			DmgButton:SetText("HealGun")
+			DmgButton:SetText("Medic")
 			DmgButton:SetTextColor(Color(0, 0, 0))
 			DmgButton:SetPos(300,20)
 			DmgButton:SetSize(40,40)
 			DmgButton.DoClick = function()
 				net.Start("CL_PLYUpgrade")
-				net.WriteString("healgun")
+				net.WriteString("medic")
 				net.SendToServer()
 			end
 			
@@ -177,9 +177,21 @@ function GM:OnContextMenuOpen()
 			end
 			
 			local DmgButton = vgui.Create("DButton", panel1)
+			DmgButton:SetText("Revenge")
+			DmgButton:SetTextColor(Color(0, 0, 0))
+			DmgButton:SetPos(300, 100)
+			DmgButton:SetSize(40,40)
+			DmgButton.DoClick = function()
+				net.Start("CL_PLYUpgrade")
+				net.WriteString("Revenge")
+				net.SendToServer()
+			end
+			
+
+			local DmgButton = vgui.Create("DButton", panel1)
 			DmgButton:SetText("Capture")
 			DmgButton:SetTextColor(Color(0, 0, 0))
-			DmgButton:SetPos(300,100)
+			DmgButton:SetPos(400,100)
 			DmgButton:SetSize(40,40)
 			DmgButton.DoClick = function()
 				net.Start("CL_PLYUpgrade")

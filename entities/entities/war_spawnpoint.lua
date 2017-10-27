@@ -28,7 +28,7 @@ function ENT:Initialize()
 
     self.radius = 0
     
-    timer.Simple(1, function()
+    timer.Simple(.75, function()
         self:EstablishTeam()
     end)
 end
