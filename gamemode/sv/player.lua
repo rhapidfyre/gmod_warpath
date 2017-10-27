@@ -218,7 +218,9 @@ function GM:PlayerDeath( ply, inflictor, attacker )
 	
 		local actwep = attacker:GetActiveWeapon()
 		if actwep:GetHoldType() != "melee" then
-			attacker:SetAmmo(math.Round(actwep:Ammo1()+(actwep:Ammo1()*.30)), actwep:GetPrimaryAmmoType())
+			local maxammo = actwep:GetMaxAmmo()
+			print(actwep:GetMaxAmmo())
+			attacker:SetAmmo(math.Round(actwep:Ammo1()+(maxammo*.3)), actwep:GetPrimaryAmmoType())
 		end
 		
 

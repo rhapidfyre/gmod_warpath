@@ -38,7 +38,7 @@ function GM:OnContextMenuOpen()
 			panel1.Paint = function( self, w, h ) draw.RoundedBox( 4, 0, 0, w, h, team.GetColor(LocalPlayer():Team()) ) end
 			CSheet:AddSheet( "Player", panel1 )
 
-
+			panel1:SetVerticalScrollbarEnabled(true)
 			
 			local TeamPoints = vgui.Create("DLabel", panel1)
 			TeamPoints:SetPos(20,10)

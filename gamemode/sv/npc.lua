@@ -57,10 +57,11 @@ function GM:OnNPCKilled( ent, attacker, inflictor )
 					print("Player Healed")
 			end
 			local actwep = attacker:GetActiveWeapon()
-			print(actwep:GetPrintName())
 			if actwep:GetHoldType() != "melee" then
-				attacker:SetAmmo(math.Round(actwep:Ammo1()+(actwep:Ammo1()*.05)), actwep:GetPrimaryAmmoType())
-				print((actwep:Ammo1()*.05))
+				local maxammo = actwep:GetMaxAmmo()
+				print(actwep:GetMaxAmmo())
+				attacker:SetAmmo(math.Round(actwep:Ammo1()+(maxammo*.05)), actwep:GetPrimaryAmmoType())
+				print((actwep:GetMaxAmmo()*.05))
 			end
 
 		end

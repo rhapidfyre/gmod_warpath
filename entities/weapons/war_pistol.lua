@@ -20,6 +20,8 @@ SWEP.AdminOnly			= false
 
 SWEP.Category = "Weapons"
 
+SWEP.MaxAmmo = 30
+
 SWEP.Primary.Damage = 15
 SWEP.Primary.TakeAmmo = 1
 SWEP.Primary.ClipSize = 6
@@ -53,27 +55,27 @@ function SWEP:PrimaryAttack() --Mess with this if you want a different attack fu
 if ( !self:CanPrimaryAttack() ) then return end
 
 local bullet = {}
-bullet.Num = self.Primary.NumberofShots
-bullet.Src = self.Owner:GetShootPos()
-bullet.Dir = self.Owner:GetAimVector()
-bullet.Spread = Vector( self.Primary.Spread * 0.1 , self.Primary.Spread * 0.1, 0)
-bullet.Tracer = 0
-bullet.Force = self.Primary.Force
-bullet.Damage = self.Primary.Damage
-bullet.AmmoType = self.Primary.Ammo
+	bullet.Num = self.Primary.NumberofShots
+	bullet.Src = self.Owner:GetShootPos()
+	bullet.Dir = self.Owner:GetAimVector()
+	bullet.Spread = Vector( self.Primary.Spread * 0.1 , self.Primary.Spread * 0.1, 0)
+	bullet.Tracer = 4
+	bullet.Force = self.Primary.Force
+	bullet.Damage = self.Primary.Damage
+	bullet.AmmoType = self.Primary.Ammo
 
-local rnda = self.Primary.Recoil * -1
-local rndb = self.Primary.Recoil * math.random(-1, 1)
+	local rnda = self.Primary.Recoil * -1
+	local rndb = self.Primary.Recoil * math.random(-1, 1)
 
-self:ShootEffects()
+	self:ShootEffects()
 
-self.Owner:FireBullets( bullet )
-self:EmitSound(Sound(self.Primary.Sound))
-self.Owner:ViewPunch( Angle( rnda,rndb,rnda ) )
-self:TakePrimaryAmmo(self.Primary.TakeAmmo)
+	self.Owner:FireBullets( bullet )
+	self:EmitSound(Sound(self.Primary.Sound))
+	self.Owner:ViewPunch( Angle( rnda,rndb,rnda ) )
+	self:TakePrimaryAmmo(self.Primary.TakeAmmo)
 
-self:SetNextPrimaryFire( CurTime() + self.Primary.Delay )
-self:SetNextSecondaryFire( CurTime() + self.Primary.Delay )
+	self:SetNextPrimaryFire( CurTime() + self.Primary.Delay )
+	self:SetNextSecondaryFire( CurTime() + self.Primary.Delay )
 end
 
 function SWEP:SecondaryAttack()
@@ -95,9 +97,15 @@ function SWEP:CanPrimaryAttack()
 end
 
 function SWEP:Reload()
-self:EmitSound(Sound(self.ReloadSound))
-self.Weapon:DefaultReload( ACT_VM_RELOAD );
+	if self:Clip1() < self.Primary.ClipSize then
+	self:EmitSound(Sound(self.ReloadSound))
+	self.Weapon:DefaultReload( ACT_VM_RELOAD );
+	end
 end
 
 function SWEP:Think()
+end
+
+function SWEP:GetMaxAmmo()
+	return self.MaxAmmo
 end

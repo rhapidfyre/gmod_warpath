@@ -20,12 +20,14 @@ SWEP.AdminOnly			= false
 
 SWEP.Category = "Weapons"
 
+SWEP.MaxAmmo = 60
+
 SWEP.Primary.Damage = 10
 SWEP.Primary.TakeAmmo = 1
-SWEP.Primary.Clip1 = 25
-SWEP.Primary.ClipSize = 25
+SWEP.Primary.Clip1 = 500
+SWEP.Primary.ClipSize = 30
 SWEP.Primary.Ammo = "ar2"
-SWEP.Primary.DefaultClip = 25
+SWEP.Primary.DefaultClip = 30
 SWEP.Primary.Spread = .1
 SWEP.Primary.NumberofShots = 1
 SWEP.Primary.Automatic = true
@@ -78,10 +80,15 @@ function SWEP:SecondaryAttack()
 end
 
 function SWEP:Reload()
-		self:EmitSound(Sound(self.ReloadSound))
-		self.Weapon:DefaultReload( ACT_VM_RELOAD );
-
+	if self:Clip1() < self.Primary.ClipSize then
+	self:EmitSound(Sound(self.ReloadSound))
+	self.Weapon:DefaultReload( ACT_VM_RELOAD );
+	end
 end
 
 function SWEP:Think()
+end
+
+function SWEP:GetMaxAmmo()
+	return self.MaxAmmo
 end
