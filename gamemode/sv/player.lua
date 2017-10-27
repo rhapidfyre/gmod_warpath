@@ -45,10 +45,11 @@ function GM:DoPlayerDeath( ply, attacker, dmginfo )
     
         -- Award NPC's team with upgrade points
         local npcTeam = attacker:GetWarTeam()
+	if npcTeam ~= 5 then
         upgrades[npcTeam]["points"] = upgrades[npcTeam]["points"] + POINT_DEAD_PLY
         team.SetScore(npcTeam, team.GetScore(npcTeam + SCORE_KILL))
-    
-	end
+    	end
+     end
 
     
 end
@@ -207,14 +208,20 @@ function GM:PlayerDeath( ply, inflictor, attacker )
 		
 		MsgAll( attacker:Nick() .. " killed " .. ply:Nick() .. " using " .. inflictor:GetClass() .. "\n" )
 		
-				if (IsValid(attacker) && (attacker:Health() >= attacker:GetMaxHealth()*.75)) then
-					attacker:SetHealth(attacker:GetMaxHealth())
-                    
-			elseif (IsValid(attacker) && (attacker:Health() < attacker:GetMaxHealth())) then
-					attacker:SetHealth(attacker:Health() + attacker:GetMaxHealth()*0.25)
-                    
-			end
+		if (IsValid(attacker) && (attacker:Health() >= attacker:GetMaxHealth()*.75)) then
+				attacker:SetHealth(attacker:GetMaxHealth())
+            
+		elseif (IsValid(attacker) && (attacker:Health() < attacker:GetMaxHealth())) then
+				attacker:SetHealth(attacker:Health() + attacker:GetMaxHealth()*0.25)
+            
+		end
+	
+		local actwep = attacker:GetActiveWeapon()
+		if actwep:GetHoldType() != "melee" then
+			attacker:SetAmmo(math.Round(actwep:Ammo1()+(actwep:Ammo1()*.30)), actwep:GetPrimaryAmmoType())
+		end
 		
+
 	return end
 	
 	if (attacker:IsNPC() ) then
@@ -355,7 +362,7 @@ function GM:PlayerLoadout( pl )
 	player_manager.RunClass( pl, "Loadout" )
     pl:Give("weapon_crowbar")
     pl:Give("war_pistol")
-    pl:GiveAmmo(90, "Pistol", false)
+    pl:GiveAmmo(30, "Pistol", false)
 
 end
 
