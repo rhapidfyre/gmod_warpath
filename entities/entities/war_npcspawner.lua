@@ -112,13 +112,6 @@ function ENT:Think()
 					--end
 					npc:SetCollisionGroup(COLLISION_GROUP_DEBRIS_TRIGGER)
 					
-					if self.WarTeam > 0 and self.WarTeam < 5 then
-						-- Weapon Accuracy / Rate of Spread
-						local curr = upgrades[self.WarTeam]["accuracy"]
-						local new  = upgrade_info["accu"][curr]
-						npc:SetCurrentWeaponProficiency(new)
-					end
-					
 					npc:SetWarTeam(self.WarTeam)
 										
 					-- Randomly spawn within given radius by map

@@ -12,6 +12,6 @@ util.AddNetworkString("CL_Points")
 -- Sends client current team point count
 net.Receive("CL_Points", function(len, ply)
     net.Start("SV_Points")
-        net.WriteInt(upgrades[ply:Team()]["points"], 32)
+        net.WriteInt(GetGlobalInt("WP_T"..ply:Team().."Points"), 32)
         net.Send(ply)
 end)

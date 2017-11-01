@@ -1,0 +1,18 @@
+
+NEXT VERSION: Dev 2A
+	- Base Gamemode Upgrades will be fully implemented
+	- HUD Revision
+
+
+LATEST VERSION: Dev 1B
+	- Implemented Modular Upgrades System
+	+ Health Upgrades (HP / NPC)
+
+
+PREVIOUS VERSIONS
+	Version Dev1A
+		- Implemented Basic Gameplay Mechanics
+		+ NPC Spawning
+		+ Capture Point Behavior
+		+ Upgrade Points
+		+ Team Scoring

@@ -71,7 +71,7 @@ if SERVER then
 	-- Checks NPC Health Upgrade everytime it's purchased
 	hook.Add("OnEntityCreated", "NPCHPUpgrade", function(ent)
 		if ent:IsNPC() then
-			local npclevel = self:GetUpgrade("health_base")
+			local npclevel = ent:GetUpgrade("health_base")
 			ent:SetMaxHealth(ent:GetMaxHealth() + myupgrade["increase"][npclevel])
 		end
 	end)

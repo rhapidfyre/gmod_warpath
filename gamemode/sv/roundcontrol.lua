@@ -160,8 +160,8 @@ timer.Create("AwardPoints", POINT_DIST, 0, function()
             local teamNum = v:GetKeyValues()["TeamNum"]
             if teamNum == 1 or teamNum == 2 then
 			
-				local pts = upgrades[teamNum]["points"]
-                upgrades[teamNum]["points"] = pts + POINT_TIME
+				local pts = GetGlobalInt("WP_T"..teamNum.."Points")
+                SetGlobalInt("WP_T"..teamNum.."Points", pts + POINT_TIME)
 				team.SetScore(teamNum, team.GetScore(teamNum) + 1)
 				
             end
