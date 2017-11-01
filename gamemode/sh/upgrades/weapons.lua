@@ -58,7 +58,7 @@ myupgrade["increase"][10] = 500
 hook.Add("PostGamemodeLoaded", "AddUpgrade", function()
 	--[[
 	I Commented this out, so that this template isn't added to the gamemode.
-	table.insert(ups, myupgrade)
+	table.insert(warpath.upgrades, myupgrade)
 	]]
 end)
 

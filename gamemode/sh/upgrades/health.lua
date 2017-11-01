@@ -28,6 +28,7 @@ myupgrade["cost"][10] 	= 10
 -- KEY: Current level
 -- VAL: Percentage increase
 myupgrade["increase"] = {}
+myupgrade["increase"][0]  = 0
 myupgrade["increase"][1]  = 10
 myupgrade["increase"][2]  = 25
 myupgrade["increase"][3]  = 50
@@ -39,10 +40,15 @@ myupgrade["increase"][8]  = 175
 myupgrade["increase"][9]  = 200
 myupgrade["increase"][10] = 500
 
+myupgrade["level"][1] = 0
+myupgrade["level"][2] = 0
+
+
+
 
 -- Adds the table info to the gamemode
 hook.Add("PostGamemodeLoaded", "AddUpgrade", function()
-	table.insert(ups, myupgrade)
+	table.insert(warpath.upgrades, myupgrade)
 end)
 
 ------------------------------------------
@@ -61,6 +67,14 @@ if SERVER then
 		if ply:Health() > ply:GetMaxHealth() then ply:SetHealth(ply:Health() + hpMod) end
 	end
 	
+	-- Checks NPC Health Upgrade everytime it's purchased
+	hook.Add("OnEntityCreated", "NPCHPUpgrade", function(ent)
+		if ent:IsNPC() then
+			local npclevel = self:GetUpgrade("health_base")
+			ent:SetMaxHealth(ent:GetMaxHealth() + myupgrade["increase"][npclevel])
+		end
+	end)
+	
 	-- Checks the player's upgrade everytime they respawn on a playable team
 	hook.Add("PlayerSpawn", "CheckHPUpgrade", function(ply)
 		if ply:Team() < 5 and ply:Team() > 0 then
@@ -74,12 +88,15 @@ if SERVER then
 	-- args: See REQUIRED below for values
 	local function DoHealthUpgrade(args)
 		
-			if args[1] == myupgrade.name then
+		if args[1] == myupgrade.name then
+		
+			local ply = args[4]
 			
-				local ply = args[4]
+			-- PLY Upgrade
+			if args[3] then
 			
 				-- Use this to determine if purchase was successful
-				local flag = false
+				local success = false
 			
 				-- If the round was reset, reset all players.
 				if args[2] == "reset" then
@@ -95,7 +112,7 @@ if SERVER then
 						if cost <= ply:GetPoints() then
 							ply:SetPoints(ply:GetPoints() - cost)
 							ply:SetUpgrade(args[1], mylevel + 1)
-							flag = true
+							success = true
 						else
 							print("(DEBUG) Insufficient points for upgrade... ["..ply:GetPoints()..", need "..cost.."]")
 						end
@@ -105,11 +122,27 @@ if SERVER then
 				end
 				
 				-- If flag is true then the upgrade/downgrade/reset was successful.
-				if flag then
+				if success then
 					HPFormula(ply)
 				end
 				
+			-- NPC Upgrade
+			else
+				local pts = GetGlobalInt("WP_T"..ply:Team().."Points")
+				local cost = myupgrade["cost"][tlevel + 1]
+				if myupgrades["level"][ply:Team()] < 10 then
+					if cost <= pts then
+						print("(DEBUG) Team upgrade level for health_base increased by 1.")
+						myupgrades["level"][ply:Team()] = myupgrades["level"][ply:Team()] + 1
+					else
+						print("(DEBUG) Not enough team points for NPC upgrade..")
+					end
+				else
+					print("(DEBUG) Team upgrade level is already maximum.")
+				end
+				
 			end
+		end
 		
 	end
 	

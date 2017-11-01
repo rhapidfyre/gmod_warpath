@@ -30,14 +30,8 @@ function round.Prep()
     for k,v in pairs(player.GetAll()) do
         v:SetPoints(0)
     end
-    for i = 1, 4, 1 do
-        upgrades[i]["points"]   = POINT_START
-        upgrades[i]["spent"]    = 0
-        upgrades[i]["health"]   = 1
-        upgrades[i]["damage"]   = 1
-        upgrades[i]["accuracy"] = 1
-        upgrades[i]["speed"]    = 1
-    end
+	SetGlobalInt("WP_T1Points", POINT_START)
+	SetGlobalInt("WP_T2Points", POINT_START)
 	
     timer.Simple(1, function()
         for _,ply in pairs (player.GetAll()) do
@@ -52,7 +46,8 @@ function round.Prep()
             -- Disperse Weaponry (Loadout)
             ply:Give("weapon_crowbar")
             ply:Give("war_pistol")
-	    ply:GiveAmmo(30, "pistol", false)
+			ply:GiveAmmo(90, "pistol", false)
+			
             if ply:GetHasAR2()      then ply:Give("war_rifle") end
             if ply:GetHasShotty()   then ply:Give("weapon_shotgun") end
             if ply:GetHasBow()      then ply:Give("weapon_crossbow") end
