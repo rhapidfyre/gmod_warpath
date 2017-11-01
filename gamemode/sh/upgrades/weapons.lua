@@ -70,7 +70,7 @@ if SERVER then
 	-- ADD YOUR FUNCTIONS HERE
 	local function MyFunction(args)
 		if args[1] = myupgrade.name then
-		
+			
 		end
 	end
 		
