@@ -39,11 +39,11 @@ local function GameF4Menu()
 			draw.RoundedBox(4,0,0,LeftMenu:GetWide(),LeftMenu:GetTall(),Color(20,20,20))
 		end
 		
-		PrintTable(upgrades)
-		if IsValid(upgrades) then
+		PrintTable(warpath.upgrades)
+		if IsValid(warpath.upgrades) then
 			local x = 6
 			local y = 8
-			for k,v in pairs (upgrades) do
+			for k,v in pairs (warpath.upgrades) do
 			
 				local selector  = vgui.Create("DButton", LeftMenu)
 				selector:SetSize(LeftMenu:GetWide() - 12, 24)

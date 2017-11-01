@@ -1,4 +1,5 @@
 
+warpath = {}
 warpath.upgrades = {}
 
 SetGlobalInt("WP_T1Points", POINT_START)

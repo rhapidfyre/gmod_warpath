@@ -40,6 +40,7 @@ myupgrade["increase"][8]  = 175
 myupgrade["increase"][9]  = 200
 myupgrade["increase"][10] = 500
 
+myupgrade["level"] = {}
 myupgrade["level"][1] = 0
 myupgrade["level"][2] = 0
 
