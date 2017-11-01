@@ -38,8 +38,8 @@ SWEP.Primary.Force = 1
 SWEP.HeadshotMultiplier    = 2
 
 SWEP.UseHands = true
-SWEP.Primary.Sound = "weapons/crossbow/single.wav"
-SWEP.ReloadSound = "weapons/crossbow/reload.wav"
+SWEP.Primary.Sound = Sound("weapon_crossbow.single")
+SWEP.ReloadSound = Sound("weapon_crossbow.reload")
 
 
 function SWEP:Initialize() --A initialize code, mess with that only if you want to make a swep with swep creator.
