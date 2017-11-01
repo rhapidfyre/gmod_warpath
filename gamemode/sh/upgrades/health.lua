@@ -74,7 +74,7 @@ if SERVER then
 	-- args: See REQUIRED below for values
 	local function DoHealthUpgrade(args)
 		
-			if args[1] == "health_base" then
+			if args[1] == myupgrade.name then
 			
 				local ply = args[4]
 			
