@@ -91,7 +91,7 @@ function GM:OnNPCKilled( ent, attacker, inflictor )
     -- Award points to opposing team anytime an NPC dies for any reason
     local teamWin = 1
     if ent:GetWarTeam() == 1 then teamWin = 2 end
-    upgrades[teamWin]["points"] = upgrades[teamWin]["points"] + POINT_DEAD_NPC
+    SetGlobalInt("WP_T"..teamWin.."Points", GetGlobalInt("WP_T"..teamWin.."Points") + POINT_DEAD_NPC)
     
     -- If killer is a player, give personal points
     if attacker:IsPlayer() or inflictor:IsPlayer() then

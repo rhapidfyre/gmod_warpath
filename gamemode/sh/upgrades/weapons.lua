@@ -1,65 +1,31 @@
 
 --[[
----------- MIN. REQUIRED ---------
-This is the minimum amount of table info needed so that
-all the menus work correctly. This table is inserted into the gamemode
-so it can be used by the player(s).
 
-If you do not include each of these keys, the upgrade will error.
-
-This file is shared, so clients can build the information without
-having to network information between server and client.
+	Delete this file if you do not want to use any of the base gamemode weapons.
+	Note: Player will always spawn with "war_pistol" unless you remove it from 'sv/player.lua'
 
 ]]
-
 local myupgrade = {}
-myupgrade.name 		= "health_base" -- Must be in coding convention. Used for gamemode purposes.
-myupgrade.title		= "Health Upgrade" -- Title for the player's menu
-myupgrade.desc		= "Increase to Max Hit Points" -- Should be short, to the point.
+myupgrade.name 		= "weapon_base" -- Must be in coding convention. Used for gamemode purposes.
+myupgrade.title		= "Weapon Upgrade" -- Title for the player's menu
+myupgrade.desc		= "Gives AR2, Shotgun, and Crossbow" -- Should be short, to the point.
+myupgrade.longdesc  = "Purchasing this upgrade will provide more weapon choices." 
 
--- Can be as long as you want. Full description of upgrade.
-myupgrade.longdesc  = "Buying a level of this upgrade will increase the amount of health you have by the percentage bonus of your current level." 
-
--- Declares the base point cost for each upgrade level
--- KEY: The level for the player's request
--- VAL: Points required to purchase corresponding key level
 myupgrade["cost"] = {}
 myupgrade["cost"][1] 	= 1
-myupgrade["cost"][2] 	= 2
-myupgrade["cost"][3] 	= 3
-myupgrade["cost"][4] 	= 4
-myupgrade["cost"][5] 	= 5
-myupgrade["cost"][6] 	= 6
-myupgrade["cost"][7] 	= 7
-myupgrade["cost"][8] 	= 8
-myupgrade["cost"][9] 	= 9
-myupgrade["cost"][10] 	= 10
+myupgrade["cost"][2] 	= 1
+myupgrade["cost"][3] 	= 1
 
--- Declares what percentage increase health gives
--- KEY: Player's current level
--- VAL: Value to add (in this case, HP to add per level)
 myupgrade["increase"] = {}
-myupgrade["increase"][1]  = 10
-myupgrade["increase"][2]  = 25
-myupgrade["increase"][3]  = 50
-myupgrade["increase"][4]  = 75
-myupgrade["increase"][5]  = 100
-myupgrade["increase"][6]  = 125
-myupgrade["increase"][7]  = 150
-myupgrade["increase"][8]  = 175
-myupgrade["increase"][9]  = 200
-myupgrade["increase"][10] = 500
-
------ THIS CONCLUDES THE MINIMUM REQUIREMENTS FOR THE INFO TABLE -----
+myupgrade["increase"][1]  = "war_shotgun"
+myupgrade["increase"][2]  = "war_rifle"
+myupgrade["increase"][3]  = "war_crossbow"
 
 
 
 -- Adds the table info to the gamemode (REQUIRED)
 hook.Add("PostGamemodeLoaded", "AddUpgrade", function()
-	--[[
-	I Commented this out, so that this template isn't added to the gamemode.
 	table.insert(warpath.upgrades, myupgrade)
-	]]
 end)
 
 -------------------------------------------------
@@ -67,13 +33,47 @@ end)
 -------------------------------------------------
 if SERVER then
 
-	-- ADD YOUR FUNCTIONS HERE
-	local function MyFunction(args)
-		if args[1] == myupgrade.name then
-			
+	local function GiveWeapons(ply)
+		if ply:WarWeapons("war_shotgun") then 
+			ply:Give("war_shotgun")
+		end
+		if ply:WarWeapons("war_rifle") then 
+			ply:Give("war_rifle")
+		end
+		if ply:WarWeapons("war_crossbow") then 
+			ply:Give("war_crossbow")
 		end
 	end
+	
+	local function MyFunction(args)
 		
+		if args[1] == myupgrade.name and !(args[3]) then
+	
+			local current = ply:GetUpgrade("weapon_base")
+			local cost = myupgrade["cost"][current + 1]
+			if cost <= ply:GetPoints() then
+				ply:SetPoints(ply:GetPoints() - cost)
+				ply:WarWeapons(myupgrade["increase"][current + 1]
+			else
+				print("(DEBUG) Insufficient points for weapons upgrade!")
+			end
+			GiveWeapons(ply)
+	
+		end
+	
+	end
+		
+	local metaTbl = FindMetaTable("Player")
+	function metaTbl:WarWeapons(weapon, value)
+		if IsValid(weapon) then
+			if self.wpntable == nil then self.wpntable = {} end
+			if self.wpntable[weapon] == nil then self.wpntable[weapon] = {} end
+			if value then
+				self.wpntable[weapon] = value
+			end
+			return self.wpntable[weapon]
+		end
+	end
 		
 	--[[
 		args[1] =
@@ -91,6 +91,8 @@ if SERVER then
 			Entity; Player
 	]]
 	hook.Add("DoUpgrade", "GiveMeAName", MyFunction)
+	
+	hook.Add("OnPlayerSpawn", "Rearm", GiveWeapons)
 end
 
 
