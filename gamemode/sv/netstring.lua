@@ -6,8 +6,7 @@ util.AddNetworkString("SV_Points")
 util.AddNetworkString("SV_UpgradeSuccess")
 util.AddNetworkString("SV_UpgradeFail")
 
-util.AddNetworkString("CL_NPCUpgrade")
-util.AddNetworkString("CL_PLYUpgrade")
+util.AddNetworkString("CL_Upgrade")
 util.AddNetworkString("CL_Points")
 
 -- Sends client current team point count
