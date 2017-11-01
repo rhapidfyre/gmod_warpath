@@ -84,6 +84,10 @@ function ENT:Think()
 					-- If the NPC is a gun fighter, give them a gun to use
 					if npc:GetClass() == "npc_citizen" or npc:GetClass() == "npc_combine_s" then
                     
+						-- Necessary for weapons upgrade
+						if weaponstable == nil then weaponstable = {"weapon_smg1"} end
+						npc:SetKeyValue("additionalequipment", table.Random(weaponstable))
+					
 						-- Don't drop gun, Fade Corpse, and don't let rebels follow players, don't allow player to push (8192, 512, 1048576, 16384)
 						npc:SetKeyValue("spawnflags", "1073664")	
 						
