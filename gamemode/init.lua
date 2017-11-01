@@ -11,6 +11,7 @@ local LuaFiles = { ["lua"] = true, }
 ProcDirTree("warpath/gamemode/sv", "LUA", include, LuaFiles)
 ProcDirTree("warpath/gamemode/cl", "LUA", AddCSLuaFile, LuaFiles)
 ProcDirTree("warpath/gamemode/sh", "LUA", AddCSLuaFile, LuaFiles)
+ProcDirTree("warpath/gamemode/sh/upgrades", "LUA", AddCSLuaFile, LuaFiles)
 
 -- Before the gamemode loads, precache models and sounds
 function GM:PreGamemodeLoaded()

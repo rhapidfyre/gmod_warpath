@@ -13,6 +13,7 @@
 -- Include all shared Lua files
 include('player_default.lua')
 for _, v in pairs(file.Find("warpath/gamemode/sh/*.lua","LUA")) do include("sh/" .. v) end
+for _, v in pairs(file.Find("warpath/gamemode/sh/upgrades/*.lua","LUA")) do include("sh/upgrades/" .. v) end
 
 GM.Name			= "Warpath"
 GM.Author		= "RhapidFyre & Zoythrus"

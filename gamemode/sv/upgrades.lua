@@ -76,3 +76,14 @@ net.Receive("CL_NPCUpgrade", function(len, ply)
 		NPCUpgrading(ply, net.ReadString())
 	end
 end)
+
+net.Receive("CL_PLYUpgrade", function(len, ply)
+	print("(DEBUG) Receiving Client Upgrades")
+	local uptype = net.ReadString()
+	local action = net.ReadString()
+	local args = {}
+	args[1] = uptype
+	args[2] = action
+	args[3] = ply
+	hook.Call("DoUpgrade", GAMEMODE, args)
+end)
