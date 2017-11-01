@@ -38,7 +38,7 @@ function HealthFlash()
 		else
 			hcolor = Color(255,0,0,trig)
 		end
-		draw.RoundedBox(0,ScrW()*0.016 + 3,ScrH()*0.909 + 3,LocalPlayer():Health() * 3.57,21,hcolor)
+		draw.RoundedBox(0,ScrW()*0.016 + 3,ScrH()*0.909 + 3,100 * 3.57,21,hcolor)
 		draw.RoundedBox(0,ScrW()*0.016 + 3,ScrH()*0.909 + 16,LocalPlayer():Armor() * 3.57,8,Color(255,180,0,255))
 		
 		draw.SimpleText(LocalPlayer():Health(),"CloseCaption_Normal",ScrW()*0.2025,ScrH()*0.9075,color,2,0)

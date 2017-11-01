@@ -1,18 +1,18 @@
 
 -- Variables that are used on both client and server
 
-SWEP.PrintName		    = "Rifle"		-- 'Nice' Weapon name (Shown on HUD)
+SWEP.PrintName		    = "Crossbow"		-- 'Nice' Weapon name (Shown on HUD)
 SWEP.Author			    = ""
 SWEP.Contact		    = ""
 SWEP.Purpose		    = ""
 SWEP.Instructions	    = ""
 SWEP.Base 		        = "weapon_base"
-SWEP.HoldType		    = "ar2"
+SWEP.HoldType		    = "crossbow"
     
 SWEP.ViewModelFOV	    = 62
 SWEP.ViewModelFlip	    = false
-SWEP.ViewModel		    = "models/weapons/v_IRifle.mdl"
-SWEP.WorldModel		    = "models/weapons/w_IRifle.mdl"
+SWEP.ViewModel		    = "models/weapons/v_crossbow.mdl"
+SWEP.WorldModel		    = "models/weapons/w_crossbow.mdl"
 
 SWEP.Spawnable			= true
 SWEP.AdminSpawnable		= true
@@ -20,26 +20,26 @@ SWEP.AdminOnly			= false
 
 SWEP.Category = "Weapons"
 
-SWEP.MaxAmmo = 60
+SWEP.MaxAmmo = 20
 
-SWEP.Primary.Damage = 10
+SWEP.Primary.Damage = 50
 SWEP.Primary.TakeAmmo = 1
-SWEP.Primary.Clip1 = 30
-SWEP.Primary.ClipSize = 30
-SWEP.Primary.Ammo = "ar2"
-SWEP.Primary.DefaultClip = 30
-SWEP.Primary.Spread = .1
+SWEP.Primary.Clip1 = 1
+SWEP.Primary.ClipSize = 1
+SWEP.Primary.Ammo = "XBowBolt"
+SWEP.Primary.DefaultClip = 1
+SWEP.Primary.Spread = .001
 SWEP.Primary.NumberofShots = 1
-SWEP.Primary.Automatic = true
-SWEP.Primary.Recoil = 0.5
-SWEP.Primary.Delay =0.1
-SWEP.Primary.Force = 0
+SWEP.Primary.Automatic = false
+SWEP.Primary.Recoil = 0.1
+SWEP.Primary.Delay = 1
+SWEP.Primary.Force = 1
 
-SWEP.HeadshotMultiplier    = 1.25
+SWEP.HeadshotMultiplier    = 2
 
 SWEP.UseHands = true
-SWEP.Primary.Sound = "weapons/ar2/fire1.wav"
-SWEP.ReloadSound = "weapons/ar2/ar2_reload.wav"
+SWEP.Primary.Sound = "weapons/crossbow/single.wav"
+SWEP.ReloadSound = "weapons/crossbow/reload.wav"
 
 
 function SWEP:Initialize() --A initialize code, mess with that only if you want to make a swep with swep creator.
@@ -58,6 +58,7 @@ bullet.Src = self.Owner:GetShootPos()
 bullet.Dir = self.Owner:GetAimVector()
 bullet.Spread = Vector( self.Primary.Spread * 0.1 , self.Primary.Spread * 0.1, 0)
 bullet.Tracer = 1
+bullet.HullSize = 10
 bullet.Force = self.Primary.Force
 bullet.Damage = self.Primary.Damage
 bullet.AmmoType = self.Primary.Ammo
