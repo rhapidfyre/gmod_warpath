@@ -6,84 +6,22 @@
 	for the formulas to use in other Lua files.
 ]]
 
-net.Receive("CL_NPCUpgrade", function(len, ply)
+net.Receive("CL_Upgrade", function(len, ply)
 
-end)--[[
-net.Receive("CL_PLYUpgrade", function(len, ply)
-
-end)]]
-
-local function NPCWeaponUp(ply, weaponname)
-
-	local teamnum = ply:Team()
-	local pts     = upgrades[teamnum]["points"]
-	local cost    = weapon_cost["NPC"][weaponname]
-	
-	if cost <= pts then
-		upweapons[teamnum][weaponname] = true
-		upgrades[teamnum]["points"] = pts - cost
-	end
-
-end
-
-local function NPCUpgrading(ply, upgrade)
-
-    local teamnum = ply:Team()
-    
-    -- Assigns current point count to "pts"
-    local pts = upgrades[teamnum]["points"]
-    
-    -- Retrieves current upgrade level to "curr"
-    local curr = upgrades[teamnum][upgrade]
-    
-    -- Assigns cost of next upgrade level to "cost"
-    local cost = upgrade_cost[upgrade][curr]
-
-    if cost <= pts then
-    
-		if curr < 10 then
-	
-			upgrades[teamnum][upgrade] = curr + 1
-			net.Start("SV_UpgradeSuccess")
-				net.Send(ply)
-				
-		else
-			net.Start("SV_UpgradeFail")
-				net.WriteString("This ability is already maximized!!")
-				net.Send(ply)
-				
-		end
-			
-			-- Subtract the cost from the team's points pool
-        upgrades[teamnum]["points"] = pts - cost
-        
-    else
-        net.Start("SV_UpgradeFail")
-            net.WriteString("Your team does not have enough points for that upgrade!!")
-            net.Send(ply)
-            
-    end
-    
-end
-
--- Runs NPCUpgrading
-net.Receive("CL_NPCUpgrade", function(len, ply)
-	local upgrade = net.ReadString()
-	if upgrade == "weapon" then
-		local wpn = net.ReadString()
-		NPCWeaponUp(ply, wpn)
-	else
-		NPCUpgrading(ply, net.ReadString())
-	end
-end)
-
-net.Receive("CL_PLYUpgrade", function(len, ply)
 	print("(DEBUG) Receiving Client Upgrades")
-	local uptype = net.ReadString()
-	local action = net.ReadString()
+	
+	local up_name   = net.ReadString()
+	local up_action = net.ReadString()
+	
+	local up_team = false
+	if net.ReadBool() then up_team = true end
+	
 	local args = {}
-	args[1] = uptype
-	args[2] = action
-	args[3] = ply
+	args[1] = up_name
+	args[2] = up_action
+	args[3] = up_team
+	args[4] = ply
+	
 	hook.Call("DoUpgrade", GAMEMODE, args)
+	
 end)

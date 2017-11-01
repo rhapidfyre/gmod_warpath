@@ -76,7 +76,7 @@ if SERVER then
 		
 			if args[1] == "health_base" then
 			
-				local ply = args[3]
+				local ply = args[4]
 			
 				-- Use this to determine if purchase was successful
 				local flag = false

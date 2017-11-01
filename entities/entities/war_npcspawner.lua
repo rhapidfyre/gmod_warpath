@@ -84,27 +84,6 @@ function ENT:Think()
 					-- If the NPC is a gun fighter, give them a gun to use
 					if npc:GetClass() == "npc_citizen" or npc:GetClass() == "npc_combine_s" then
                     
-						--[[
-                        local upg = upgrades[self.WarTeam]["weapon"]
-                        npc:SetKeyValue("additionalequipment", upgrade_info["weapon"][upg])
-                        -- Set Citizens to use Rebel models
-						if npc:GetClass() == "npc_citizen" then npc:SetKeyValue("citizentype", "3") end
-                        ]]
-						
-						local weapons_table = {}
-						table.insert(weapons_table, "weapon_smg1")
-						for k,v in pairs (upweapons[self.WarTeam]) do
-							print("KEY = "..tostring(k))
-							print("VAL = "..tostring(v))
-							if v then
-								table.insert(weapons_table, k)
-							end
-						
-						end
-						
-						local use_weapon = table.Random(weapons_table)
-						npc:SetKeyValue("additionalequipment", use_weapon)
-						
 						-- Don't drop gun, Fade Corpse, and don't let rebels follow players, don't allow player to push (8192, 512, 1048576, 16384)
 						npc:SetKeyValue("spawnflags", "1073664")	
 						
@@ -115,23 +94,14 @@ function ENT:Think()
 
 					npc:Spawn()
 					
-					
-                   			if self.WarTeam == 5 then
+                   	if self.WarTeam == 5 then
 						npc:SetColor(Color(math.Rand(50,255),math.Rand(50,255),math.Rand(50,255)))
 						timer.Simple(0.1, function()
-						npc:SetMaxHealth(100/*Insert Health Calculation*/)
-						npc:SetHealth(npc:GetMaxHealth())
+							npc:SetMaxHealth(100)
+							npc:SetHealth(npc:GetMaxHealth())
 						end)
 					else
-						--npc:SetColor(Color(math.Rand(50,255),math.Rand(50,255),math.Rand(50,255)))
 						npc:SetColor(team.GetColor(self.WarTeam))
-						print(team.GetColor(self.WarTeam))
-						timer.Simple(0.1, function()
-						local HPLevel   = upgrades[self.WarTeam]["health"]
-						local HPUpgrade = upgrade_info["perc"][HPLevel]
-						npc:SetMaxHealth(50 + (100* HPUpgrade))
-						npc:SetHealth(npc:GetMaxHealth())
-						end)
 					end
 					
 					
