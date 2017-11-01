@@ -18,8 +18,8 @@ end)
 concommand.Add("getmodel", function(ply, cmd, args)
     print(ply:GetModel())
 end)
-concommand.Add("check", function(ply, cmd, args)
-    print("(DEBUG) HEALTH: "..ply:Health().."/"..ply:GetMaxHealth())
+concommand.Add("setpoints", function(ply, cmd, args)
+	ply:SetPoints(args[1])
 end)
 
 ------------------------------------------

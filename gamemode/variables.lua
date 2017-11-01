@@ -12,8 +12,16 @@
 	TIME_END			= 3			-- Time after round concludes until next prep round
 		
 	MAX_ROUNDS			= 10		-- Max rounds until map change
-	MAX_TIME			= 1800		-- Max time until map change
+	MAX_TIME			= 30		-- Max time until map change in MINUTES
+	
+	USE_MAX_TIME		= true
+	USE_MAX_ROUNDS		= true
 	FOREVER_GAME		= true		-- If true, max round/time will be ignored
+	
+	if FOREVER_GAME then
+		USE_MAX_TIME = false
+		USE_MAX_ROUNDS = false
+	end
     
 	-- POINT VALUES
 	-- Points are used for individual & team upgrades
