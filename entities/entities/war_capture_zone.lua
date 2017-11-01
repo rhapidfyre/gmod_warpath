@@ -56,8 +56,8 @@ function ENT:AcceptInput(inputName, activator, called, data)
         else
         
             -- Issues points to NPC or Player based on who captured it
-            if activator:IsNPC() then upgrades[self.ownerteam]["points"] = upgrades[self.ownerteam]["points"] + POINT_CAPTURE_NPC
-            else                      upgrades[self.ownerteam]["points"] = upgrades[self.ownerteam]["points"] + POINT_CAPTURE
+            if activator:IsNPC() then SetGlobalInt("WP_T"..(self.ownerteam).."Points", GetGlobalInt("WP_T"..(self.ownerteam).."Points") + POINT_CAPTURE_NPC)
+            else                      SetGlobalInt("WP_T"..(self.ownerteam).."Points", GetGlobalInt("WP_T"..(self.ownerteam).."Points") + POINT_CAPTURE)
             end
         
             net.Start("SV_Capture")
