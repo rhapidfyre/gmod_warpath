@@ -96,9 +96,17 @@ function SWEP:Reload()
 		self.Weapon:SendWeaponAnim( ACT_SHOTGUN_RELOAD_START)
 
 		for i= clips,8,1 do
-			local reloading = true
-			if reloading = true then
 			
+				--[[
+				if !timer.Exists("SGReload_T") then
+					timer.Create("SGReload_T", 1, x, function()
+						-- Do reload stuff
+					if self:Clip1() >= self.Prmary.Clipsize then
+						self:SetClip1(self.Primary.Clipsize)
+						if timer.Exists("SGReload_T") then timer.Remove("SGReload_T") end
+					end
+					end)
+			]]
 				timer.Simple(1, function()
 				local cliptemp = i
 				self:EmitSound(Sound(self.ReloadSound))
@@ -106,10 +114,9 @@ function SWEP:Reload()
 				print(cliptemp.." is how much is in the clip")
 				self:SetClip1(cliptemp)
 				print(self:Clip1())
-				reloading = false
 				end)
 
-			end
+			
 		end
 			self.Weapon:SendWeaponAnim( ACT_SHOTGUN_RELOAD_FINISH)
 		

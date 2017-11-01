@@ -10,6 +10,24 @@ end
    Name: gamemode:EntityTakeDamage( ent, info )
    Desc: The entity has received damage
 -----------------------------------------------------------]]
+local function CalcDamage(info, victim)
+	local dmg = info:GetDamage()
+	print(dmg*.1)
+		info:SetDamage(0)
+	if victim:Health() < victim:GetMaxHealth() then 
+		if ((victim:Health()+dmg*.1)>victim:GetMaxHealth()) then
+			victim:SetHealth( victim:Health()+(dmg*.1))
+		else
+			victim:SetHealth(victim:GetMaxHealth())
+	
+		end
+	else
+		victim:SetHealth(victim:GetMaxHealth())
+	end
+	print ("Player now has "..victim:Health().." Health!") 
+
+end
+
 function GM:EntityTakeDamage( ent, info )
 
     if info:GetDamageType() == DMG_CLUB then
@@ -19,50 +37,39 @@ function GM:EntityTakeDamage( ent, info )
     if ent:IsNPC() then
         if info:GetAttacker():IsPlayer() then
             if (ent:GetWarTeam() == info:GetAttacker():Team()) then
-		local dmg=info:GetDamage()
-		print(dmg*.1)
-                info:SetDamage(0)
-		if ent:Health() < ent:GetMaxHealth() then 
-			if ((ent:Health()+dmg*.1)>ent:GetMaxHealth()) then
-				ent:SetHealth( ent:Health()+(dmg*.1))
+				local dmg=info:GetDamage()
+				print(dmg*.1)
+				info:SetDamage(0)
+				if ent:Health() < ent:GetMaxHealth() then 
+					if ((ent:Health()+dmg*.1)>ent:GetMaxHealth()) then
+						ent:SetHealth( ent:Health()+(dmg*.1))
+					else
+						ent:SetHealth(ent:GetMaxHealth())
+					end
+				else
+					ent:SetHealth(ent:GetMaxHealth())
+				end
+			print ("NPC now has "..ent:Health().." Health!") 
+					Redirect(ent)
 			else
-				ent:SetHealth(ent:GetMaxHealth())
-
+				Redirect(ent)
 			end
 		else
-			ent:SetHealth(ent:GetMaxHealth())
+			Redirect(ent)
 		end
-		print ("NPC now has "..ent:Health().." Health!") 
-                Redirect(ent)
-            else
-                Redirect(ent)
-            end
-        else
-            Redirect(ent)
-        end
     else
-	if info:GetAttacker():IsPlayer() then
-	    if (ent:Team() == info:GetAttacker():Team()) then
-		local dmg=info:GetDamage()
-		print(dmg*.1)
-	        info:SetDamage(0)
-		if ent:Health() < ent:GetMaxHealth() then 
-			if ((ent:Health()+dmg*.1)>ent:GetMaxHealth()) then
-				ent:SetHealth( ent:Health()+(dmg*.1))
-			else
-				ent:SetHealth(ent:GetMaxHealth())
-
+	--[[if ent:IsPlayer() then
+		local atk = info:GetAttacker()
+		
+		if atk:IsPlayer() then
+			if (ent:Team() == atk:Team()) then
+				CalcDamage(info, ent)
 			end
-		else
-			ent:SetHealth(ent:GetMaxHealth())
-		end
-		print ("Player now has "..ent:Health().." Health!") 
-
-	    else
-
-	    end
-	else
-
+		elseif atk:IsNPC() then
+			if (ent:Team() == atk:GetWarTeam()) then
+				CalcDamage(info, ent)
+			end
+		end]]
      end
 
 end
@@ -94,4 +101,3 @@ end
 	end	
 	
 	]]
-end
