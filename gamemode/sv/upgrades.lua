@@ -8,10 +8,10 @@
 
 net.Receive("CL_NPCUpgrade", function(len, ply)
 
-end)
+end)--[[
 net.Receive("CL_PLYUpgrade", function(len, ply)
 
-end)
+end)]]
 
 local function NPCWeaponUp(ply, weaponname)
 

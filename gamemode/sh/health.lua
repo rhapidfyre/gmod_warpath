@@ -48,17 +48,21 @@ local function AddToGame()
 end
 
 local function HPFormula(ply)
-	local mylevel 	= myupgrade.playerlist[ply:SteamID64()]
+	local mylevel 	= ply:GetUpgrade("health_base")
 	local hpMax 	= ply:GetMaxHealth()
-	local hpMod 	= ply:GetMaxHealth() * myupgrade.increase[mylevel]
+	local hpMod 	= myupgrade["increase"][mylevel]
 	-- Sets the new max health for player
 	ply:SetMaxHealth(hpMax + hpMod)
-	print(ply:GetMaxHealth())
+	
+	ply:SetHealth(ply:Health() + hpMod)
+	if ply:Health() > ply:GetMaxHealth() then ply:SetHealth(ply:GetMaxHealth()) end
 end
 
 local function CheckHPUpgrade(ply)
 	if ply:Team() < 5 and ply:Team() > 0 then
-		HPFormula(ply)
+		if ply:GetUpgrade("health_base") > 0 then
+			HPFormula(ply)
+		end
 	end
 end
 
@@ -76,26 +80,24 @@ local function MyUpgradeFunction(args)
 		
 			-- If the round was reset, reset all players.
 			if args[2] == "reset" then
-				table.Empty(myupgrade.playerlist)
+				ply:ResetUpgrades()
 			end
 			
 			if args[2] == "upgrade" then
 			
-				local mylevel = myupgrade.playerlist[ply:SteamID64()]
-				local plyinfo = {}
+				local mylevel = ply:GetUpgrade(args[1])
 				
-				if !IsValid(mylevel) or mylevel == nil then
-					plyinfo[ply:SteamID64()] = 0					
-				end
-				
-				local plylevel = plyinfo[ply:SteamID64()]
-				if plylevel < 10 then
-					local cost = myupgrade["cost"][plylevel + 1]
+				if mylevel < 10 then
+					local cost = myupgrade["cost"][mylevel + 1]
 					if cost <= ply:GetPoints() then
-						ply:SetPoint(ply:GetPoints() - cost)
-						plyinfo[ply:SteamID64()] = plylevel + 1
+						ply:SetPoints(ply:GetPoints() - cost)
+						ply:SetUpgrade(args[1], mylevel + 1)
 						flag = true
+					else
+						print("(DEBUG) Insufficient points for upgrade... ["..ply:GetPoints()..", need "..cost.."]")
 					end
+				else
+					print("(DEBUG) Level already maximized!")
 				end
 			end
 			
@@ -127,7 +129,6 @@ end
 ]]
 hook.Add("CheckUpgrade", MyUpgradeFunction, vararg)
 net.Receive("CL_PLYUpgrade", function(len, ply)
-	print("HI!!!!!!!!!!!!!!!!!")
 	local uptype = net.ReadString()
 	local action = net.ReadString()
 	local temptbl = {}
@@ -138,7 +139,7 @@ net.Receive("CL_PLYUpgrade", function(len, ply)
 end)
 hook.Add("PostGamemodeLoaded", "AddUpgrade", AddToGame)
 -------------------------------------------------------------
-hook.Add("PlayerSpawn", "CheckHPUpgrade", CheckUpgrade)
+hook.Add("PlayerSpawn", "CheckHPUpgrade", CheckHPUpgrade)
 
 
 

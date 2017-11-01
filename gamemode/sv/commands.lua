@@ -19,7 +19,7 @@ concommand.Add("getmodel", function(ply, cmd, args)
     print(ply:GetModel())
 end)
 concommand.Add("check", function(ply, cmd, args)
-    PrintTable(upgrade_info)
+    print("(DEBUG) HEALTH: "..ply:Health().."/"..ply:GetMaxHealth())
 end)
 
 ------------------------------------------

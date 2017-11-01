@@ -1,6 +1,7 @@
 
 -- include root folder and first-order Lua files
 include("shared.lua")
+include('variables.lua')
 include("sh/utils.lua")
 AddCSLuaFile("shared.lua")
 AddCSLuaFile("cl_init.lua")

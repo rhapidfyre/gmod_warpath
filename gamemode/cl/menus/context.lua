@@ -11,7 +11,7 @@ local function UpdatePoints()                             --
         net.SendToServer()                                --
 end                                                       --
                                                           --
-net.Receive("SV_Points", function()                   --
+net.Receive("SV_Points", function()                   	  --
     NPC_Points = net.ReadInt(32)                          --
 end)                                                      --
 ------------------------------------------------------------

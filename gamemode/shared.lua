@@ -12,7 +12,6 @@
 
 -- Include all shared Lua files
 include('player_default.lua')
-include('variables.lua')
 for _, v in pairs(file.Find("warpath/gamemode/sh/*.lua","LUA")) do include("sh/" .. v) end
 
 GM.Name			= "Warpath"
