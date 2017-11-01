@@ -20,6 +20,8 @@ GM.Author		= "RhapidFyre & Zoythrus"
 GM.Email		= "nojunkmail@mailinator.com"
 GM.Website		= "www.gmod-warpath.com"
 GM.TeamBased	= true
+GameVersion		= "Dev 1.0b"
+GameLastUpdate	= "11/01/2017"
 
 --[[---------------------------------------------------------
    Name: gamemode:KeyPress( )

@@ -82,9 +82,15 @@ function GM:CreateTeams()
 end
 function AssignTeams(teamcol1, teamcol2)
 	
+		local teamname1 = {"Impact", "Aurora",
+		"Fatal", "Royal", "Aftermath", "Alpha"}
+		
+		local teamname2 = {"Havoc", "Reign",
+		"Shadow", "Omega", "Cyclone", "Indigo"}
+	
 		local teams = {
-			{1,		"Team Impact",	teamcol1,	true,	"info_player_blue"},	
-			{2,		"Team Havoc",	teamcol2,	true,	"info_player_red"},		
+			{1,		"Team "..table.Random(teamname1),	teamcol1,	true,	"info_player_blue"},	
+			{2,		"Team "..table.Random(teamname2),	teamcol2,	true,	"info_player_red"},		
 			{3,		"Yellow Team",	Color(255,255,40,255),	false,	"info_player_yellow" },	
 			{4,		"Green Team",	Color(40,255,40,255),	false,	"info_player_green" },	
 			{5,		"Neutral Team",	Color(255,255,255,255),	false,	"info_player_deathmatch" }
