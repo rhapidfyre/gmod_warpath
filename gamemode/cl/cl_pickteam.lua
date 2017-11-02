@@ -1,8 +1,4 @@
-
---[[---------------------------------------------------------
-   Name: gamemode:ShowTeam()
-   Desc:
------------------------------------------------------------]]
+--[[
 function GM:ShowTeam()
 	timer.Simple(.1,function()
 	if ( IsValid( self.TeamSelectFrame ) ) then return end
@@ -51,10 +47,6 @@ function GM:ShowTeam()
 	end)
 end
 
---[[---------------------------------------------------------
-   Name: gamemode:HideTeam()
-   Desc:
------------------------------------------------------------]]
 function GM:HideTeam()
 
 	if ( IsValid(self.TeamSelectFrame) ) then
@@ -63,3 +55,4 @@ function GM:HideTeam()
 	end
 
 end
+]]
