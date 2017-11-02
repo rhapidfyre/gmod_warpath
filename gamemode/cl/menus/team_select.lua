@@ -26,7 +26,8 @@ function GM:ShowTeam()
             t1_title:SetPos(2, 2)
             t1_title.Paint = function()
                 draw.RoundedBox(0,0,0,teamMenu:GetWide(),teamMenu:GetTall(),Color(25,25,25))
-                draw.SimpleTextOutlined(team.GetName(1), "ScoreMain", (teamMenu:GetWide()/2)/2, teamMenu:GetTall()*0.5, color_white, 1, 1, 0, color_white)
+                draw.SimpleTextOutlined(team.GetName(1), "ScoreMain", (teamMenu:GetWide()/2)/2, teamMenu:GetTall()*0.3, team.GetColor(1), 1, 1, 0, color_white)
+                draw.SimpleTextOutlined("Players: "..#team.GetPlayers(1), "HUDScore2", (teamMenu:GetWide()/2)/2, teamMenu:GetTall()*0.66, color_white, 1, 1, 0, color_white)
             end
             
             local t1_button = vgui.Create("DButton", t1_title)
@@ -39,6 +40,9 @@ function GM:ShowTeam()
                     draw.RoundedBox(0,0,0,t1_button:GetWide(),t1_button:GetTall(),Color(t1color.r, t1color.g, t1color.b,40))
                 end
             end
+            function t1_button:OnCursorEntered()
+                surface.PlaySound("buttons/lightswitch2.wav")
+            end
             function t1_button.DoClick()
                 self:HideTeam()
                 RunConsoleCommand("changeteam", 1)
@@ -49,7 +53,8 @@ function GM:ShowTeam()
             t2_title:SetPos(teamMenu:GetWide()/2 + 1, 2)
             t2_title.Paint = function()
                 draw.RoundedBox(0,0,0,teamMenu:GetWide(),teamMenu:GetTall(),Color(25,25,25))
-                draw.SimpleTextOutlined(team.GetName(2), "ScoreMain", (teamMenu:GetWide()/2)/2, teamMenu:GetTall()*0.5, color_white, 1, 1, 0, color_white)
+                draw.SimpleTextOutlined(team.GetName(2), "ScoreMain", (teamMenu:GetWide()/2)/2, teamMenu:GetTall()*0.3, team.GetColor(2), 1, 1, 0, color_white)
+                draw.SimpleTextOutlined("Players: "..#team.GetPlayers(2), "HUDScore2", (teamMenu:GetWide()/2)/2, teamMenu:GetTall()*0.66, color_white, 1, 1, 0, color_white)
             end
         
             local t2_button = vgui.Create("DButton", t2_title)
@@ -61,6 +66,9 @@ function GM:ShowTeam()
                 if t2_button:IsHovered() then
                     draw.RoundedBox(0,0,0,t2_button:GetWide(),t2_button:GetTall(),Color(t2color.r, t2color.g, t2color.b,40))
                 end
+            end
+            function t2_button:OnCursorEntered()
+                surface.PlaySound("buttons/lightswitch2.wav")
             end
             function t2_button.DoClick()
                 self:HideTeam()
