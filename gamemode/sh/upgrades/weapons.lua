@@ -53,7 +53,7 @@ if SERVER then
 			local cost = myupgrade["cost"][current + 1]
 			if cost <= ply:GetPoints() then
 				ply:SetPoints(ply:GetPoints() - cost)
-				ply:WarWeapons(myupgrade["increase"][current + 1]
+				ply:WarWeapons(myupgrade["increase"][current + 1])
 			else
 				print("(DEBUG) Insufficient points for weapons upgrade!")
 			end

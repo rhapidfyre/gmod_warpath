@@ -130,11 +130,12 @@ if SERVER then
 			-- NPC Upgrade
 			else
 				local pts = GetGlobalInt("WP_T"..ply:Team().."Points")
+				local tlevel = myupgrade["level"][ply:Team()]
 				local cost = myupgrade["cost"][tlevel + 1]
 				if myupgrades["level"][ply:Team()] < 10 then
 					if cost <= pts then
 						print("(DEBUG) Team upgrade level for health_base increased by 1.")
-						myupgrades["level"][ply:Team()] = myupgrades["level"][ply:Team()] + 1
+						myupgrades["level"][ply:Team()] = tlevel + 1
 					else
 						print("(DEBUG) Not enough team points for NPC upgrade..")
 					end
