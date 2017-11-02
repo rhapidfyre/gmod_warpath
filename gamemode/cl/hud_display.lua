@@ -73,8 +73,8 @@ function DrawHealth()
 		draw.RoundedBox(1,x + 2,y + 59,width-2,2,Color(200,200,200))
 	
 		-- Write Team
-		draw.SimpleText(TeamName(),"HUDSmallBack",x + 92,y + 64,TeamColor(),TEXT_ALIGN_CENTER,0,2,color_white)
-		draw.SimpleText(TeamName(),"HUDSmall",x + 92,y + 64,color_white,TEXT_ALIGN_CENTER,0,2,TeamColor())
+		draw.SimpleText(TeamName(),"HUDSmallBack",x + 108,y + 64,TeamColor(),TEXT_ALIGN_CENTER,0,2)
+		draw.SimpleText(TeamName(),"HUDSmall",x + 108,y + 64,color_white,TEXT_ALIGN_CENTER,0,2)
 		
 		-- Player Name
 		draw.SimpleTextOutlined(LocalPlayer():Name(),"ChatFont",x + 12,y,Color(255,255,255),0,0,1,Color(0,0,0))

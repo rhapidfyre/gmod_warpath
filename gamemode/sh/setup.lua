@@ -65,42 +65,46 @@ function GM:CreateTeams()
 			SetGlobalVector("TCol2", veccy2)
 			teamcol1 = tcol1[tc1]
 			teamcol2 = tcol2[tc2]
+            
+            local teamname1 = {"Impact", "Aurora",
+            "Fatal", "Royal", "Aftermath", "Alpha"}
+            
+            local teamname2 = {"Havoc", "Reign",
+            "Shadow", "Omega", "Cyclone", "Indigo"}
 			
-			AssignTeams(teamcol1, teamcol2)
+            local tname1 = table.Random(teamname1)
+            local tname2 = table.Random(teamname2)
+            SetGlobalString("TName1", tname1)
+            SetGlobalString("TName2", tname2)
+            
+			AssignTeams(teamcol1, teamcol2, tname1, tname2)
 	end
 	if CLIENT then
 		timer.Simple(.01, function()
 			teamcol1 = GetGlobalVector("TCol1"):ToColor()
 			teamcol2 = GetGlobalVector("TCol2"):ToColor()
-			print(teamcol1)
-			print(teamcol2)
+            tname1 = GetGlobalString("TName1")
+            tname2 = GetGlobalString("TName2")
 			
-			AssignTeams(teamcol1, teamcol2)
+			AssignTeams(teamcol1, teamcol2, tname1, tname2)
 		end)
-	else
 	end
 end
-function AssignTeams(teamcol1, teamcol2)
+function AssignTeams(teamcol1, teamcol2, tn1, tn2)
 	
-		local teamname1 = {"Impact", "Aurora",
-		"Fatal", "Royal", "Aftermath", "Alpha"}
-		
-		local teamname2 = {"Havoc", "Reign",
-		"Shadow", "Omega", "Cyclone", "Indigo"}
+	local teams = {
+		{1,		"Team "..(tn1),	teamcol1,	true,	"info_player_blue"},	
+		{2,		"Team "..(tn2),	teamcol2,	true,	"info_player_red"},		
+		{3,		"Yellow Team",	Color(255,255,40,255),	false,	"info_player_yellow" },	
+		{4,		"Green Team",	Color(40,255,40,255),	false,	"info_player_green" },	
+		{5,		"Neutral Team",	Color(255,255,255,255),	false,	"info_player_deathmatch" }
+	}
 	
-		local teams = {
-			{1,		"Team "..table.Random(teamname1),	teamcol1,	true,	"info_player_blue"},	
-			{2,		"Team "..table.Random(teamname2),	teamcol2,	true,	"info_player_red"},		
-			{3,		"Yellow Team",	Color(255,255,40,255),	false,	"info_player_yellow" },	
-			{4,		"Green Team",	Color(40,255,40,255),	false,	"info_player_green" },	
-			{5,		"Neutral Team",	Color(255,255,255,255),	false,	"info_player_deathmatch" }
-		}
-		
-		
-		for n,r in pairs(teams) do
-			--          #,name,color,joinable
-			team.SetUp( n, r[2], r[3], r[4] )
-			team.SetSpawnPoint(n,r[5])
-		end
-
+	
+	for n,r in pairs(teams) do
+		--          #,name,color,joinable
+		team.SetUp( n, r[2], r[3], r[4] )
+		team.SetSpawnPoint(n,r[5])
+	end
+    
 end
