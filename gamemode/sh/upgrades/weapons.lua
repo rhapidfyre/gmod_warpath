@@ -15,11 +15,13 @@ myupgrade["cost"] = {}
 myupgrade["cost"][1] 	= 1
 myupgrade["cost"][2] 	= 1
 myupgrade["cost"][3] 	= 1
+myupgrade["cost"][4] 	= 1
 
 myupgrade["increase"] = {}
-myupgrade["increase"][1]  = "war_shotgun"
-myupgrade["increase"][2]  = "war_rifle"
-myupgrade["increase"][3]  = "war_crossbow"
+myupgrade["increase"][1]  = "war_pistol"
+myupgrade["increase"][2]  = "war_shotgun"
+myupgrade["increase"][3]  = "war_rifle"
+myupgrade["increase"][4]  = "war_crossbow"
 
 myupgrade["level"] = {}
 myupgrade["level"][1] = 1
@@ -36,26 +38,31 @@ end)
 if SERVER then
 
 	local function GiveWeapons(ply)
+        print("(DEBUG) Running GiveWeapons(ply)")
 		if ply:WarWeapons("war_shotgun") then 
+            print("(DEBUG) Shotgun: Yes")
 			ply:Give("war_shotgun")
 		end
 		if ply:WarWeapons("war_rifle") then 
+            print("(DEBUG) Rifle: Yes")
 			ply:Give("war_rifle")
 		end
 		if ply:WarWeapons("war_crossbow") then 
+            print("(DEBUG) Crossbow: Yes")
 			ply:Give("war_crossbow")
 		end
 	end
-	
-	local function MyFunction(args)
-		
-		if args[1] == myupgrade.name and !(args[3]) then
+
+	local function UpgradeWeapons(args)
+        local ply = args[4]
+		if args[1] == myupgrade.name and !args[3] then
 	
 			local current = ply:GetUpgrade("weapon_base")
 			local cost = myupgrade["cost"][current + 1]
 			if cost <= ply:GetPoints() then
+                print("(DEBUG) Successfully upgraded weapons!")
 				ply:SetPoints(ply:GetPoints() - cost)
-				ply:WarWeapons(myupgrade["increase"][current + 1])
+				ply:WarWeapons(myupgrade["increase"][current + 1], true)
 			else
 				print("(DEBUG) Insufficient points for weapons upgrade!")
 			end
@@ -67,14 +74,30 @@ if SERVER then
 		
 	local metaTbl = FindMetaTable("Player")
 	function metaTbl:WarWeapons(weapon, value)
-		if IsValid(weapon) then
-			if self.wpntable == nil then self.wpntable = {} end
-			if self.wpntable[weapon] == nil then self.wpntable[weapon] = {} end
+    
+		if weapon ~= nil then
+        
+            print("(DEBUG) WarWeapons Received")
+			if self.wpntable == nil then
+                print("(DEBUG) SWeapon Table was nil")
+                self.wpntable = {}
+               end
+               
+			if self.wpntable[weapon] == nil then
+                print("(DEBUG) Weapon Slot was nil")
+                self.wpntable[weapon] = false
+            end
+            
 			if value then
+                print("(DEBUG) Value set to "..tostring(value))
 				self.wpntable[weapon] = value
 			end
+            
+            print("(DEBUG) returning "..tostring(self.wpntable[weapon]))
 			return self.wpntable[weapon]
+            
 		end
+        
 	end
 		
 	--[[
@@ -92,7 +115,7 @@ if SERVER then
 		args[4] =
 			Entity; Player
 	]]
-	hook.Add("DoUpgrade", "GiveMeAName", MyFunction)
+	hook.Add("DoUpgrade", "GiveMeAName", UpgradeWeapons)
 	
 	hook.Add("OnPlayerSpawn", "Rearm", GiveWeapons)
 end

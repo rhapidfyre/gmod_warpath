@@ -111,16 +111,16 @@ function GM:OnContextMenuOpen()
 		
 			
 			local ShtButton = vgui.Create("DButton", panel1)
-			ShtButton:SetText("Shotgun")
+			ShtButton:SetText("Weapon")
 			ShtButton:SetTextColor(Color(0, 0, 0))
 			ShtButton:SetPos(40,170)
 			ShtButton:SetSize(60,60)
 			ShtButton.DoClick = function()
 				net.Start("CL_Upgrade")
-				net.WriteString("shotgun")
+				net.WriteString("weapon_base")
 				net.SendToServer()
 			end
-			
+			--[[
 			local RflButton = vgui.Create("DButton", panel1)
 			RflButton:SetText("AR2")
 			RflButton:SetTextColor(Color(0, 0, 0))
@@ -142,7 +142,7 @@ function GM:OnContextMenuOpen()
 				net.WriteString("crossbow")
 				net.SendToServer()
 			end
-			
+			]]
 			local MedButton = vgui.Create("DButton", panel1)
 			MedButton:SetText("Medic")
 			MedButton:SetTextColor(Color(0, 0, 0))
