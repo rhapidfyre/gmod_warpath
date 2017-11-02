@@ -115,11 +115,11 @@ function GM:ScaleNPCDamage( npc, hitgroup, dmginfo )
 		dmginfo:ScaleDamage( 2 )
 	
 	end
-	
+	--[[
 	-- Increase neutral's damage
 	if npc:GetWarTeam() < 1 or npc:GetWarTeam() > 4 then
 		dmginfo:ScaleDamage(2.25)
-	end
+	end]]
 	
 	-- Less damage if we're shot in the arms or legs
 	if ( hitgroup == HITGROUP_LEFTARM ||

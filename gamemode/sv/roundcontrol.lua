@@ -46,7 +46,9 @@ function round.Prep()
             -- Disperse Weaponry (Loadout)
             ply:Give("weapon_crowbar")
             ply:Give("war_pistol")
-			ply:GiveAmmo(90, "pistol", false)
+	    ply:GiveAmmo(90, "pistol", false)
+
+	    ply:SetRunSpeed(ply:GetMaxSpeed())
 			
             if ply:GetHasAR2()      then ply:Give("war_rifle") end
             if ply:GetHasShotty()   then ply:Give("weapon_shotgun") end

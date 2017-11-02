@@ -135,7 +135,7 @@ if SERVER then
 				if myupgrade["level"][ply:Team()] < 10 then
 					if cost <= pts then
 						print("(DEBUG) Team upgrade level for health_base increased by 1.")
-						myupgrades["level"][ply:Team()] = tlevel + 1
+						myupgrade["level"][ply:Team()] = tlevel + 1
 					else
 						print("(DEBUG) Not enough team points for NPC upgrade..")
 					end

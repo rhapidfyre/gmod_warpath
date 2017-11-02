@@ -91,14 +91,14 @@ function ENT:Think()
 						-- Don't drop gun, Fade Corpse, and don't let rebels follow players, don't allow player to push (8192, 512, 1048576, 16384)
 						npc:SetKeyValue("spawnflags", "1073664")	
 						
-                    end
+                    			end
 					
 					-- Add input so that when the mob dies, the spawner it belongs to will spawn another
 					npc:Input("AddOutput", npc, ply, "OnDeath "..self:GetName()..":DecreaseCount:1::-1")
 
 					npc:Spawn()
 					
-                   	if self.WarTeam == 5 then
+                   			if self.WarTeam == 5 then
 						npc:SetColor(Color(math.Rand(50,255),math.Rand(50,255),math.Rand(50,255)))
 						timer.Simple(0.1, function()
 							npc:SetMaxHealth(100)

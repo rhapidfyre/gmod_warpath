@@ -45,16 +45,16 @@ function GM:CreateTeams()
 	teamcol2 = color_white
 	if SERVER then
 		local tcol1 = {}
-			tcol1[1]= Color(40,40,255,225)    --blue
-			tcol1[2]= Color(40,255,40,255)    --green
-			tcol1[3]= Color(66, 244, 220,255) --cyan
-			tcol1[4]= Color(216, 0, 255, 255)  --magenta
+			tcol1[1]= Color(0,0,255,225)    --blue
+			tcol1[2]= Color(0,255,0,255)    --green
+			tcol1[3]= Color(0, 204, 255,255) --cyan
+			tcol1[4]= Color(204, 0, 255, 255)  --magenta
 		
 		local tcol2 = {}
-			tcol2[1]= Color(255,40,40,255)   --red
-			tcol2[2]= Color(255,255,40,255)   --yellow
-			tcol2[3]= Color(255, 140, 0,255)  --orange
-			tcol2[4] = Color(76, 47, 12, 255) --brown
+			tcol2[1]= Color(255,0,0,255)   --red
+			tcol2[2]= Color(255,255,0,255)   --yellow
+			tcol2[3]= Color(255, 153, 0,255)  --orange
+			tcol2[4] = Color(153, 102, 51, 255) --brown
 
 		local tc1 = math.random(1,4)
 		local tc2 = math.random(1,4)

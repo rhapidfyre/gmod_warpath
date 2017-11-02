@@ -10,7 +10,7 @@ end
    Name: gamemode:EntityTakeDamage( ent, info )
    Desc: The entity has received damage
 -----------------------------------------------------------]]
-local function CalcDamage(info, victim)
+local function HealDamage(info, victim)
 	local dmg = info:GetDamage()
 	print(dmg*.1)
 		info:SetDamage(0)
@@ -37,19 +37,7 @@ function GM:EntityTakeDamage( ent, info )
     if ent:IsNPC() then
         if info:GetAttacker():IsPlayer() then
             if (ent:GetWarTeam() == info:GetAttacker():Team()) then
-				local dmg=info:GetDamage()
-				print(dmg*.1)
-				info:SetDamage(0)
-				if ent:Health() < ent:GetMaxHealth() then 
-					if ((ent:Health()+dmg*.1)>ent:GetMaxHealth()) then
-						ent:SetHealth( ent:Health()+(dmg*.1))
-					else
-						ent:SetHealth(ent:GetMaxHealth())
-					end
-				else
-					ent:SetHealth(ent:GetMaxHealth())
-				end
-			print ("NPC now has "..ent:Health().." Health!") 
+				HealDamage(info, ent)
 					Redirect(ent)
 			else
 				Redirect(ent)
