@@ -13,21 +13,21 @@ function GM:ShowTeam()
         timer.Simple(0.1, function()
             teamMenu = vgui.Create("DFrame")
             teamMenu:SetTitle("")
-            teamMenu:SetSize(ScrW()*0.4,ScrH()*0.1)
+            teamMenu:SetSize(ScrW()*0.4,ScrH()*0.2)
             teamMenu:Center()
             teamMenu:ShowCloseButton(false)
             teamMenu.Paint = function()
-                draw.RoundedBox(0,0,0,teamMenu:GetWide(),teamMenu:GetTall(),Color(80,80,80))
+                draw.RoundedBox(16,0,0,teamMenu:GetWide(),teamMenu:GetTall(),Color(180,180,180,120))
             end
             
             
             local t1_title = vgui.Create("DPanel", teamMenu)
-            t1_title:SetSize(teamMenu:GetWide()/2 - 3,teamMenu:GetTall() - 4)
+            t1_title:SetSize(teamMenu:GetWide()/2 - 3,teamMenu:GetTall() * 0.65)
             t1_title:SetPos(2, 2)
             t1_title.Paint = function()
-                draw.RoundedBox(0,0,0,teamMenu:GetWide(),teamMenu:GetTall(),Color(25,25,25))
-                draw.SimpleTextOutlined(team.GetName(1), "ScoreMain", (teamMenu:GetWide()/2)/2, teamMenu:GetTall()*0.3, team.GetColor(1), 1, 1, 0, color_white)
-                draw.SimpleTextOutlined("Players: "..#team.GetPlayers(1), "HUDScore2", (teamMenu:GetWide()/2)/2, teamMenu:GetTall()*0.66, color_white, 1, 1, 0, color_white)
+                draw.RoundedBoxEx(16,0,0,t1_title:GetWide(),t1_title:GetTall(),Color(0,0,0,220),true,false,false,false)
+                draw.SimpleTextOutlined(team.GetName(1), "ScoreMain", (t1_title:GetWide()/2), t1_title:GetTall()*0.3, team.GetColor(1), 1, 1, 0, color_white)
+                draw.SimpleTextOutlined("Players: "..#team.GetPlayers(1), "HUDScore2", (t1_title:GetWide()/2), t1_title:GetTall()*0.66, color_white, 1, 1, 0, color_white)
             end
             
             local t1_button = vgui.Create("DButton", t1_title)
@@ -37,7 +37,7 @@ function GM:ShowTeam()
             t1_button.Paint = function()
                 local t1color = team.GetColor(1)
                 if t1_button:IsHovered() then
-                    draw.RoundedBox(0,0,0,t1_button:GetWide(),t1_button:GetTall(),Color(t1color.r, t1color.g, t1color.b,40))
+                    draw.RoundedBoxEx(16,0,0,t1_button:GetWide(),t1_button:GetTall(),Color(t1color.r, t1color.g, t1color.b,40),true,false,false,false)
                 end
             end
             function t1_button:OnCursorEntered()
@@ -49,12 +49,12 @@ function GM:ShowTeam()
             end
             
             local t2_title = vgui.Create("DPanel", teamMenu)
-            t2_title:SetSize(teamMenu:GetWide()/2 - 3,teamMenu:GetTall() - 4)
+            t2_title:SetSize(teamMenu:GetWide()/2 - 3,teamMenu:GetTall() * 0.65)
             t2_title:SetPos(teamMenu:GetWide()/2 + 1, 2)
             t2_title.Paint = function()
-                draw.RoundedBox(0,0,0,teamMenu:GetWide(),teamMenu:GetTall(),Color(25,25,25))
-                draw.SimpleTextOutlined(team.GetName(2), "ScoreMain", (teamMenu:GetWide()/2)/2, teamMenu:GetTall()*0.3, team.GetColor(2), 1, 1, 0, color_white)
-                draw.SimpleTextOutlined("Players: "..#team.GetPlayers(2), "HUDScore2", (teamMenu:GetWide()/2)/2, teamMenu:GetTall()*0.66, color_white, 1, 1, 0, color_white)
+                draw.RoundedBoxEx(16,0,0,t2_title:GetWide(),t2_title:GetTall(),Color(0,0,0,220),false,true,false,false)
+                draw.SimpleTextOutlined(team.GetName(2), "ScoreMain", (t2_title:GetWide()/2), t2_title:GetTall()*0.3, team.GetColor(2), 1, 1, 0, color_white)
+                draw.SimpleTextOutlined("Players: "..#team.GetPlayers(2), "HUDScore2", (t2_title:GetWide()/2), t2_title:GetTall()*0.66, color_white, 1, 1, 0, color_white)
             end
         
             local t2_button = vgui.Create("DButton", t2_title)
@@ -64,7 +64,7 @@ function GM:ShowTeam()
             t2_button.Paint = function()
                 local t2color = team.GetColor(2)
                 if t2_button:IsHovered() then
-                    draw.RoundedBox(0,0,0,t2_button:GetWide(),t2_button:GetTall(),Color(t2color.r, t2color.g, t2color.b,40))
+                    draw.RoundedBoxEx(16,0,0,t2_button:GetWide(),t2_button:GetTall(),Color(t2color.r, t2color.g, t2color.b,40),false,true,false,false)
                 end
             end
             function t2_button:OnCursorEntered()
@@ -75,6 +75,30 @@ function GM:ShowTeam()
                 RunConsoleCommand("changeteam", 2)
             end
             
+            local t3_title = vgui.Create("DPanel", teamMenu)
+            t3_title:SetSize(teamMenu:GetWide() - 4,(teamMenu:GetTall() * 0.35) - 4)
+            t3_title:SetPos(2, teamMenu:GetTall() * 0.65 + 4)
+            t3_title.Paint = function()
+                draw.RoundedBoxEx(16,0,0,t3_title:GetWide(),t3_title:GetTall(),Color(0,0,0,220),false,false,true,true)
+                draw.SimpleTextOutlined("SPECTATE", "ScoreMain", t3_title:GetWide()/2, t3_title:GetTall()/2, Color(200,200,200), 1, 1, 0, color_white)
+            end
+        
+            local t3_button = vgui.Create("DButton", t3_title)
+            t3_button:SetSize(t3_title:GetWide(), t3_title:GetTall())
+            t3_button:SetPos(0, 0)
+            t3_button:SetText("")
+            t3_button.Paint = function()
+                if t3_button:IsHovered() then
+                    draw.RoundedBoxEx(16,0,0,t3_button:GetWide(),t3_button:GetTall(),Color(200, 200, 200,40),false,false,true,true)
+                end
+            end
+            function t3_button:OnCursorEntered()
+                surface.PlaySound("buttons/lightswitch2.wav")
+            end
+            function t3_button.DoClick()
+                self:HideTeam()
+                RunConsoleCommand("changeteam", TEAM_SPECTATOR)
+            end
             
             teamMenu:MakePopup()
             teamMenu:SetKeyboardInputEnabled(false)
