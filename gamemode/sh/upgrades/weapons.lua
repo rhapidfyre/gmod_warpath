@@ -8,7 +8,7 @@
 local myupgrade = {}
 myupgrade.name 		= "weapon_base" -- Must be in coding convention. Used for gamemode purposes.
 myupgrade.title		= "Weapon Upgrade" -- Title for the player's menu
-myupgrade.desc		= "Gives AR2, Shotgun, and Crossbow" -- Should be short, to the point.
+myupgrade.desc		= "Gives AR2, then Shotgun, then Crossbow" -- Should be short, to the point.
 myupgrade.longdesc  = "Purchasing this upgrade will provide more weapon choices." 
 
 myupgrade["cost"] = {}
@@ -21,11 +21,13 @@ myupgrade["increase"][1]  = "war_shotgun"
 myupgrade["increase"][2]  = "war_rifle"
 myupgrade["increase"][3]  = "war_crossbow"
 
-
+myupgrade["level"] = {}
+myupgrade["level"][1] = 1
+myupgrade["level"][2] = 1
 
 -- Adds the table info to the gamemode (REQUIRED)
-hook.Add("PostGamemodeLoaded", "AddUpgrade", function()
-	table.insert(warpath.upgrades, myupgrade)
+hook.Add("InitPostEntity", "AddWeaponBase", function()
+	table.insert(warpath_upgrades, myupgrade)
 end)
 
 -------------------------------------------------

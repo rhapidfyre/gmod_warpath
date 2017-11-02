@@ -50,15 +50,20 @@ myupgrade["increase"][8]  = 175
 myupgrade["increase"][9]  = 200
 myupgrade["increase"][10] = 500
 
+-- Current Team Level (1 = Team 1, 2 = Team 2)
+myupgrade["level"] = {}
+myupgrade["level"][1] = 0
+myupgrade["level"][2] = 0
+
 ----- THIS CONCLUDES THE MINIMUM REQUIREMENTS FOR THE INFO TABLE -----
 
 
 
 -- Adds the table info to the gamemode (REQUIRED)
-hook.Add("PostGamemodeLoaded", "AddUpgrade", function()
+hook.Add("InitPostEntity", "AddUpgrade", function()
 	--[[
 	I Commented this out, so that this template isn't added to the gamemode.
-	table.insert(warpath.upgrades, myupgrade)
+	table.insert(warpath_upgrades, myupgrade)
 	]]
 end)
 

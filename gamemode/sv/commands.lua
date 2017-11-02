@@ -21,6 +21,9 @@ end)
 concommand.Add("setpoints", function(ply, cmd, args)
 	ply:SetPoints(args[1])
 end)
+concommand.Add("check", function(ply, cmd, args)
+	print("Your Health: "..ply:Health().."/"..ply:GetMaxHealth())
+end)
 
 ------------------------------------------
 

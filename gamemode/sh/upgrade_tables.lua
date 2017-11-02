@@ -1,6 +1,5 @@
 
-warpath = {}
-warpath.upgrades = {}
+warpath_upgrades = {}
 
 SetGlobalInt("WP_T1Points", POINT_START)
 SetGlobalInt("WP_T2Points", POINT_START)
