@@ -297,8 +297,8 @@ surface.CreateFont( "ScoreBack", {
 	extended = false,
 	size = 48,
 	weight = 2000,
-	blursize = 8,
-	scanlines = 2,
+	blursize = 6,
+	scanlines = 1,
 	antialias = true,
 	underline = false,
 	italic = false,
@@ -306,7 +306,7 @@ surface.CreateFont( "ScoreBack", {
 	symbol = false,
 	rotary = false,
 	shadow = false,
-	additive = true,
+	additive = false,
 	outline = false,
 } )
 surface.CreateFont( "ScoreMain", {

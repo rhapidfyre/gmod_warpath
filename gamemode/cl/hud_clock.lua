@@ -22,7 +22,6 @@
 	
 		sounds (bool variable)			-> Boolean for whether to play sounds or not
 		
-]]
 
 -- I want the clock/status to always stay accurate/updated so I'm putting it first
 clock 			= 0
@@ -114,3 +113,4 @@ net.Receive("SV_Clock", function()
 	VOXRemaining()
 
 end)
+]]
