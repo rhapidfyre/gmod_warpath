@@ -62,99 +62,88 @@ function DrawHealth()
 	local x			= 12
 	local y			= ScrH() - 128
 	local color		= Color(120,120,120,255)
+    
+    local window    = TeamWindow()
 	
-	if LocalPlayer():Alive() then
-		-- Draw Health/Team Box
-		--draw.RoundedBoxEx(6,x,y,width/2,(ScrH() * 0.052),TeamWindow(),true,false,false,false)
-		draw.RoundedBoxEx(16,x,y,width,(ScrH() * 0.0525),TeamWindow(),false,true,false,false)
-		draw.RoundedBox(6,x,y - 2,8,height+4,Color(40,40,40))
-		draw.RoundedBox(4,x,y + 56,width+2,6,Color(40,40,40))
-		draw.RoundedBox(1,x + 2,y,4,height,Color(200,200,200))
-		draw.RoundedBox(1,x + 2,y + 59,width-2,2,Color(200,200,200))
+	-- Draw Health/Team Box
+	--draw.RoundedBoxEx(6,x,y,width/2,(ScrH() * 0.052),TeamWindow(),true,false,false,false)
+	draw.RoundedBoxEx(16,x+2,y,width,64,Color(window.r, window.g, window.b,120),false,true,false,false)
+	draw.RoundedBox(0,x,ScrH()-68,width+2,38,window)
+	draw.RoundedBox(8,x+12,ScrH()-64,width-12,32,Color(20,20,20))
+	draw.RoundedBox(0,x,y - 2,8,height+4,Color(40,40,40))
+	draw.RoundedBox(0,x,y + 56,width+2,6,Color(40,40,40))
+	draw.RoundedBox(0,x + 2,y,4,height,Color(200,200,200))
+	draw.RoundedBox(0,x + 2,y + 58,width-2,2,Color(200,200,200))
 	
-		-- Write Team
-		draw.SimpleText(TeamName(),"HUDSmallBack",x + 108,y + 64,TeamColor(),TEXT_ALIGN_CENTER,0,2)
-		draw.SimpleText(TeamName(),"HUDSmall",x + 108,y + 64,color_white,TEXT_ALIGN_CENTER,0,2)
-		
-		-- Player Name
-		draw.SimpleTextOutlined(LocalPlayer():Name(),"ChatFont",x + 12,y,Color(255,255,255),0,0,1,Color(0,0,0))
-		
-		-- Health Indicator
-		HealthFlash(x, y, width, height)
-	end
+	-- Write Team
+	draw.SimpleTextOutlined(TeamName(),"HUDSmall",x + (384/2),y + 64,color_white,TEXT_ALIGN_CENTER,0,2,TeamColor())
+	
+	-- Player Name
+	draw.SimpleTextOutlined(LocalPlayer():Name(),"ChatFont",x + 14,y+4,Color(255,255,255),0,0,1,Color(0,0,0))
+	
+	-- Health Indicator
+	HealthFlash(x, y, width, height)
 	
 end
 
 function DrawWeapon()
-	--[[
-	local width		= ScrW()
-	local height	= 42
-	local color		= Color(32,32,32,255)
-	
-	local width		= 384
-	local height	= 96
-	local x			= ScrW() - (384+12)
-	local y			= ScrH() - 128
-	local color		= Color(120,120,120,255)
-	
-	if LocalPlayer():Alive() then
-		-- Draw Health/Team Box
-		--draw.RoundedBoxEx(6,x,y,width/2,(ScrH() * 0.052),TeamWindow(),true,false,false,false)
-		draw.RoundedBoxEx(16,x,y,width,(ScrH() * 0.0525),TeamWindow(),false,true,false,false)
-		draw.RoundedBox(6,x,y - 2,8,height+4,Color(40,40,40))
-		draw.RoundedBox(4,x,y + 56,width+2,6,Color(40,40,40))
-		draw.RoundedBox(1,x + 2,y,4,height,Color(200,200,200))
-		draw.RoundedBox(1,x + 2,y + 59,width-2,2,Color(200,200,200))
-	
-		-- Write Team
-		draw.SimpleTextOutlined(TeamName(),"HUDSmall",x + 12,y + 64,Color(255,255,255,255),0,0,2,TeamColor())
-		
-		-- Player Name
-		draw.SimpleTextOutlined(LocalPlayer():Name(),"ChatFont",x + 12,y,Color(255,255,255),0,0,1,Color(0,0,0))
-		
-		-- Health Indicator
-		HealthFlash(x, y, width, height)
-	end
-	]]
-
-	-- Current weapon information and algorithms
-	if (LocalPlayer():GetActiveWeapon():IsValid()) then
-
-		local x	= ScrW() * 0.975
-		local y	= ScrH() * 0.945
-		
-		local info_clip1 	= LocalPlayer():GetActiveWeapon():Clip1()
-		local info_reserve 	= LocalPlayer():GetAmmoCount(LocalPlayer():GetActiveWeapon():GetPrimaryAmmoType())
-		local curWeapon = LocalPlayer():GetActiveWeapon():GetClass()
-		
-	
-		if( LocalPlayer():GetActiveWeapon():GetPrintName() ~= nil) then
-			draw.SimpleText(LocalPlayer():GetActiveWeapon():GetPrintName(),"HUDSmallBack",x,y,TeamColor(),TEXT_ALIGN_RIGHT,0)
-			draw.SimpleText(LocalPlayer():GetActiveWeapon():GetPrintName(),"HUDSmall",x,y,Color(255,255,255),TEXT_ALIGN_RIGHT,0)
-		end
-		
-		if (curWeapon != "weapon_crowbar" && curWeapon != "weapon_physcannon") then
-		
-			x = ScrW() * 0.93
-			y = ScrH() * 0.885
-		
-			if (LocalPlayer():GetActiveWeapon():Clip1() != -1) then
-				draw.SimpleText(info_clip1, "HUDBack", x-2, y, TeamColor(), TEXT_ALIGN_RIGHT, 0)
-				draw.SimpleText(info_clip1, "HUDFront", x-2, y, TeamColor(), TEXT_ALIGN_RIGHT, 0)
-				draw.SimpleText(info_clip1, "HUDMain", x-2, y, Color(255,255,255), TEXT_ALIGN_RIGHT, 0)
-				draw.SimpleText(info_reserve, "HUDSmallBack", x+6, y+2, TeamColor(), TEXT_ALIGN_LEFT, 0)
-				draw.SimpleText(info_reserve, "HUDSmall", x+6, y+2, Color(255,255,255), TEXT_ALIGN_LEFT, 0)
-			else
-			
-			end
-			
-			if (LocalPlayer():GetAmmoCount(LocalPlayer():GetActiveWeapon():GetSecondaryAmmoType()) > 0) then
-			
-			end
-		end
-		
-	end
-	
+    
+    if (LocalPlayer():GetActiveWeapon():IsValid()) then
+        
+        local curWeapon     = LocalPlayer():GetActiveWeapon():GetClass()
+        
+        if (curWeapon != "weapon_crowbar" && curWeapon != "weapon_physcannon") then
+        
+            local width		= ScrW()
+            local height	= 42
+            local color		= Color(32,32,32,255)
+            
+            local width		= 384
+            local height	= 96
+            local x			= (ScrW() - 396) - 12
+            local y			= ScrH() - 128
+            local color		= Color(120,120,120,255)
+            
+            local window    = TeamWindow()
+            
+            -- Draw Box Frame
+            --draw.RoundedBoxEx(6,x,y,width/2,(ScrH() * 0.052),TeamWindow(),true,false,false,false)
+            draw.RoundedBoxEx(16,x+2,y,width-2,64,Color(window.r, window.g, window.b,120),true,false,false,false)
+            draw.RoundedBox(0,x+2,ScrH()-68,width-2,38,window)
+            draw.RoundedBoxEx(8,(x + (384/2)) + 2,y+4,84,48,Color(20,20,20),true,true,false,false)
+            draw.RoundedBoxEx(8,(x + (384/2)) - 86,y+4,84,48,Color(20,20,20),true,true,false,false)
+            draw.RoundedBox(8,x+6,ScrH()-64,width-12,32,Color(20,20,20))
+            draw.RoundedBox(0,x+384,y - 2,8,height+4,Color(40,40,40))
+            draw.RoundedBox(0,x,y + 56,width+2,6,Color(40,40,40))
+            draw.RoundedBox(0,x + 384 + 2,y,4,height,Color(200,200,200))
+            draw.RoundedBox(0,x+2,y + 58,width-2,2,Color(200,200,200))
+        
+            local info_clip1 	= LocalPlayer():GetActiveWeapon():Clip1()
+            local info_reserve 	= LocalPlayer():GetAmmoCount(LocalPlayer():GetActiveWeapon():GetPrimaryAmmoType())
+            
+        
+            if( LocalPlayer():GetActiveWeapon():GetPrintName() ~= nil) then
+                draw.SimpleTextOutlined(LocalPlayer():GetActiveWeapon():GetPrintName(),"HUDSmall",x+(384/2), y + 64 ,color_white,TEXT_ALIGN_CENTER,0,2,TeamColor())
+            end
+        
+        
+            if (LocalPlayer():GetActiveWeapon():Clip1() != -1) then
+                local alignX = (x+(384/2)) - 43
+                --draw.SimpleText(info_clip1, "HUDBack",  ScrW()-88-60, y-8, TeamColor(), TEXT_ALIGN_CENTER, 0)
+                draw.SimpleText("LOADED", "HUDFont2",  alignX, y+8, Color(255,255,255), TEXT_ALIGN_CENTER, 0)
+                draw.SimpleText(info_clip1, "HUDSmallBack", alignX, y+18, TeamColor(), TEXT_ALIGN_CENTER, 0)
+                draw.SimpleText(info_clip1, "HUDSmall",  alignX, y+18, Color(255,255,255), TEXT_ALIGN_CENTER, 0)
+                
+                local alignX = (x+(384/2)) + 43
+                draw.SimpleText("RESERVE", "HUDFont2",  alignX, y+8, Color(255,255,255), TEXT_ALIGN_CENTER, 0)
+                draw.SimpleText(info_reserve, "HUDSmallBack", alignX, y+18, TeamColor(), TEXT_ALIGN_CENTER, 0)
+                draw.SimpleText(info_reserve, "HUDSmall", alignX, y+18, Color(255,255,255), TEXT_ALIGN_CENTER, 0)
+            
+            end
+            
+        end
+        
+    end
 end
 
 local hidetable = {

@@ -259,7 +259,7 @@ surface.CreateFont( "HUDBkg", {
 surface.CreateFont( "HUDFront", {
 	font = "halflife2",
 	extended = false,
-	size = 64,
+	size = 48,
 	weight = 2000,
 	blursize = 6,
 	scanlines = 4,
@@ -277,8 +277,8 @@ surface.CreateFont( "HUDFront", {
 surface.CreateFont( "HUDMain", {
 	font = "halflife2",
 	extended = false,
-	size = 64,
-	weight = 2000,
+	size = 48,
+	weight = 500,
 	blursize = 1,
 	scanlines = 2,
 	antialias = true,
