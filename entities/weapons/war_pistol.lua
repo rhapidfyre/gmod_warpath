@@ -39,7 +39,7 @@ SWEP.Secondary.DefaultClip	= 0				-- Default number of bullets in a clip
 SWEP.Secondary.Automatic	= false				-- Automatic/Semi Auto
 SWEP.Secondary.Ammo			= "Pistol"
 
-
+SWEP.UseHands = true
 SWEP.Primary.Sound = "weapons/pistol/pistol_fire2.wav"
 SWEP.ReloadSound = "weapons/pistol/pistol_reload1.wav"
 
