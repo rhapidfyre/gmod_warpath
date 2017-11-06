@@ -1,6 +1,8 @@
---local ShowTeamColor = 1
 
--- Called when F3 (+showspare1) is struck
+function GM:ShowHelp(ply)
+    ply:ConCommand("war_helpsettings")
+end
+
 function GM:ShowSpare1(ply)
     ply:ConCommand("war_modelselect")
 end

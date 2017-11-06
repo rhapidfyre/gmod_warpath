@@ -62,7 +62,6 @@ net.Receive("SV_Victory", function(len, ply)
     else
         surface.PlaySound("vox/all_captured.wav")
     end
-	lastShow = CurTime() + TIME_END
-	DisplayVictory(victor)
+	lastShow = CurTime() + 3
 	
 end)
