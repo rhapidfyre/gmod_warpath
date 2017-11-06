@@ -1,5 +1,7 @@
 -- File controls the F3 Menu
 local F3Menu = nil
+local modelview		= string.Right(LocalPlayer():GetModel(), 14)
+
 	
 	
 local ModelTable = {
@@ -109,6 +111,10 @@ local function GMF3Menu()
                     LocalPlayer():ConCommand("setmodel "..v[2])
                     surface.PlaySound("garrysmod/ui_click.wav")
                 end
+				function F3Click.OnCursorEntered()
+					modelview = "models/player/"..v[2]
+					print(modelview)
+				end
                 
                 i = i + 100
                 if i >= F3Scroll:GetWide() - 96 then
@@ -117,6 +123,22 @@ local function GMF3Menu()
                 end
             end
         end
+		
+		local F3Right = vgui.Create("DPanel", F3Menu)
+		F3Right:SetSize(F3Menu:GetWide()/2 - 6, F3Menu:GetTall() - 32)
+		F3Right:SetPos(F3Menu:GetWide()/2 + 2, 28)
+		
+		local viewer = vgui.Create("DModelPanel", F3Right)
+		viewer:SetSize(F3Right:GetWide(),F3Right:GetTall())
+		viewer:Center()
+		viewer:SetCamPos(Vector(20,20,48))
+		viewer:SetLookAt(Vector(0,0,48))
+		viewer:SetAnimated(true)
+		F3Right.Paint = function()
+			local tCol = team.GetColor(LocalPlayer():Team())
+			viewer:SetModel(modelview)
+			function viewer.Entity:GetPlayerColor() return (Vector(tCol.r/255, tCol.g/255, tCol.b/255)) end
+		end
         
         gui.EnableScreenClicker(true)
         
