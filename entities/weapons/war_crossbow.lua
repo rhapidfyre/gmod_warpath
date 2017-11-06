@@ -48,38 +48,52 @@ util.PrecacheSound(self.ReloadSound)
 self:SetWeaponHoldType( self.HoldType )
 end
 
+ 
+
 function SWEP:PrimaryAttack() --Mess with this if you want a different attack function. Google is your best friend to have the knowledge for that.
-
-if ( !self:CanPrimaryAttack() ) then return end
-
-local bullet = {}
-bullet.Num = self.Primary.NumberofShots
-bullet.Src = self.Owner:GetShootPos()
-bullet.Dir = self.Owner:GetAimVector()
-bullet.Spread = Vector( self.Primary.Spread * 0.1 , self.Primary.Spread * 0.1, 0)
-bullet.Tracer = 1
-bullet.HullSize = 10
-bullet.Force = self.Primary.Force
-bullet.Damage = self.Primary.Damage
-bullet.AmmoType = self.Primary.Ammo
-
-local rnda = self.Primary.Recoil * -1
-local rndb = self.Primary.Recoil * math.random(-1, 1)
-
-self:ShootEffects()
-
-self.Owner:FireBullets( bullet )
-self:EmitSound(Sound(self.Primary.Sound))
-self.Owner:ViewPunch( Angle( rnda,rndb,rnda ) )
-self:TakePrimaryAmmo(self.Primary.TakeAmmo)
-
-self:SetNextPrimaryFire( CurTime() + self.Primary.Delay )
-self:SetNextSecondaryFire( CurTime() + self.Primary.Delay )
+	self:ShootBullet(self.Primary.Damage, 1, 1)
 end
-
 function SWEP:SecondaryAttack()
 end
 
+function SWEP:ShootBullet( damage, num_bullets, aimcone )
+
+	// Only the player fires this way so we can cast
+	local pPlayer = self.Owner;
+
+	if ( !pPlayer ) then
+		return;
+	end
+
+	local vecSrc		= pPlayer:GetShootPos();
+	local vecAiming		= pPlayer:GetAimVector();
+
+	local info = { Num = num_bullets, Src = vecSrc, Dir = vecAiming, Spread = aimcone, Damage = damage };
+	info.Attacker = pPlayer;
+
+	if ( CLIENT ) then return end
+
+	for i = 1, info.Num do
+
+		local Src		= info.Spread || vec3_origin
+		local Dir		= info.Dir + Vector( math.Rand( -Src.x, Src.x ), math.Rand( -Src.y, Src.y ), math.Rand( -Src.y, Src.y ) )
+		local pBolt		= ents.Create( "crossbow_bolt" );
+
+		pBolt:SetPos( info.Src + ( Dir * 32 ) )
+		pBolt:SetAngles( Dir:Angle() );
+		pBolt.m_iDamage = self.Primary.Damage;
+		pBolt:SetOwner( pPlayer );
+		pBolt:Spawn()
+
+		pBolt:SetPos( info.Src + ( Dir * pBolt:BoundingRadius() ) );
+
+		if ( pPlayer:WaterLevel() == 3 ) then
+			pBolt:SetVelocity( Dir * BOLT_WATER_VELOCITY );
+		else
+			pBolt:SetVelocity( Dir * BOLT_AIR_VELOCITY );
+		end
+	end
+end
 function SWEP:Reload()
 	if self:Clip1() < self.Primary.ClipSize then
 	self:EmitSound(Sound(self.ReloadSound))

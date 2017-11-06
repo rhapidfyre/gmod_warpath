@@ -98,9 +98,9 @@ function ENT:Think()
 
 					npc:Spawn()
 					
-                   			if self.WarTeam == 5 then
-						npc:SetColor(Color(math.Rand(50,255),math.Rand(50,255),math.Rand(50,255)))
-						timer.Simple(0.1, function()
+                   		if self.WarTeam == 5 then
+							npc:SetColor(Color(math.Rand(50,255),math.Rand(50,255),math.Rand(50,255)))
+							timer.Simple(0.1, function()
 							npc:SetMaxHealth(100)
 							npc:SetHealth(npc:GetMaxHealth())
 						end)

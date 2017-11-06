@@ -25,7 +25,7 @@ function GM:OnContextMenuOpen()
     
 			CMenu = vgui.Create("DFrame")
 			CMenu:SetPos(24,ScrH()*0.25)
-			CMenu:SetSize( 500, 300 )
+			CMenu:SetSize(ScrW() * 0.20,ScrH() * 0.55)
 			CMenu:SetTitle( "Upgrade Window" )
 			CMenu:SetVisible( true )
 			CMenu:SetDraggable( true )
@@ -111,24 +111,24 @@ function GM:OnContextMenuOpen()
 		
 			
 			local ShtButton = vgui.Create("DButton", panel1)
-			ShtButton:SetText("Weapon")
+			ShtButton:SetText("Shotgun")
 			ShtButton:SetTextColor(Color(0, 0, 0))
 			ShtButton:SetPos(40,170)
 			ShtButton:SetSize(60,60)
 			ShtButton.DoClick = function()
-				net.Start("CL_Upgrade")
-				net.WriteString("weapon_base")
+				net.Start("player_weapon")
+				net.WriteString("war_shotgun")
 				net.SendToServer()
 			end
-			--[[
+			
 			local RflButton = vgui.Create("DButton", panel1)
-			RflButton:SetText("AR2")
+			RflButton:SetText("Rifle")
 			RflButton:SetTextColor(Color(0, 0, 0))
 			RflButton:SetPos(120,170)
 			RflButton:SetSize(60,60)
 			RflButton.DoClick = function()
-				net.Start("CL_Upgrade")
-				net.WriteString("ar2")
+				net.Start("player_weapon")
+				net.WriteString("war_rifle")
 				net.SendToServer()
 			end
 			
@@ -138,11 +138,11 @@ function GM:OnContextMenuOpen()
 			CrsButton:SetPos(200,170)
 			CrsButton:SetSize(60,60)
 			CrsButton.DoClick = function()
-				net.Start("CL_Upgrade")
-				net.WriteString("crossbow")
+				net.Start("player_weapon")
+				net.WriteString("war_crossbow")
 				net.SendToServer()
 			end
-			]]
+			
 			local MedButton = vgui.Create("DButton", panel1)
 			MedButton:SetText("Medic")
 			MedButton:SetTextColor(Color(0, 0, 0))

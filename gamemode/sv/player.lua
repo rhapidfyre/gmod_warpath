@@ -393,6 +393,9 @@ function GM:PlayerLoadout( pl )
 	player_manager.RunClass( pl, "Loadout" )
     pl:Give("weapon_crowbar")
     pl:Give("war_pistol")
+	if (pl:GetPrimary()) then
+		pl:Give(pl:GetPrimaryWep())
+	end
     pl:GiveAmmo(30, "Pistol", false)
 
 end

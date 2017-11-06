@@ -59,7 +59,7 @@ function GM:EntityTakeDamage( ent, info )
 			end
 		end]]
      end
-
+print(info:GetDamage())
 end
 
 

@@ -8,6 +8,8 @@ util.AddNetworkString("SV_UpgradeFail")
 
 util.AddNetworkString("CL_Upgrade")
 util.AddNetworkString("CL_Points")
+util.AddNetworkString("player_weapon")
+
 
 -- Sends client current team point count
 net.Receive("CL_Points", function(len, ply)
