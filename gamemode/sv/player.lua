@@ -394,7 +394,8 @@ function GM:PlayerLoadout( pl )
     pl:Give("weapon_crowbar")
     pl:Give("war_pistol")
 	if (pl:GetPrimary()) then
-		pl:Give(pl:GetPrimaryWep())
+		prim = pl:Give(pl:GetPrimaryWep())
+			pl:GiveAmmo(prim:GetMaxAmmo(), prim:GetPrimaryAmmoType(), true)
 	end
     pl:GiveAmmo(30, "Pistol", false)
 

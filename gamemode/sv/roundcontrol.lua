@@ -39,6 +39,7 @@ function round.Prep()
             -- Respawn/Reset Players
             if IsPlaying(ply) then ply:Spawn() end
             
+			ply:SetPrimary(false)
             -- Weapon Strip 
 			ply:StripWeapons()
 			ply:StripAmmo()
@@ -46,10 +47,10 @@ function round.Prep()
             -- Disperse Weaponry (Loadout)
             ply:Give("weapon_crowbar")
             ply:Give("war_pistol")
-			if ply:GetPrimary() then ply:Give(ply:GetPrimaryWep()) end
-	    ply:GiveAmmo(90, "pistol", false)
-
-	    ply:SetRunSpeed(ply:GetMaxSpeed())
+			ply:GiveAmmo(30, "pistol", false)
+			ply:SetPoints(1)
+			
+			ply:SetRunSpeed(ply:GetMaxSpeed())
 			
             if ply:GetHasAR2()      then ply:Give("war_rifle") end
             if ply:GetHasShotty()   then ply:Give("weapon_shotgun") end
@@ -57,7 +58,7 @@ function round.Prep()
             if ply:GetHasFrag()     then ply:Give("weapon_frag") end
             
             
-        end
+		end
     end)
 	
 	-- Build HUD Info
