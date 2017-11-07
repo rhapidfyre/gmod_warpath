@@ -24,6 +24,62 @@ function GM:OnContextMenuOpen()
 	
             UpdatePoints()
     
+
+
+			--panel1:SetVerticalScrollbarEnabled(true)
+			
+			if !LocalPlayer():GetPrimary() then
+			
+			CMenu = vgui.Create("DFrame")
+			CMenu:SetPos(24,ScrH()*0.25)
+			CMenu:SetSize(ScrW() * 0.20,ScrH() * 0.25)
+			CMenu:SetTitle( "Primary Weapon" )
+			CMenu:SetVisible( true )
+			CMenu:SetDraggable( true )
+			CMenu:ShowCloseButton( true )
+			
+	
+			local CSheet = vgui.Create("DPropertySheet", CMenu)
+			CSheet:Dock(FILL)
+			
+			local panel1 = vgui.Create( "DScrollPanel", CSheet )
+			panel1.Paint = function( self, w, h ) draw.RoundedBox( 4, 0, 0, w, h, Color(150,150,150,0) ) end
+			CSheet:AddSheet( "Player", panel1 )
+			
+				local ShtButton = vgui.Create("DButton", panel1)
+				ShtButton:SetText("Shotgun")
+				ShtButton:SetTextColor(Color(0, 0, 0))
+				ShtButton:SetPos(40,ScrH()*0.05)
+				ShtButton:SetSize(60,60)
+				ShtButton.DoClick = function()
+					net.Start("player_weapon")
+					net.WriteString("war_shotgun")
+					net.SendToServer()
+				end
+				
+				local RflButton = vgui.Create("DButton", panel1)
+				RflButton:SetText("Rifle")
+				RflButton:SetTextColor(Color(0, 0, 0))
+				RflButton:SetPos(120,ScrH()*0.05)
+				RflButton:SetSize(60,60)
+				RflButton.DoClick = function()
+					net.Start("player_weapon")
+					net.WriteString("war_rifle")
+					net.SendToServer()
+				end
+				
+				local CrsButton = vgui.Create("DButton", panel1)
+				CrsButton:SetText("Crossbow")
+				CrsButton:SetTextColor(Color(0, 0, 0))
+				CrsButton:SetPos(200,ScrH()*0.05)
+				CrsButton:SetSize(60,60)
+				CrsButton.DoClick = function()
+					net.Start("player_weapon")
+					net.WriteString("war_crossbow")
+					net.SendToServer()
+				end
+			else
+			
 			CMenu = vgui.Create("DFrame")
 			CMenu:SetPos(24,ScrH()*0.25)
 			CMenu:SetSize(ScrW() * 0.20,ScrH() * 0.55)
@@ -36,46 +92,10 @@ function GM:OnContextMenuOpen()
 			CSheet:Dock(FILL)
 			
 			local panel1 = vgui.Create( "DScrollPanel", CSheet )
-			panel1.Paint = function( self, w, h ) draw.RoundedBox( 4, 0, 0, w, h, color_black ) end
+			panel1.Paint = function( self, w, h ) draw.RoundedBox( 4, 0, 0, w, h, color_gray ) end
 			CSheet:AddSheet( "Player", panel1 )
-
-			panel1:SetVerticalScrollbarEnabled(true)
 			
-			if !LocalPlayer():GetPrimary() then
 			
-				local ShtButton = vgui.Create("DButton", panel1)
-				ShtButton:SetText("Shotgun")
-				ShtButton:SetTextColor(Color(0, 0, 0))
-				ShtButton:SetPos(40,170)
-				ShtButton:SetSize(60,60)
-				ShtButton.DoClick = function()
-					net.Start("player_weapon")
-					net.WriteString("war_shotgun")
-					net.SendToServer()
-				end
-				
-				local RflButton = vgui.Create("DButton", panel1)
-				RflButton:SetText("Rifle")
-				RflButton:SetTextColor(Color(0, 0, 0))
-				RflButton:SetPos(120,170)
-				RflButton:SetSize(60,60)
-				RflButton.DoClick = function()
-					net.Start("player_weapon")
-					net.WriteString("war_rifle")
-					net.SendToServer()
-				end
-				
-				local CrsButton = vgui.Create("DButton", panel1)
-				CrsButton:SetText("Crossbow")
-				CrsButton:SetTextColor(Color(0, 0, 0))
-				CrsButton:SetPos(200,170)
-				CrsButton:SetSize(60,60)
-				CrsButton.DoClick = function()
-					net.Start("player_weapon")
-					net.WriteString("war_crossbow")
-					net.SendToServer()
-				end
-			else
 				local TeamPoints = vgui.Create("DLabel", panel1)
 				TeamPoints:SetPos(20,10)
 				TeamPoints:SetText("Points:  "..PLY_Points)            

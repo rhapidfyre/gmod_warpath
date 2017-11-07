@@ -22,7 +22,7 @@ net.Receive("player_weapon", function (len,ply)
 			prim = ply:Give(ply:GetPrimaryWep())
 			ply:SetPrimaryWep(plyweapon)
 			ply:SetPrimary(true)
-			ply:SetPoints(ply:GetPoints() - 5)
+			ply:SetPoints(ply:GetPoints() - 1)
 			ply:GiveAmmo(prim:GetMaxAmmo(), prim:GetPrimaryAmmoType(), true)
 			
 		else
