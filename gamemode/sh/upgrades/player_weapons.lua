@@ -14,28 +14,28 @@
 -- Adds the table info to the gamemode (REQUIRED)
 net.Receive("player_weapon", function (len,ply)
 	local plyweapon = net.ReadString()
-	print(plyweapon)
 	--print(ply:Nick())
 	
 	if SERVER then
 		if !ply:GetPrimary() && ply:GetPoints() >= 1 then
-			ply:Give(plyweapon)
+			prim = ply:Give(plyweapon)
 			ply:SetPrimaryWep(plyweapon)
 			ply:SetPrimary(true)
 			ply:SetPoints(ply:GetPoints() - 1)
-			print(ply:GetPrimaryWep())
-			ply:GiveAmmo(ply:GetWeapon(ply:GetPrimaryWep()):GetMaxAmmo(), ply:GetWeapon(ply:GetPrimaryWep()):GetPrimaryAmmoType(), true)
+			ply:GiveAmmo(prim:GetMaxAmmo(), prim:GetPrimaryAmmoType(), false)
 			
-		elseif ((plyweapon == "weapon_frag") && (ply:GetHasFrag() == false) && (ply:GetPoints() >=1)) then
-			ply:Give("weapon_frag")
-			ply:SetHasFrag (true)
-			ply:SetPoints(ply:GetPoints() - 1)
-			print("Here's a grenade for you!")
-			
-		elseif ((plyweapon == "weapon_frag") && (ply:GetHasFrag() == true) && (ply:GetPoints() >=1)) then
-			ply:SetPoints(ply:GetPoints() - 1)
-			ply:GiveAmmo(1, 10, false)
-			print("Another one!")
+		elseif ((plyweapon == "weapon_frag") && (ply:GetPoints() >=1)) then
+		
+			if ply:GetHasFrag(false) then
+				ply:Give("weapon_frag")
+				ply:SetHasFrag (true)
+				ply:SetPoints(ply:GetPoints() - 1)
+				print("Here's a grenade for you!")
+			else
+				ply:SetPoints(ply:GetPoints() - 1)
+				ply:GiveAmmo(1, 10, false)
+				print("Another one!")
+			end
 			
 		else	
 			print("(DEBUG) Already got a primary weapon dork")

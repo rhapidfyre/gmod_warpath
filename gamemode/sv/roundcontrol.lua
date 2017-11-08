@@ -53,10 +53,6 @@ function round.Prep()
 			
 			ply:SetRunSpeed(ply:GetMaxSpeed())
 			
-            if ply:GetHasAR2()      then ply:Give("war_rifle") end
-            if ply:GetHasShotty()   then ply:Give("weapon_shotgun") end
-            if ply:GetHasBow()      then ply:Give("weapon_crossbow") end
-            if ply:GetHasFrag()     then ply:Give("weapon_frag") end
             
             
 		end
