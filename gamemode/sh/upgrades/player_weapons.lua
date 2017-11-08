@@ -19,12 +19,12 @@ net.Receive("player_weapon", function (len,ply)
 	
 	if SERVER then
 		if !ply:GetPrimary() && ply:GetPoints() >= 1 then
-			prim = ply:Give(ply:GetPrimaryWep())
+			ply:Give(plyweapon)
 			ply:SetPrimaryWep(plyweapon)
 			ply:SetPrimary(true)
 			ply:SetPoints(ply:GetPoints() - 1)
-			print(prim)
-			ply:GiveAmmo(prim:GetMaxAmmo(), prim:GetPrimaryAmmoType(), true)
+			print(ply:GetPrimaryWep())
+			ply:GiveAmmo(ply:GetWeapon(ply:GetPrimaryWep()):GetMaxAmmo(), ply:GetWeapon(ply:GetPrimaryWep()):GetPrimaryAmmoType(), true)
 			
 		elseif ((plyweapon == "weapon_frag") && (ply:GetHasFrag() == false) && (ply:GetPoints() >=1)) then
 			ply:Give("weapon_frag")
