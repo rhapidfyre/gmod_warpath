@@ -10,8 +10,8 @@ local function GameF4Menu()
 	
 	if F4Menu == nil then
 		F4Menu = vgui.Create("DFrame")
-		F4Menu:SetSize(ScrW() * 0.35,ScrH() * 0.6)
-		F4Menu:SetPos(12,(ScrH()/2)-F4Menu:GetTall()/2)
+		F4Menu:SetSize(ScrW() * 0.4,ScrH() * 0.6)
+		F4Menu:Center()
 		F4Menu:SetVisible(true)
 		F4Menu:ShowCloseButton(false)
 		F4Menu:SetDeleteOnClose(false)
@@ -19,11 +19,7 @@ local function GameF4Menu()
 		F4Menu:SetTitle("NPC Upgrades - Press F4 again to Close")
 		F4Menu.Paint = function()
 			draw.RoundedBox(0,0,0,F4Menu:GetWide(),F4Menu:GetTall(),Color(80,80,80))
-		end			
-		
-		--local Display   = vgui.Create("DPanel", RightMenu)
-		--local BuyBtn    = vgui.Create("DButton", RightMenu)
-		--local Closer    = vgui.Create("DButton", RightMenu)
+		end
 		
 		local LeftMenu  = vgui.Create("DPanel", F4Menu)
 		LeftMenu:SetSize((F4Menu:GetWide()*0.33)-8, (F4Menu:GetTall()-8))
@@ -34,23 +30,29 @@ local function GameF4Menu()
 		
 		local RightMenu = vgui.Create("DPanel", F4Menu)
 		RightMenu:SetSize((F4Menu:GetWide()*0.66)-8, (F4Menu:GetTall()-8))
-		RightMenu:SetPos((F4Menu:GetWide()*0.33)+12, 4)
+		RightMenu:SetPos((F4Menu:GetWide()*0.33), 4)
 		RightMenu.Paint = function()
 			draw.RoundedBox(4,0,0,RightMenu:GetWide(),RightMenu:GetTall(),Color(20,20,20))
             
-            draw.SimpleText("POINTS AVAILABLE: ", "ChatFont", RightMenu:GetWide()/2, 16, Color(255,255,0), 1, 1)
-            draw.SimpleText(GetGlobalInt("WP_T"..LocalPlayer():Team().."Points"), "ChatFont", RightMenu:GetWide()/2, 16+16, team.GetColor(LocalPlayer():Team()), 1, 1)
+            draw.SimpleText("TEAM POINTS", "ChatFont", RightMenu:GetWide()/2, 16, Color(255,255,0), 1, 1)
+            draw.SimpleText(GetGlobalInt("WP_T"..LocalPlayer():Team().."Points"), "ChatFont", RightMenu:GetWide()/2, 32, team.GetColor(LocalPlayer():Team()), 1, 1)
             
             draw.SimpleText("Title", "ChatFont", RightMenu:GetWide()/2, 16+16+16+16, Color(200,255,200), 1, 1)
             draw.SimpleText(upName, "ChatFont", RightMenu:GetWide()/2, 32+16+16+16, team.GetColor(LocalPlayer():Team()), 1, 1)
             
-            draw.SimpleText(upDesc, "ChatFont", RightMenu:GetWide()/2, 64+16+16+16+16+16, color_white, 1, 1)
+            draw.SimpleText(upDesc, "ChatFont", RightMenu:GetWide()/2, 64+16+16+16+16+16, team.GetColor(LocalPlayer():Team()), 1, 1)
             
-            draw.SimpleText(upLong, "ChatFont", RightMenu:GetWide()/2, 96+16+16+16+16+16, color_white, 1, 1)
-            
-            draw.SimpleText("Current Team Level", "ChatFont", RightMenu:GetWide()/2, 96+16+16+16+16+16+16+16+16, Color(200,255,200), 1, 1)
-            draw.SimpleText(upLevel, "ChatFont", RightMenu:GetWide()/2, 128+16+16+16+16+16+16+16, color_white, 1, 1)
+            draw.SimpleText("Current Level", "ChatFont", RightMenu:GetWide()/2, 96+16+16+16+16+16+16+16+16, Color(200,255,200), 1, 1)
+            draw.SimpleText(upLevel, "ChatFont", RightMenu:GetWide()/2, 128+16+16+16+16+16+16+16, team.GetColor(LocalPlayer():Team()), 1, 1)
+		
 		end
+		
+		local RightWrap = vgui.Create("DLabel", RightMenu)
+		RightWrap:SetText(upLong)
+		RightWrap:SetAutoStretchVertical(true)
+		RightWrap:SetWide(RightMenu:GetWide() * 0.8)
+		RightWrap:SetWrap(true)
+		RightWrap:Center()
 		
 		PrintTable(warpath_upgrades)
 		if warpath_upgrades ~= nil then

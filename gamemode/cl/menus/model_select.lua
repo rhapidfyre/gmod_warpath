@@ -1,8 +1,6 @@
 -- File controls the F3 Menu
 local F3Menu = nil
-local modelview		= string.Right(LocalPlayer():GetModel(), 14)
-
-	
+local modelview		= "kleiner.mdl"	
 	
 local ModelTable = {
 --[[ Table#,    model path,         Allowed Team#,  donor/vip only
@@ -46,6 +44,8 @@ local ModelTable = {
 
 -- The menu itself
 local function GMF3Menu()
+
+	modelview = string.Right(LocalPlayer():GetModel(), 14)
 
     if !IsValid(F3Menu) then
     
