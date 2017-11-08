@@ -23,9 +23,21 @@ net.Receive("player_weapon", function (len,ply)
 			ply:SetPrimaryWep(plyweapon)
 			ply:SetPrimary(true)
 			ply:SetPoints(ply:GetPoints() - 1)
+			print(prim)
 			ply:GiveAmmo(prim:GetMaxAmmo(), prim:GetPrimaryAmmoType(), true)
 			
-		else
+		elseif ((plyweapon == "weapon_frag") && (ply:GetHasFrag() == false) && (ply:GetPoints() >=1)) then
+			ply:Give("weapon_frag")
+			ply:SetHasFrag (true)
+			ply:SetPoints(ply:GetPoints() - 1)
+			print("Here's a grenade for you!")
+			
+		elseif ((plyweapon == "weapon_frag") && (ply:GetHasFrag() == true) && (ply:GetPoints() >=1)) then
+			ply:SetPoints(ply:GetPoints() - 1)
+			ply:GiveAmmo(1, 10, false)
+			print("Another one!")
+			
+		else	
 			print("(DEBUG) Already got a primary weapon dork")
 		end
 	end

@@ -830,4 +830,13 @@ end
 function GM:PlayerButtonDown( ply, btn ) end
 function GM:PlayerButtonUp( ply, btn ) end
 
+local hasFrag = false
+function SetHasFrag (bool)
+	hasFrag = bool
+end
+
+function GetHasFrag()
+	return hasFrag
+end
+
 concommand.Add( "changeteam", function( pl, cmd, args ) hook.Call( "PlayerRequestTeam", GAMEMODE, pl, tonumber( args[ 1 ] ) ) end )
