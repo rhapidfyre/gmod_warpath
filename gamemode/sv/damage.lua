@@ -35,7 +35,7 @@ function GM:EntityTakeDamage( ent, info )
     end
 
     if ent:IsNPC() then
-        if info:GetAttacker():IsPlayer() then
+        if info:GetAttacker():IsPlayer() && info:GetAttacker():GetHasHealGun() then
             if (ent:GetWarTeam() == info:GetAttacker():Team()) then
 				HealDamage(info, ent)
 					Redirect(ent)

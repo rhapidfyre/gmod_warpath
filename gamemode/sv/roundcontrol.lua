@@ -38,19 +38,23 @@ function round.Prep()
 		
             -- Respawn/Reset Players
             if IsPlaying(ply) then ply:Spawn() end
-            
+
+            		ply:SetHasFrag(false)
+			ply:SetHasHealGun(false)
+			ply:SetHasScavenge(false)
+			ply:SetHasRevenge(false)
 			ply:SetPrimary(false)
             -- Weapon Strip 
 			ply:StripWeapons()
 			ply:StripAmmo()
-			ply:SetHasFrag(false)
+
             
             -- Disperse Weaponry (Loadout)
             ply:Give("weapon_crowbar")
             ply:Give("war_pistol")
-			ply:GiveAmmo(30, "pistol", false)
-			ply:SetPoints(1)
-			
+		ply:GiveAmmo(30, "pistol", false)
+		ply:SetPoints(1)
+
 			ply:SetRunSpeed(ply:GetMaxSpeed())
 			
             

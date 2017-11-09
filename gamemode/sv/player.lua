@@ -43,7 +43,7 @@ function GM:DoPlayerDeath( ply, attacker, dmginfo )
 
 	ply:CreateRagdoll()
 	ply:AddDeaths( 1 )
-	if ply:LastHitGroup() != HITGROUP_HEAD then
+	if ply:LastHitGroup() != HITGROUP_HEAD && ply:GetHasRevenge() then
 		timer.Simple(1,function()
 		local effectdata = EffectData()
 		effectdata:SetEntity(ply)
@@ -393,7 +393,7 @@ function GM:PlayerLoadout( pl )
 	player_manager.RunClass( pl, "Loadout" )
     pl:Give("weapon_crowbar")
     pl:Give("war_pistol")
-	if (pl:GetPrimary()) then
+	if (pl:GetPrimary() && pl:GetPrimaryWep()) then
 		prim = pl:Give(pl:GetPrimaryWep())
 		pl:GiveAmmo(prim:GetMaxAmmo(), prim:GetPrimaryAmmoType(), false)
 	end
@@ -831,6 +831,10 @@ function GM:PlayerButtonDown( ply, btn ) end
 function GM:PlayerButtonUp( ply, btn ) end
 
 local hasFrag = false
+local hasHealGun = false
+local hasRevenge = false
+local hasScavenge = false
+
 function SetHasFrag (bool)
 	hasFrag = bool
 end
@@ -838,5 +842,32 @@ end
 function GetHasFrag()
 	return hasFrag
 end
+--[[
+function SetHasHealGun (bool)
+	hasHealGun = bool
+end
+
+function GetHasHealGun()
+	return hasHealGun
+end
+
+function SetHasRevenge (bool)
+	hasRevenge = bool
+end
+
+function GetHasRevenge()
+	return hasRevenge
+end
+]]
+function SetHasScavenge (bool)
+	hasScavenge = bool
+end
+
+function GetHasScavenge()
+	return hasScavenge
+end
+
+
+
 
 concommand.Add( "changeteam", function( pl, cmd, args ) hook.Call( "PlayerRequestTeam", GAMEMODE, pl, tonumber( args[ 1 ] ) ) end )

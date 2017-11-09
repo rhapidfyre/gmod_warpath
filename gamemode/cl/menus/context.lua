@@ -164,40 +164,45 @@ function GM:OnContextMenuOpen()
 					net.SendToServer()
 				end
 				
-				
-				local MedButton = vgui.Create("DButton", panel1)
-				MedButton:SetText("Medic")
-				MedButton:SetTextColor(Color(0, 0, 0))
-				MedButton:SetPos(40,170)
-				MedButton:SetSize(60,60)
-				MedButton.DoClick = function()
-					net.Start("CL_Upgrade")
-					net.WriteString("medic")
-					net.SendToServer()
+				if !LocalPlayer():GetHasHealGun() then
+					local MedButton = vgui.Create("DButton", panel1)
+					MedButton:SetText("Medic")
+					MedButton:SetTextColor(Color(0, 0, 0))
+					MedButton:SetPos(40,170)
+					MedButton:SetSize(60,60)
+					MedButton.DoClick = function()
+						net.Start("player_perk")
+						net.WriteString("medic")
+						net.SendToServer()
+					end
 				end
 				
-				local SvgButton = vgui.Create("DButton", panel1)
-				SvgButton:SetText("Scavenge")
-				SvgButton:SetTextColor(Color(0, 0, 0))
-				SvgButton:SetPos(120,170)
-				SvgButton:SetSize(60,60)
-				SvgButton.DoClick = function()
-					net.Start("CL_Upgrade")
-					net.WriteString("scavenge")
-					net.SendToServer()
+				if !LocalPlayer():GetHasScavenge() then
+					local SvgButton = vgui.Create("DButton", panel1)
+					SvgButton:SetText("Scavenge")
+					SvgButton:SetTextColor(Color(0, 0, 0))
+					SvgButton:SetPos(120,170)
+					SvgButton:SetSize(60,60)
+					SvgButton.DoClick = function()
+						net.Start("player_perk")
+						net.WriteString("scavenge")
+						net.SendToServer()
+					end
 				end
 				
-				local RvgButton = vgui.Create("DButton", panel1)
-				RvgButton:SetText("Revenge")
-				RvgButton:SetTextColor(Color(0, 0, 0))
-				RvgButton:SetPos(200, 170)
-				RvgButton:SetSize(60,60)
-				RvgButton.DoClick = function()
-					net.Start("CL_Upgrade")
-					net.WriteString("Revenge")
-					net.SendToServer()
+				if !LocalPlayer():GetHasRevenge() then
+					local RvgButton = vgui.Create("DButton", panel1)
+					RvgButton:SetText("Revenge")
+					RvgButton:SetTextColor(Color(0, 0, 0))
+					RvgButton:SetPos(200, 170)
+					RvgButton:SetSize(60,60)
+					RvgButton.DoClick = function()
+						net.Start("player_perk")
+						net.WriteString("revenge")
+						net.SendToServer()
+					end
 				end
-				
+
 				local GndButton = vgui.Create("DButton", panel1)
 				GndButton:SetText("Grenade")
 				GndButton:SetTextColor(Color(0, 0, 0))
@@ -215,7 +220,7 @@ function GM:OnContextMenuOpen()
 				CapButton:SetPos(120,250)
 				CapButton:SetSize(60,60)
 				CapButton.DoClick = function()
-					net.Start("CL_Upgrade")
+					net.Start("player_perk")
 					net.WriteString("capture")
 					net.SendToServer()
 				end

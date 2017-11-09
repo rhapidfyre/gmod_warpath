@@ -9,6 +9,7 @@ util.AddNetworkString("SV_UpgradeFail")
 util.AddNetworkString("CL_Upgrade")
 util.AddNetworkString("CL_Points")
 util.AddNetworkString("player_weapon")
+util.AddNetworkString("player_perk")
 
 
 -- Sends client current team point count

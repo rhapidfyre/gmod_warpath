@@ -12,33 +12,29 @@
 	end
 	
 -- Adds the table info to the gamemode (REQUIRED)
-net.Receive("player_weapon", function (len,ply)
-	local plyweapon = net.ReadString()
+net.Receive("player_perk", function (len,ply)
+	local plyperk = net.ReadString()
 	--print(ply:Nick())
 	
 	if SERVER then
-		if !ply:GetPrimary() && ply:GetPoints() >= 1 then
-			prim = ply:Give(plyweapon)
-			ply:SetPrimaryWep(plyweapon)
-			ply:SetPrimary(true)
+
+		if (plyperk == "medic" && !ply:GetHasHealGun() && ply:GetPoints() >= 1) then
+			ply:SetHasHealGun(true)
 			ply:SetPoints(ply:GetPoints() - 1)
-			ply:GiveAmmo(prim:GetMaxAmmo(), prim:GetPrimaryAmmoType(), false)
+			print("Researched Medic!")
 			
-		elseif ((plyweapon == "weapon_frag") && (ply:GetPoints() >=1)) then
-		
-			if ply:GetHasFrag() == false then
-				ply:Give("weapon_frag")
-				ply:SetPoints(ply:GetPoints() - 1)
-				ply:SetHasFrag (true)
-				print("Here's a grenade for you!")
-			else
-				ply:SetPoints(ply:GetPoints() - 1)
-				ply:GiveAmmo(1, 10, false)
-				print("Another one!")
-			end
+		elseif (plyperk == "scavenge" && !ply:GetHasScavenge() && ply:GetPoints() >= 1) then
+			ply:SetHasHealGun(true)
+			ply:SetPoints(ply:GetPoints() - 1)
+			print("Researched Scavenge!")
+			
+		elseif (plyperk == "revenge" && !ply:GetHasRevenge() && ply:GetPoints() >= 1) then
+			ply:SetHasHealGun(true)
+			ply:SetPoints(ply:GetPoints() - 1)
+			print("Researched Revenge!")
 			
 		else	
-			print("(DEBUG) Already got a primary weapon dork")
+
 		end
 	end
 	
