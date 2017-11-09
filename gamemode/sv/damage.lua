@@ -15,8 +15,8 @@ local function HealDamage(info, victim)
 	print(dmg*.1)
 		info:SetDamage(0)
 	if victim:Health() < victim:GetMaxHealth() then 
-		if ((victim:Health()+dmg*.1)>victim:GetMaxHealth()) then
-			victim:SetHealth( victim:Health()+(dmg*.1))
+		if ((victim:Health()+dmg*.2)>victim:GetMaxHealth()) then
+			victim:SetHealth( victim:Health()+(dmg*.2))
 		else
 			victim:SetHealth(victim:GetMaxHealth())
 	
@@ -24,7 +24,7 @@ local function HealDamage(info, victim)
 	else
 		victim:SetHealth(victim:GetMaxHealth())
 	end
-	print ("Player now has "..victim:Health().." Health!") 
+	print ("NPC now has "..victim:Health().." Health!") 
 
 end
 
@@ -35,29 +35,33 @@ function GM:EntityTakeDamage( ent, info )
     end
 
     if ent:IsNPC() then
-        if info:GetAttacker():IsPlayer() && info:GetAttacker():GetHasHealGun() then
+        if info:GetAttacker():IsPlayer() then
             if (ent:GetWarTeam() == info:GetAttacker():Team()) then
+		if  info:GetAttacker():GetHasHealGun() then
 				HealDamage(info, ent)
 					Redirect(ent)
-			else
-				Redirect(ent)
-			end
 		else
+			info:SetDamage(0)
 			Redirect(ent)
 		end
-    else
-	--[[if ent:IsPlayer() then
+	    else
+		Redirect(ent)
+	    end
+	else
+	  Redirect(ent)
+	end
+    elseif ent:IsPlayer() then
 		local atk = info:GetAttacker()
 		
 		if atk:IsPlayer() then
 			if (ent:Team() == atk:Team()) then
-				CalcDamage(info, ent)
+				HealDamage(info, ent)
 			end
 		elseif atk:IsNPC() then
 			if (ent:Team() == atk:GetWarTeam()) then
-				CalcDamage(info, ent)
+				HealDamage(info, ent)
 			end
-		end]]
+		end
      end
 print(info:GetDamage())
 end

@@ -246,7 +246,7 @@ function GM:PlayerDeath( ply, inflictor, attacker )
 		end
 	
 		local actwep = attacker:GetActiveWeapon()
-		if actwep:GetHoldType() != "melee" then
+		if actwep:GetHoldType() != "melee"  && attacker:GetHasScavenge() then
 			local maxammo = actwep:GetMaxAmmo()
 			print(actwep:GetMaxAmmo())
 			attacker:SetAmmo(math.Round(actwep:Ammo1()+(maxammo*.3)), actwep:GetPrimaryAmmoType())
@@ -830,6 +830,7 @@ end
 function GM:PlayerButtonDown( ply, btn ) end
 function GM:PlayerButtonUp( ply, btn ) end
 
+
 local hasFrag = false
 local hasHealGun = false
 local hasRevenge = false
@@ -842,7 +843,7 @@ end
 function GetHasFrag()
 	return hasFrag
 end
---[[
+
 function SetHasHealGun (bool)
 	hasHealGun = bool
 end
@@ -858,7 +859,7 @@ end
 function GetHasRevenge()
 	return hasRevenge
 end
-]]
+
 function SetHasScavenge (bool)
 	hasScavenge = bool
 end
@@ -866,6 +867,7 @@ end
 function GetHasScavenge()
 	return hasScavenge
 end
+
 
 
 

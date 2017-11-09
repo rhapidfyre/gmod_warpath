@@ -18,19 +18,19 @@ net.Receive("player_perk", function (len,ply)
 	
 	if SERVER then
 
-		if (plyperk == "medic" && !ply:GetHasHealGun() && ply:GetPoints() >= 1) then
+		if (plyperk == "medic" && !ply:GetHasHealGun() && ply:GetPoints() >= 20) then
 			ply:SetHasHealGun(true)
-			ply:SetPoints(ply:GetPoints() - 1)
+			ply:SetPoints(ply:GetPoints() - 20)
 			print("Researched Medic!")
 			
-		elseif (plyperk == "scavenge" && !ply:GetHasScavenge() && ply:GetPoints() >= 1) then
-			ply:SetHasHealGun(true)
-			ply:SetPoints(ply:GetPoints() - 1)
+		elseif (plyperk == "scavenge" && !ply:GetHasScavenge() && ply:GetPoints() >= 20) then
+			ply:SetHasScavenge(true)
+			ply:SetPoints(ply:GetPoints() - 20)
 			print("Researched Scavenge!")
 			
-		elseif (plyperk == "revenge" && !ply:GetHasRevenge() && ply:GetPoints() >= 1) then
-			ply:SetHasHealGun(true)
-			ply:SetPoints(ply:GetPoints() - 1)
+		elseif (plyperk == "revenge" && !ply:GetHasRevenge() && ply:GetPoints() >= 20) then
+			ply:SetHasRevenge(true)
+			ply:SetPoints(ply:GetPoints() - 20)
 			print("Researched Revenge!")
 			
 		else	

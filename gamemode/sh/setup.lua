@@ -27,7 +27,10 @@ function GM:OnEntityCreated( Ent )
         Ent:NetworkVar("Bool",1,"HasBow")
         Ent:NetworkVar("Bool",2,"HasShotty")
         Ent:NetworkVar("Bool",3,"HasFrag")
-        Ent:NetworkVar("Bool",4,"Primary")
+        Ent:NetworkVar("Bool",4,"HasHealGun")
+        Ent:NetworkVar("Bool",5,"HasScavenge")
+        Ent:NetworkVar("Bool",6,"HasRevenge")
+        Ent:NetworkVar("Bool",7,"Primary")
         Ent:NetworkVar("String",0,"PrimaryWep")
 		
 
