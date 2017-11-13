@@ -24,15 +24,16 @@ net.Receive("player_weapon", function (len,ply)
 			ply:SetPoints(ply:GetPoints() - 1)
 			ply:GiveAmmo(prim:GetMaxAmmo(), prim:GetPrimaryAmmoType(), false)
 			
-		elseif ((plyweapon == "weapon_frag") && (ply:GetPoints() >=1)) then
+			
+		elseif ((plyweapon == "weapon_frag") && (ply:GetPoints() >=5)) then
 		
 			if ply:GetHasFrag() == false then
 				ply:Give("weapon_frag")
-				ply:SetPoints(ply:GetPoints() - 1)
+				ply:SetPoints(ply:GetPoints() - 5)
 				ply:SetHasFrag (true)
 				print("Here's a grenade for you!")
 			else
-				ply:SetPoints(ply:GetPoints() - 1)
+				ply:SetPoints(ply:GetPoints() - 5)
 				ply:GiveAmmo(1, 10, false)
 				print("Another one!")
 			end
