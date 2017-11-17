@@ -67,6 +67,9 @@ function ENT:Think()
                 --for i=1,self.spawnmobs do
                 
 					local npc = nil
+					
+
+					
 					if self.WarTeam == 2 then
                         npc = ents.Create("npc_combine_s")
                     elseif self.WarTeam == 5 then
@@ -75,6 +78,7 @@ function ENT:Think()
 						npc = ents.Create("npc_citizen")
 					end
 					
+					npc:SetWarTeam(self.WarTeam)
 					--self.WarTeam = self.nearest:GetKeyValues()["TeamNum"]
 					--local npc = ents.Create("npc_citizen")
 					
@@ -96,12 +100,13 @@ function ENT:Think()
 					-- Add input so that when the mob dies, the spawner it belongs to will spawn another
 					npc:Input("AddOutput", npc, ply, "OnDeath "..self:GetName()..":DecreaseCount:1::-1")
 
-					npc:SetWarTeam(self.WarTeam)
+
+				
 					
 					npc:Spawn()
 					
                    	if self.WarTeam == 5 then
-						npc:SetColor(Color(math.Rand(50,255),math.Rand(50,255),math.Rand(50,255)))
+						npc:SetColor(Color(125,125,125,255))
 						timer.Simple(0.1, function()
 							npc:SetMaxHealth(100)
 							npc:SetHealth(npc:GetMaxHealth())

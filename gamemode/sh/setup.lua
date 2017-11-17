@@ -71,11 +71,11 @@ function GM:CreateTeams()
 			teamcol1 = tcol1[tc1]
 			teamcol2 = tcol2[tc2]
             
-            local teamname1 = {"Impact", "Aurora",
-            "Fatal", "Royal", "Aftermath", "Alpha"}
+            local teamname1 = {"Impact", "Aurora", "Conquest",
+            "Fatal", "Royal", "Aftermath", "Alpha", "Paragon"}
             
-            local teamname2 = {"Havoc", "Reign",
-            "Shadow", "Omega", "Cyclone", "Marauder"}
+            local teamname2 = {"Havoc", "Reign", "Doom",
+            "Shadow", "Omega", "Cyclone", "Marauder", "Renegade"}
 			
             local tname1 = table.Random(teamname1)
             local tname2 = table.Random(teamname2)

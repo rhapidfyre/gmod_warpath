@@ -38,6 +38,10 @@ concommand.Add("printnpc", function(ply, cmd, args)
 	end
 end)
 
+concommand.Add("grow", function(ply)
+	ply:SetModelScale(ply:GetModelScale()*3)
+end)
+
 ------------------------------------------
 
 

@@ -175,23 +175,21 @@ function GM:OnContextMenuOpen()
 						net.WriteString("medic")
 						net.SendToServer()
 					end
-				end
+				end]]
 				
-				if !LocalPlayer():GetHasScavenge() then
 					local SvgButton = vgui.Create("DButton", panel1)
 					SvgButton:SetText("Scavenge")
 					SvgButton:SetTextColor(Color(0, 0, 0))
 					SvgButton:SetPos(120,170)
 					SvgButton:SetSize(60,60)
 					SvgButton.DoClick = function()
-						net.Start("player_perk")
+						net.Start("CL_Upgrade")
 						net.WriteString("scavenge")
 						net.SendToServer()
 					end
-				end
-				]]
-				--if !LocalPlayer():GetHasRevenge() then
-					local RvgButton = vgui.Create("DButton", panel1)
+				
+				
+				local RvgButton = vgui.Create("DButton", panel1)
 					RvgButton:SetText("Revenge")
 					RvgButton:SetTextColor(Color(0, 0, 0))
 					RvgButton:SetPos(200, 170)
@@ -201,7 +199,6 @@ function GM:OnContextMenuOpen()
 						net.WriteString("revenge")
 						net.SendToServer()
 					end
-				--end
 
 				local GndButton = vgui.Create("DButton", panel1)
 				GndButton:SetText("Grenade")

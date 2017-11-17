@@ -260,6 +260,8 @@ function GM:PlayerDeath( ply, inflictor, attacker )
 		if (IsValid(attacker)) then
 			attacker:SetMaxHealth(attacker:GetMaxHealth()*2)
 			attacker:SetHealth(attacker:GetMaxHealth())
+			attacker:SetModelScale(attacker:GetModelScale()*1.1)
+
 			
 		end
 	return end

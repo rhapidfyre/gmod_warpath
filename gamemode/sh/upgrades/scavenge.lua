@@ -79,21 +79,37 @@ if SERVER then
 	end
 		
 
-local function DeathScavenge(ply, inf, atk)
-	if ply:LastHitGroup() != HITGROUP_HEAD && GetHasScavenge(ply) then
-			local actwep = attacker:GetActiveWeapon()
+local function DeathScavengePlayer(ply, inf, atk)
+	if atk:IsPlayer() && GetHasScavenge(ply) then
+			local actwep = atk:GetActiveWeapon()
 			if actwep:GetHoldType() != "melee" then
 				local maxammo = actwep:GetMaxAmmo()
 				print(actwep:GetMaxAmmo())
-				attacker:SetAmmo(math.Round(actwep:Ammo1()+(maxammo*.05)), actwep:GetPrimaryAmmoType())
-				print((actwep:GetMaxAmmo()*.05))
+				atk:SetAmmo(math.Round(actwep:Ammo1()+(maxammo*.25)), actwep:GetPrimaryAmmoType())
+				print((actwep:GetMaxAmmo()*.25))
 			end
 		
 		
 	end
 end
 	
-hook.Add("PlayerDeath", "DoHPUpgrade", DeathScavenge)
+	
+local function DeathScavengeNPC(ply, inf, atk)
+	if atk:IsPlayer() && GetHasScavenge(ply) then
+			local actwep = atk:GetActiveWeapon()
+			print(actwep)
+			if actwep:GetHoldType() != "melee" then
+				local maxammo = actwep:GetMaxAmmo()
+				print(actwep:GetMaxAmmo())
+				atk:SetAmmo(math.Round(actwep:Ammo1()+(maxammo*.05)), actwep:GetPrimaryAmmoType())
+				print("Ammo is "..(actwep:GetMaxAmmo()*.05))
+			end
+		
+		
+	end
+end	
+hook.Add("PlayerDeath", "DeathScavengePlayer", DeathScavengePlayer)
+hook.Add("NPCDeath", "DeathScavengeNPC", DeathScavengeNPC)
 		--[[
 		args[1] =
 			upgrade name (myupgrade.name)

@@ -93,7 +93,7 @@ local function DeathRevenge(ply, inf, atk)
 	end
 end
 	
-hook.Add("PlayerDeath", "DoHPUpgrade", DeathRevenge)
+hook.Add("PlayerDeath", "DeathRevenge", DeathRevenge)
 		--[[
 		args[1] =
 			upgrade name (myupgrade.name)

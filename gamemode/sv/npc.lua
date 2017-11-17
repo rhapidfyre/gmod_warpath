@@ -93,6 +93,7 @@ function GM:OnNPCKilled( ent, attacker, inflictor )
         attacker:SetPoints(attacker:GetPoints() + POINT_DEAD_NPC)
 		team.SetScore(attacker:Team(), team.GetScore(attacker:Team()) + SCORE_KILLNPC)
     end
+	
     
 end
 
@@ -109,10 +110,6 @@ function GM:ScaleNPCDamage( npc, hitgroup, dmginfo )
 	
 	end
 	
-	 --Increase neutral's damage
-	if npc:GetWarTeam() < 1 or npc:GetWarTeam() > 4 then
-		dmginfo:ScaleDamage(2.25)
-	end
 	
 	-- Less damage if we're shot in the arms or legs
 	if ( hitgroup == HITGROUP_LEFTARM ||
