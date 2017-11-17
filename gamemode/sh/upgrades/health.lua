@@ -74,7 +74,7 @@ if SERVER then
 	-- Checks NPC Health Upgrade everytime it's purchased
 	hook.Add("OnEntityCreated", "NPCHPUpgrade", function(ent)
 		if ent:IsNPC() then
-			timer.Simple(3, function()
+			timer.Simple(1, function()
 			local warteam = ent:GetWarTeam()
 				if warteam > 0 and warteam < 3 then
 					local npclevel = myupgrade["level"][warteam]
