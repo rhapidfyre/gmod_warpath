@@ -29,6 +29,8 @@ function round.Prep()
     -- Resets Upgrades to Level 1 & points to POINT_START (variables.lua)
     for k,v in pairs(player.GetAll()) do
         v:SetPoints(0)
+		v:ResetUpgrades()
+		hook.Call("UpgradeReset")
     end
 	SetGlobalInt("WP_T1Points", POINT_START)
 	SetGlobalInt("WP_T2Points", POINT_START)
@@ -39,10 +41,8 @@ function round.Prep()
             -- Respawn/Reset Players
             if IsPlaying(ply) then ply:Spawn() end
 
-            		ply:SetHasFrag(false)
-			ply:SetHasHealGun(false)
-			ply:SetHasScavenge(false)
-			ply:SetHasRevenge(false)
+			
+			
 			ply:SetPrimary(false)
             -- Weapon Strip 
 			ply:StripWeapons()

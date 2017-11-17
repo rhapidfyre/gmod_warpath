@@ -163,7 +163,7 @@ function GM:OnContextMenuOpen()
 					net.WriteString("upgrade")
 					net.SendToServer()
 				end
-				
+				--[[
 				if !LocalPlayer():GetHasHealGun() then
 					local MedButton = vgui.Create("DButton", panel1)
 					MedButton:SetText("Medic")
@@ -189,19 +189,19 @@ function GM:OnContextMenuOpen()
 						net.SendToServer()
 					end
 				end
-				
-				if !LocalPlayer():GetHasRevenge() then
+				]]
+				--if !LocalPlayer():GetHasRevenge() then
 					local RvgButton = vgui.Create("DButton", panel1)
 					RvgButton:SetText("Revenge")
 					RvgButton:SetTextColor(Color(0, 0, 0))
 					RvgButton:SetPos(200, 170)
 					RvgButton:SetSize(60,60)
 					RvgButton.DoClick = function()
-						net.Start("player_perk")
+						net.Start("CL_Upgrade")
 						net.WriteString("revenge")
 						net.SendToServer()
 					end
-				end
+				--end
 
 				local GndButton = vgui.Create("DButton", panel1)
 				GndButton:SetText("Grenade")

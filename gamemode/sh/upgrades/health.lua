@@ -7,6 +7,10 @@ myupgrade.title		= "Health Upgrade"
 myupgrade.desc		= "Increase to Max Hit Points" -- Should be in the form of an improper sentence
 myupgrade.longdesc  = "Buying a level of this upgrade will increase the amount of health you have by the percentage bonus of your current level." -- Proper grammar/punctuation, as long as you want.
 
+-- Menu applicability
+myupgrade.npc		= true -- True if npc upgrade (shows up in F4 NPC Menu)
+myupgrade.player	= true -- True if player upgrade (shows up in C context menu)
+
 -- Declares the base point cost for each upgrade level
 -- KEY: Level in Question
 -- VAL: Price to purchase level KEY
@@ -24,9 +28,9 @@ myupgrade["cost"][10] 	= 10
 ----------------------------------
 ---------------------------------- (end required)
 
--- Declares what percentage increase health gives
+-- Declares what value increase health gives
 -- KEY: Current level
--- VAL: Percentage increase
+-- VAL: value increase
 myupgrade["increase"] = {}
 myupgrade["increase"][0]  = 0
 myupgrade["increase"][1]  = 10
@@ -70,8 +74,14 @@ if SERVER then
 	-- Checks NPC Health Upgrade everytime it's purchased
 	hook.Add("OnEntityCreated", "NPCHPUpgrade", function(ent)
 		if ent:IsNPC() then
-			local npclevel = ent:GetUpgrade("health_base")
-			ent:SetMaxHealth(ent:GetMaxHealth() + myupgrade["increase"][npclevel])
+			timer.Simple(3, function()
+			local warteam = ent:GetWarTeam()
+				if warteam > 0 and warteam < 3 then
+					local npclevel = myupgrade["level"][warteam]
+					ent:SetMaxHealth(ent:GetMaxHealth() + myupgrade["increase"][npclevel])
+					ent:SetHealth(ent:GetMaxHealth())
+				end
+			end)--timer end
 		end
 	end)
 	

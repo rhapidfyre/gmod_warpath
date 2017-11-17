@@ -96,11 +96,13 @@ function ENT:Think()
 					-- Add input so that when the mob dies, the spawner it belongs to will spawn another
 					npc:Input("AddOutput", npc, ply, "OnDeath "..self:GetName()..":DecreaseCount:1::-1")
 
+					npc:SetWarTeam(self.WarTeam)
+					
 					npc:Spawn()
 					
-                   		if self.WarTeam == 5 then
-							npc:SetColor(Color(math.Rand(50,255),math.Rand(50,255),math.Rand(50,255)))
-							timer.Simple(0.1, function()
+                   	if self.WarTeam == 5 then
+						npc:SetColor(Color(math.Rand(50,255),math.Rand(50,255),math.Rand(50,255)))
+						timer.Simple(0.1, function()
 							npc:SetMaxHealth(100)
 							npc:SetHealth(npc:GetMaxHealth())
 						end)
@@ -108,6 +110,12 @@ function ENT:Think()
 						npc:SetColor(team.GetColor(self.WarTeam))
 					end
 					
+					timer.Simple(2, function()
+						if npc:GetMaxHealth() < 50 then
+							npc:SetMaxHealth(50)
+							npc:SetHealth(50)
+						end
+					end)--timer end
 					
 					
 					--(DEBUG)
@@ -116,7 +124,6 @@ function ENT:Think()
 					--end
 					npc:SetCollisionGroup(COLLISION_GROUP_DEBRIS_TRIGGER)
 					
-					npc:SetWarTeam(self.WarTeam)
 										
 					-- Randomly spawn within given radius by map
 					npc:SetPos(self:GetPos() + Vector(0,0,0))

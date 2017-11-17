@@ -14,7 +14,6 @@
 -- Adds the table info to the gamemode (REQUIRED)
 net.Receive("player_weapon", function (len,ply)
 	local plyweapon = net.ReadString()
-	--print(ply:Nick())
 	
 	if SERVER then
 		if !ply:GetPrimary() && ply:GetPoints() >= 1 then
@@ -66,10 +65,3 @@ end)
 		args[4] =
 			Entity; Player
 	]]
-
-
-
-
-
-
-

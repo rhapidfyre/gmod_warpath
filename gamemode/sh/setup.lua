@@ -75,7 +75,7 @@ function GM:CreateTeams()
             "Fatal", "Royal", "Aftermath", "Alpha"}
             
             local teamname2 = {"Havoc", "Reign",
-            "Shadow", "Omega", "Cyclone", "Indigo"}
+            "Shadow", "Omega", "Cyclone", "Marauder"}
 			
             local tname1 = table.Random(teamname1)
             local tname2 = table.Random(teamname2)
