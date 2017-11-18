@@ -1,4 +1,3 @@
-
 --[[
 ---------- MIN. REQUIRED ---------
 This is the minimum amount of table info needed so that
@@ -13,13 +12,13 @@ having to network information between server and client.
 ]]
 
 local myupgrade = {}
-myupgrade.name 		= "health_base" -- Must be in coding convention. Used for gamemode purposes.
-myupgrade.title		= "Health Upgrade" -- Title for the player's menu
-myupgrade.desc		= "Increase to Max Hit Points" -- Should be short, to the point.
+myupgrade.name 		= "revenge" -- Must be in coding convention. Used for gamemode purposes.
+myupgrade.title		= "Death Revenge" -- Title for the player's menu
+myupgrade.desc		= "Explode on death. A fun time for all." -- Should be short, to the point.
 
 -- Menu applicability
 myupgrade.npc		= false -- True if npc upgrade (shows up in F4 NPC Menu)
-myupgrade.player	= false -- True if player upgrade (shows up in C context menu)
+myupgrade.player	= true -- True if player upgrade (shows up in C context menu)
 
 -- Can be as long as you want. Full description of upgrade.
 myupgrade.longdesc  = "Buying a level of this upgrade will increase the amount of health you have by the percentage bonus of your current level." 
@@ -27,37 +26,9 @@ myupgrade.longdesc  = "Buying a level of this upgrade will increase the amount o
 -- Declares the base point cost for each upgrade level
 -- KEY: The level for the player's request
 -- VAL: Points required to purchase corresponding key level
-myupgrade["cost"] = {}
-myupgrade["cost"][1] 	= 1
-myupgrade["cost"][2] 	= 2
-myupgrade["cost"][3] 	= 3
-myupgrade["cost"][4] 	= 4
-myupgrade["cost"][5] 	= 5
-myupgrade["cost"][6] 	= 6
-myupgrade["cost"][7] 	= 7
-myupgrade["cost"][8] 	= 8
-myupgrade["cost"][9] 	= 9
-myupgrade["cost"][10] 	= 10
+myupgrade["cost"] = 1
 
--- Declares what percentage increase health gives
--- KEY: Player's current level
--- VAL: Value to add (in this case, HP to add per level)
-myupgrade["increase"] = {}
-myupgrade["increase"][1]  = 10
-myupgrade["increase"][2]  = 25
-myupgrade["increase"][3]  = 50
-myupgrade["increase"][4]  = 75
-myupgrade["increase"][5]  = 100
-myupgrade["increase"][6]  = 125
-myupgrade["increase"][7]  = 150
-myupgrade["increase"][8]  = 175
-myupgrade["increase"][9]  = 200
-myupgrade["increase"][10] = 500
 
--- Current Team Level (1 = Team 1, 2 = Team 2)
-myupgrade["level"] = {}
-myupgrade["level"][1] = 0
-myupgrade["level"][2] = 0
 
 ----- THIS CONCLUDES THE MINIMUM REQUIREMENTS FOR THE INFO TABLE -----
 
@@ -76,15 +47,54 @@ end)
 -------------------------------------------------
 if SERVER then
 
+	local function SetHasRevenge (ply, bool)
+		ply:SetUpgrade(myupgrade.name, bool)
+	end
+
+	local function GetHasRevenge(ply)
+		local hasUp = ply:GetUpgrade(myupgrade.name) 
+		if hasUp == 1 then return true
+		else return false end
+	end
+
 	-- ADD YOUR FUNCTIONS HERE
-	local function MyFunction(args)
+	local function RevengeUpgrade(args)
 		if args[1] == myupgrade.name then
-			-- Do Stuff
+			local ply 		= args[4]
+			local mylevel 	= ply:GetUpgrade(args[1])
+			
+			if mylevel == 0 then mylevel = false
+			else mylevel = true end
+			
+			if !args[3] and !mylevel then
+				local points = ply:GetPoints()
+				local cost = myupgrade["cost"]
+				if points >= cost then
+					ply:SetPoints(ply:GetPoints()-cost)
+					SetHasRevenge(ply, 1)
+					
+				end
+			end
 		end
 	end
 		
+
+local function DeathRevenge(ply, inf, atk)
+	if ply:LastHitGroup() != HITGROUP_HEAD && GetHasRevenge(ply) then
+		timer.Simple(1,function()
+		local effectdata = EffectData()
+		effectdata:SetEntity(ply)
+		effectdata:SetOrigin(ply:GetPos())	
+
+		util.Effect("Explosion", effectdata)
+		util.BlastDamage(ply, ply, ply:GetPos(), 200, 200)
 		
-	--[[
+		end)--timer
+	end
+end
+	
+hook.Add("PlayerDeath", "DeathRevenge", DeathRevenge)
+		--[[
 		args[1] =
 			upgrade name (myupgrade.name)
 		
@@ -99,7 +109,7 @@ if SERVER then
 		args[4] =
 			Entity; Player
 	]]
-	hook.Add("DoUpgrade", "GiveMeAName", MyFunction)
+	hook.Add("DoUpgrade", "GiveRevenge", RevengeUpgrade)
 end
 
 

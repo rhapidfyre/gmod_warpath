@@ -24,7 +24,22 @@ concommand.Add("setpoints", function(ply, cmd, args)
 	ply:SetPoints(args[1])
 end)
 concommand.Add("check", function(ply, cmd, args)
-	print("Your Health: "..ply:Health().."/"..ply:GetMaxHealth())
+	local eyetrace = ply:GetEyeTraceNoCursor()
+	local target = eyetrace.Entity
+	if target:IsNPC() then
+		print("Target Health: "..target:Health().."/"..target:GetMaxHealth()) 
+	end
+end)
+concommand.Add("printnpc", function(ply, cmd, args)
+	local eyetrace = ply:GetEyeTraceNoCursor()
+	local target = eyetrace.Entity
+	if target:IsNPC() then
+		PrintTable(target:GetKeyValues())
+	end
+end)
+
+concommand.Add("grow", function(ply)
+	ply:SetModelScale(ply:GetModelScale()*3)
 end)
 
 ------------------------------------------

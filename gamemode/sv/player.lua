@@ -43,16 +43,7 @@ function GM:DoPlayerDeath( ply, attacker, dmginfo )
 
 	ply:CreateRagdoll()
 	ply:AddDeaths( 1 )
-	if ply:LastHitGroup() != HITGROUP_HEAD && ply:GetHasRevenge() then
-		timer.Simple(1,function()
-		local effectdata = EffectData()
-		effectdata:SetEntity(ply)
-		effectdata:SetOrigin(ply:GetPos())	
-
-		util.Effect("Explosion", effectdata)
-		util.BlastDamage(ply, ply, ply:GetPos(), 200, 200)
-		end)
-	end
+	
 	if ( attacker:IsValid() && attacker:IsPlayer() ) then
 	
 		if ( attacker == ply ) then
@@ -269,6 +260,8 @@ function GM:PlayerDeath( ply, inflictor, attacker )
 		if (IsValid(attacker)) then
 			attacker:SetMaxHealth(attacker:GetMaxHealth()*2)
 			attacker:SetHealth(attacker:GetMaxHealth())
+			attacker:SetModelScale(attacker:GetModelScale()*1.1)
+
 			
 		end
 	return end
@@ -852,14 +845,15 @@ function GetHasHealGun()
 	return hasHealGun
 end
 
-function SetHasRevenge (bool)
-	hasRevenge = bool
-end
 
+<<<<<<< HEAD
 function GetHasRevenge()
 	return hasRevenge
 end
 
+=======
+]]
+>>>>>>> master
 function SetHasScavenge (bool)
 	hasScavenge = bool
 end

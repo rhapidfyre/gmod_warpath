@@ -34,11 +34,21 @@ function GM:EntityTakeDamage( ent, info )
         info:SetDamage(10)
     end
 
+	if info:GetAttacker():IsNPC() && info:GetAttacker():GetWarTeam() > 5 then
+		info:ScaleDamage(2.25)
+	end
+	
     if ent:IsNPC() then
+<<<<<<< HEAD
         if info:GetAttacker():IsPlayer() then
             if (ent:GetWarTeam() == info:GetAttacker():Team()) then
 		if  info:GetAttacker():GetHasHealGun() then
 				HealDamage(info, ent)
+=======
+        if info:GetAttacker():IsPlayer() && ent:GetWarTeam() == info:GetAttacker():Team() then
+				info:SetDamage(0)
+				--HealDamage(info, ent)
+>>>>>>> master
 					Redirect(ent)
 		else
 			info:SetDamage(0)
@@ -63,7 +73,8 @@ function GM:EntityTakeDamage( ent, info )
 			end
 		end
      end
-print(info:GetDamage())
+
+print(info:GetAttacker():GetModelScale())
 end
 
 

@@ -11,6 +11,10 @@ myupgrade.title		= "Weapon Upgrade" -- Title for the player's menu
 myupgrade.desc		= "Gives AR2, then Shotgun, then Crossbow" -- Should be short, to the point.
 myupgrade.longdesc  = "Purchasing this upgrade will provide more weapon choices." 
 
+-- Menu applicability
+myupgrade.npc		= false -- True if npc upgrade (shows up in F4 NPC Menu)
+myupgrade.player	= true -- True if player upgrade (shows up in C context menu)
+
 myupgrade["cost"] = {}
 myupgrade["cost"][1] 	= 1
 myupgrade["cost"][2] 	= 1

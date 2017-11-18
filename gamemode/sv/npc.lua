@@ -56,6 +56,7 @@ function GM:OnNPCKilled( ent, attacker, inflictor )
 					attacker:SetHealth(attacker:Health() + attacker:GetMaxHealth()*0.1)
 					print("Player Healed")
 			end
+<<<<<<< HEAD
 			local actwep = attacker:GetActiveWeapon()
 			if actwep:GetHoldType() != "melee"  && attacker:GetHasScavenge() then
 				local maxammo = actwep:GetMaxAmmo()
@@ -63,6 +64,8 @@ function GM:OnNPCKilled( ent, attacker, inflictor )
 				attacker:SetAmmo(math.Round(actwep:Ammo1()+(maxammo*.05)), actwep:GetPrimaryAmmoType())
 				print((actwep:GetMaxAmmo()*.05))
 			end
+=======
+>>>>>>> master
 
 		end
 
@@ -100,6 +103,7 @@ function GM:OnNPCKilled( ent, attacker, inflictor )
         attacker:SetPoints(attacker:GetPoints() + POINT_DEAD_NPC)
 		team.SetScore(attacker:Team(), team.GetScore(attacker:Team()) + SCORE_KILLNPC)
     end
+	
     
 end
 
@@ -116,10 +120,6 @@ function GM:ScaleNPCDamage( npc, hitgroup, dmginfo )
 	
 	end
 	
-	 --Increase neutral's damage
-	if npc:GetWarTeam() < 1 or npc:GetWarTeam() > 4 then
-		dmginfo:ScaleDamage(2.25)
-	end
 	
 	-- Less damage if we're shot in the arms or legs
 	if ( hitgroup == HITGROUP_LEFTARM ||
