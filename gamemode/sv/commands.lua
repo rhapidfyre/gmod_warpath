@@ -11,40 +11,6 @@ function GM:ShowSpare2(ply)
 	ply:ConCommand("war_npcupgrades")
 end
 
--------------------------------------------
--- (DEBUG) Commands for debugging only
-concommand.Add("setmodel", function(ply, cmd, args)
-    print(args[1])
-    ply:SetModel("models/player/"..args[1])
-end)
-concommand.Add("getmodel", function(ply, cmd, args)
-    print(ply:GetModel())
-end)
-concommand.Add("setpoints", function(ply, cmd, args)
-	ply:SetPoints(args[1])
-end)
-concommand.Add("check", function(ply, cmd, args)
-	local eyetrace = ply:GetEyeTraceNoCursor()
-	local target = eyetrace.Entity
-	if target:IsNPC() then
-		print("Target Health: "..target:Health().."/"..target:GetMaxHealth()) 
-	end
-end)
-concommand.Add("printnpc", function(ply, cmd, args)
-	local eyetrace = ply:GetEyeTraceNoCursor()
-	local target = eyetrace.Entity
-	if target:IsNPC() then
-		PrintTable(target:GetKeyValues())
-	end
-end)
-
-concommand.Add("grow", function(ply)
-	ply:SetModelScale(ply:GetModelScale()*3)
-end)
-
-------------------------------------------
-
-
 --Forces supplied player to given team #
 concommand.Add("war_admin_setteam", function(ply, cmd, args)
 end)
