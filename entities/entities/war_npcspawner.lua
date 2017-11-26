@@ -78,7 +78,7 @@ function ENT:Think()
 						npc = ents.Create("npc_citizen")
 					end
 					
-					npc:SetWarTeam(self.WarTeam)
+					npc:SetTeam(self.WarTeam)
 					--self.WarTeam = self.nearest:GetKeyValues()["TeamNum"]
 					--local npc = ents.Create("npc_citizen")
 					

@@ -64,7 +64,7 @@ function GM:DoPlayerDeath( ply, attacker, dmginfo )
     elseif ( attacker:IsValid() && attacker:IsNPC() ) then
     
         -- Award NPC's team with upgrade points
-        local npcTeam = attacker:GetWarTeam()
+        local npcTeam = attacker:Team()
 	if npcTeam ~= 5 then
         SetGlobalInt("WP_T"..npcTeam.."Points", GetGlobalInt("WP_T"..npcTeam.."Points") + POINT_DEAD_PLY)
         team.SetScore(npcTeam, team.GetScore(npcTeam + SCORE_KILL))

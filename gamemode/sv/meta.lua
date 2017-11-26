@@ -84,3 +84,18 @@ function npcm:GetUpgrade(upname)
 	end
 end
 
+-- Team() function overload for NPC entities
+function npcm:Team()
+	if IsValid(self) then return self:GetKeyValues()["TeamNum"]
+	else 				  return 0
+	end
+end
+
+-- SetTeam() function overload for NPC entities
+function npcm:SetTeam(teamNum)
+	if IsValid(self) then
+		self:SetKeyValue("TeamNum", teamNum)
+		self:SetNWInt("TeamNum", teamNum)
+	end
+end
+

@@ -100,7 +100,7 @@ function ENT:StartTouch(ent)
     
         local entTeam = nil
         if ent:IsPlayer() then entTeam = ent:Team()
-        elseif ent:IsNPC() then entTeam = ent:GetWarTeam() end
+        elseif ent:IsNPC() then entTeam = ent:Team() end
         
         if entTeam == self.ownerteam then
             self.occupied = true
@@ -113,11 +113,11 @@ end
 function ENT:EndTouch(ent)
     if ent:IsNPC() or ent:IsPlayer() then
         self.count = self.count - 1
-        if self.count <= 0 then
+        if self.count <= 0 and IsValid(ent) then
         
             local entTeam = nil
             if ent:IsPlayer() then entTeam = ent:Team()
-            elseif ent:IsNPC() then entTeam = ent:GetWarTeam() end
+            elseif ent:IsNPC() then entTeam = ent:Team() end
             
             if entTeam == self.ownerteam then
             self.count = 0
@@ -132,15 +132,15 @@ function ENT:Touch(activator)
 	
 	if activator:IsNPC() then
     /*
-        if activator:GetWarTeam() == self.ownerteam and self.last_command < CurTime() then
+        if activator:Team() == self.ownerteam and self.last_command < CurTime() then
             AssaultPoint(activator)
             self.last_command = CurTime() + 5
             
         else*/
-        if ((activator:GetWarTeam() > 0 and activator:GetWarTeam() < 3) and (activator:GetWarTeam() ~= self.ownerteam)) then
+        if ((activator:Team() > 0 and activator:Team() < 3) and (activator:Team() ~= self.ownerteam)) then
             if !self.occupied then
                 if self.cooldown < CurTime() then
-                    self:Input("capture", activator, activator, activator:GetWarTeam())
+                    self:Input("capture", activator, activator, activator:Team())
                     SpawnpointChange() -- setup_npc.lua
                     self.count = 1
                     self.occupied = true

@@ -34,60 +34,19 @@ function GM:EntityTakeDamage( ent, info )
         info:SetDamage(10)
     end
 
-	if info:GetAttacker():IsNPC() && info:GetAttacker():GetWarTeam() > 5 then
+	if info:GetAttacker():IsNPC() && info:GetAttacker():Team() == 0 then
 		info:ScaleDamage(2.25)
 	end
 	
     if ent:IsNPC() then
-        if info:GetAttacker():IsPlayer() && ent:GetWarTeam() == info:GetAttacker():Team() then
+        if info:GetAttacker():IsPlayer() && ent:Team() == info:GetAttacker():Team() then
 				info:SetDamage(0)
 				--HealDamage(info, ent)
 					Redirect(ent)
 		else
 			Redirect(ent)
 		end
-    else
-	--[[if ent:IsPlayer() then
-		local atk = info:GetAttacker()
-		
-		if atk:IsPlayer() then
-			if (ent:Team() == atk:Team()) then
-				CalcDamage(info, ent)
-			end
-		elseif atk:IsNPC() then
-			if (ent:Team() == atk:GetWarTeam()) then
-				CalcDamage(info, ent)
-			end
-		end]]
      end
 
 print(info:GetAttacker():GetModelScale())
 end
-
-
-	--[[
-	-- Damage Upgrade Modifier
-	if ent:IsNPC() or ent:IsPlayer() then
-
-		local attacker = info:GetAttacker()
-		if IsValid(attacker) then
-			if attacker:IsNPC() then
-					
-				if attacker:GetWarTeam() > 0 and attacker:GetWarTeam() < 5 then
-					local teamnum = attacker:GetWarTeam()
-					local level = upgrades[teamnum]["damage"]
-					info:ScaleDamage(upgrade_info["perc"][level])
-				end
-					
-			elseif attacker:IsPlayer() then
-			
-					local teamnum = attacker:Team()
-					local level = upgrades[teamnum]["damage"]
-					info:ScaleDamage(upgrade_info["perc"][level])
-					
-			end
-		end
-	
-	end	
-	
-	]]

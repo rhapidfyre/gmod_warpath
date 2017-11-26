@@ -1,4 +1,15 @@
 
+local hidetable = {
+	CHudHealth 			= true,
+	CHudBattery 		= true,
+	CHudAmmo		 	= true,
+	CHudSecondaryAmmo 	= true,
+	CHudCrosshair		= true
+}
+hook.Add("HUDShouldDraw", "HideDefault", function(hudtype)
+	if(hidetable[hudtype]) then return false end
+end)
+
 --[[---------------------------------------------------------
 	Name: gamemode:HUDShouldDraw( name )
 	Desc: return true if we should draw the named element
