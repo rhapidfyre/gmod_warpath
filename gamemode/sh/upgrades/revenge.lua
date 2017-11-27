@@ -13,7 +13,7 @@ having to network information between server and client.
 
 local myupgrade = {}
 myupgrade.name 		= "revenge" -- Must be in coding convention. Used for gamemode purposes.
-myupgrade.title		= "Death Revenge" -- Title for the player's menu
+myupgrade.title		= "Revenge" -- Title for the player's menu
 myupgrade.desc		= "Explode on death. A fun time for all." -- Should be short, to the point.
 
 -- Menu applicability
@@ -35,11 +35,11 @@ myupgrade["cost"] = 1
 
 
 -- Adds the table info to the gamemode (REQUIRED)
-hook.Add("InitPostEntity", "AddUpgrade", function()
-	--[[
-	I Commented this out, so that this template isn't added to the gamemode.
+hook.Add("InitPostEntity", "AddRevengeUpgrade", function()
+	
+	--I Commented this out, so that this template isn't added to the gamemode.
 	table.insert(warpath_upgrades, myupgrade)
-	]]
+	
 end)
 
 -------------------------------------------------
@@ -63,7 +63,9 @@ if SERVER then
 			local ply 		= args[4]
 			local mylevel 	= ply:GetUpgrade(args[1])
 			
-			if mylevel == 0 then mylevel = false
+			if mylevel == 0 then 
+			print("DEBUG Revenge is false")
+			mylevel = false
 			else mylevel = true end
 			
 			if !args[3] and !mylevel then
@@ -80,7 +82,8 @@ if SERVER then
 		
 
 local function DeathRevenge(ply, inf, atk)
-	if ply:LastHitGroup() != HITGROUP_HEAD && GetHasRevenge(ply) then
+	print(GetHasRevenge(ply))
+	if ply:LastHitGroup() != HITGROUP_HEAD && GetHasRevenge(ply) == true then
 		timer.Simple(1,function()
 		local effectdata = EffectData()
 		effectdata:SetEntity(ply)

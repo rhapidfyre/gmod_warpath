@@ -42,13 +42,12 @@ function GM:EntityTakeDamage( ent, info )
         if info:GetAttacker():IsPlayer() && ent:Team() == info:GetAttacker():Team() then
 				info:SetDamage(0)
 				--HealDamage(info, ent)
->>>>>>> master
+
 					Redirect(ent)
 		else
-			info:SetDamage(0)
+			--info:SetDamage(0)
 			Redirect(ent)
 		end
      end
 
-print(info:GetAttacker():GetModelScale())
 end

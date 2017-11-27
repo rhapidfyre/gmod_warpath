@@ -2,6 +2,12 @@ local CMenu = nil
 local NPC_Points = 0
 local PLY_Points = 0
 
+local upName  = "None Selected"
+local upDesc  = "No Details"
+local upLong  = "This menu is for buying upgrades that will affect your NPCs. The points will come from the team balance. Be careful, this uses the point balance for the ENTIRE team! You must hover an upgrade to see extended information regarding the upgrade you wish to purchase."
+local upCost  = {}
+local upLevel = 0
+
 -- local NPCUpgrades (upgrade) return end
 	
 ------------------------------------------------------------
@@ -163,6 +169,27 @@ function GM:OnContextMenuOpen()
 					net.WriteString("upgrade")
 					net.SendToServer()
 				end
+				
+				
+				local y = 4
+				for k,v in pairs(warpath_upgrades) do
+					if v["player"] == true then
+						local button = vgui.Create("DButton", panel1)
+						button:SetSize(250, 24)
+						button:SetPos(40,170+y)
+						button:SetText(v["title"])
+						function button.DoClick()
+							net.Start("CL_Upgrade")
+							net.WriteString(v["title"])
+							net.WriteBool(true)
+							net.SendToServer()
+						end
+						y = y + 28
+						print("DEBUG Player upgrade test")
+					end
+			
+				end
+
 				--[[
 				if !LocalPlayer():GetHasHealGun() then
 					local MedButton = vgui.Create("DButton", panel1)
@@ -175,7 +202,7 @@ function GM:OnContextMenuOpen()
 						net.WriteString("medic")
 						net.SendToServer()
 					end
-				end]]
+				end
 				
 					local SvgButton = vgui.Create("DButton", panel1)
 					SvgButton:SetText("Scavenge")
@@ -198,7 +225,7 @@ function GM:OnContextMenuOpen()
 						net.Start("CL_Upgrade")
 						net.WriteString("revenge")
 						net.SendToServer()
-					end
+					end]]
 
 				local GndButton = vgui.Create("DButton", panel1)
 				GndButton:SetText("Grenade")

@@ -35,11 +35,10 @@ myupgrade["cost"] = 1
 
 
 -- Adds the table info to the gamemode (REQUIRED)
-hook.Add("InitPostEntity", "AddUpgrade", function()
-	--[[
-	I Commented this out, so that this template isn't added to the gamemode.
+hook.Add("InitPostEntity", "AddScavengeUpgrade", function()
+	
 	table.insert(warpath_upgrades, myupgrade)
-	]]
+	
 end)
 
 -------------------------------------------------

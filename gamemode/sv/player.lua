@@ -833,7 +833,7 @@ end
 function GM:PlayerButtonDown( ply, btn ) end
 function GM:PlayerButtonUp( ply, btn ) end
 
-
+--[[
 local hasFrag = false
 local hasHealGun = false
 local hasRevenge = false
@@ -856,14 +856,12 @@ function GetHasHealGun()
 end
 
 
-<<<<<<< HEAD
+
 function GetHasRevenge()
 	return hasRevenge
 end
 
-=======
-]]
->>>>>>> master
+
 function SetHasScavenge (bool)
 	hasScavenge = bool
 end
@@ -871,7 +869,7 @@ end
 function GetHasScavenge()
 	return hasScavenge
 end
-
+]]
 
 
 

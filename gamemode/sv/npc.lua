@@ -56,7 +56,7 @@ function GM:OnNPCKilled( ent, attacker, inflictor )
 					attacker:SetHealth(attacker:Health() + attacker:GetMaxHealth()*0.1)
 					print("Player Healed")
 			end
-<<<<<<< HEAD
+
 			local actwep = attacker:GetActiveWeapon()
 			if actwep:GetHoldType() != "melee"  && attacker:GetHasScavenge() then
 				local maxammo = actwep:GetMaxAmmo()
@@ -64,8 +64,7 @@ function GM:OnNPCKilled( ent, attacker, inflictor )
 				attacker:SetAmmo(math.Round(actwep:Ammo1()+(maxammo*.05)), actwep:GetPrimaryAmmoType())
 				print((actwep:GetMaxAmmo()*.05))
 			end
-=======
->>>>>>> master
+
 
 		end
 

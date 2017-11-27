@@ -9,7 +9,7 @@ myupgrade.longdesc  = "Buying a level of this upgrade will increase the amount o
 
 -- Menu applicability
 myupgrade.npc		= true -- True if npc upgrade (shows up in F4 NPC Menu)
-myupgrade.player	= true -- True if player upgrade (shows up in C context menu)
+myupgrade.player	= false -- True if player upgrade (shows up in C context menu)
 
 -- Declares the base point cost for each upgrade level
 -- KEY: Level in Question
