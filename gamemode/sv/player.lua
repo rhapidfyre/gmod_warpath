@@ -64,7 +64,7 @@ function GM:DoPlayerDeath( ply, attacker, dmginfo )
     elseif ( attacker:IsValid() && attacker:IsNPC() ) then
     
         -- Award NPC's team with upgrade points
-        local npcTeam = attacker:GetWarTeam()
+        local npcTeam = attacker:Team()
 	if npcTeam ~= 5 then
         SetGlobalInt("WP_T"..npcTeam.."Points", GetGlobalInt("WP_T"..npcTeam.."Points") + POINT_DEAD_PLY)
         team.SetScore(npcTeam, team.GetScore(npcTeam + SCORE_KILL))
@@ -314,6 +314,12 @@ function GM:PlayerSpawn( pl )
 	-- If the player doesn't have a team in a TeamBased game
 	-- then spawn him as a spectator
 	--
+	if pl:GetPData("Model") ~= nil then
+		pl:SetModel(pl:GetPData("Model"))
+	else
+		pl:SetModel("models/player/kleiner.mdl")
+	end
+	
 	if ( self.TeamBased && ( pl:Team() == TEAM_SPECTATOR || pl:Team() == TEAM_UNASSIGNED ) ) then
 
 		self:PlayerSpawnAsSpectator( pl )
@@ -340,6 +346,10 @@ function GM:PlayerSpawn( pl )
         pl:SetModel("models/player/kleiner.mdl")
     end
     
+	if pl:GetModel() == "models/player/kleiner.mdl" then
+		pl:PrintMessage(HUD_PRINTTALK, "Using default model - To change your player model, press F3.")
+	end
+	
     local colors = team.GetColor(pl:Team())
     pl:SetPlayerColor(Vector(colors.r/255, colors.g/255, colors.b/255))
     

@@ -65,7 +65,10 @@ local function GMF3Menu()
             draw.RoundedBox(6, 0, 0, F3Menu:GetWide(), F3Menu:GetTall(), Color(40,40,40))
             draw.RoundedBoxEx(6, 0, 0, F3Menu:GetWide(), 24, Color(teamCol.r, teamCol.g, teamCol.b,255), true, true, false, false)
         end
-        
+		function F3Menu:OnClose()
+			gui.EnableScreenClicker(false)
+		end
+		
         local F3Panel = vgui.Create("DPanel", F3Menu)
         F3Panel:SetSize(F3Menu:GetWide()-4, F3Menu:GetTall()-4)
         F3Panel:SetPos(2,24)
@@ -108,12 +111,14 @@ local function GMF3Menu()
                 F3Click.Paint = function()
                 end
                 F3Click.DoClick = function()
-                    LocalPlayer():ConCommand("setmodel "..v[2])
+                    net.Start("CL_ChooseModel")
+						net.WriteString(modelview)
+						net.SendToServer()
                     surface.PlaySound("garrysmod/ui_click.wav")
+					F3Menu:Close()
                 end
 				function F3Click.OnCursorEntered()
 					modelview = "models/player/"..v[2]
-					print(modelview)
 				end
                 
                 i = i + 100

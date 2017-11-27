@@ -14,7 +14,7 @@ end
 -- Loops through each NPC for each NPC, and builds a hate list based on team
 --
 function Hostility(npc, npcTeam)
-    if npc:GetWarTeam() ~= 5 and npc:GetWarTeam() ~= 0 then
+    if npc:Team() ~= 5 and npc:Team() ~= 0 then
         for _,ply in pairs (player.GetAll()) do
         
             if ply:Team() == npcTeam then
@@ -34,7 +34,7 @@ function HostilityPly(pl)
         local plTeam = pl:Team()
         for _,npc in pairs (ents.FindByClass("npc_combine_s")) do
             if IsValid(npc) then
-                if npc:GetWarTeam() == plTeam then
+                if npc:Team() == plTeam then
                     npc:AddEntityRelationship(pl, D_LI, 99)
                 
                 else
@@ -106,7 +106,7 @@ end
 
 function AssaultPoint(npc)
     if IsValid(npc) and npc ~= nil then
-        if npc:GetWarTeam() < 3 and npc:GetWarTeam() > 0 then
+        if npc:Team() < 3 and npc:Team() > 0 then
             if !(CombatSchedules(npc)) then
                 
                 /*
@@ -115,7 +115,7 @@ function AssaultPoint(npc)
                 local minimum = nil
                 for _,zone in pairs (ents.FindByClass("war_capture_zone")) do
                 
-                    if zone:GetKeyValues()["TeamNum"] ~= npc:GetWarTeam() then
+                    if zone:GetKeyValues()["TeamNum"] ~= npc:Team() then
                     
                         if minimum == nil then minimum = zone end
                         
@@ -134,7 +134,7 @@ function AssaultPoint(npc)
                 local minimum = {}
                 
                 for _,zone in pairs (ents.FindByClass("war_capture_zone")) do
-                    if zone:GetKeyValues()["TeamNum"] ~= npc:GetWarTeam() then
+                    if zone:GetKeyValues()["TeamNum"] ~= npc:Team() then
                     
                         table.insert(minimum, zone:GetPos())
                         flag = true

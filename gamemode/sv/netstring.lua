@@ -8,6 +8,7 @@ util.AddNetworkString("SV_UpgradeFail")
 
 util.AddNetworkString("CL_Upgrade")
 util.AddNetworkString("CL_Points")
+util.AddNetworkString("CL_ChooseModel")
 util.AddNetworkString("player_weapon")
 util.AddNetworkString("player_perk")
 
@@ -17,4 +18,11 @@ net.Receive("CL_Points", function(len, ply)
     net.Start("SV_Points")
         net.WriteInt(GetGlobalInt("WP_T"..ply:Team().."Points"), 32)
         net.Send(ply)
+end)
+
+-- Receives the client model request
+net.Receive("CL_ChooseModel", function(len, ply)
+	local modelchoice = net.ReadString()
+	ply:SetModel(modelchoice)
+	ply:SetPData("Model", modelchoice)
 end)

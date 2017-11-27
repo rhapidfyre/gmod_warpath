@@ -1,5 +1,45 @@
 
 surface.CreateFont(
+"HUDCrosshair1",
+{
+	font = "halflife2",
+	extended = false,
+	size = 48,
+	weight = 1000,
+	blursize = 0,
+	scanlines = 0,
+	antialias = true,
+	underline = false,
+	italic = false,
+	strikeout = false,
+	symbol = false,
+	rotary = false,
+	shadow = false,
+	additive = true,
+	outline = false,
+} )
+
+surface.CreateFont(
+"HUDCrosshair2",
+{
+	font = "halflife2",
+	extended = false,
+	size = 32,
+	weight = 1000,
+	blursize = 0,
+	scanlines = 0,
+	antialias = true,
+	underline = false,
+	italic = false,
+	strikeout = false,
+	symbol = false,
+	rotary = false,
+	shadow = false,
+	additive = true,
+	outline = false,
+} )
+
+surface.CreateFont(
 "HUDFloatOne",
 {
 	font = "halflife2",
@@ -18,6 +58,7 @@ surface.CreateFont(
 	additive = false,
 	outline = false,
 } )
+
 
 surface.CreateFont(
 "HUDClock1",

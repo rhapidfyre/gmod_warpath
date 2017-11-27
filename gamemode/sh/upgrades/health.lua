@@ -75,7 +75,7 @@ if SERVER then
 	hook.Add("OnEntityCreated", "NPCHPUpgrade", function(ent)
 		if ent:IsNPC() then
 			timer.Simple(1, function()
-			local warteam = ent:GetWarTeam()
+			local warteam = ent:Team()
 				if warteam > 0 and warteam < 3 then
 					local npclevel = myupgrade["level"][warteam]
 					ent:SetMaxHealth(ent:GetMaxHealth() + myupgrade["increase"][npclevel])

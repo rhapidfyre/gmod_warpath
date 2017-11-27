@@ -146,16 +146,6 @@ function DrawWeapon()
     end
 end
 
-local hidetable = {
-	CHudHealth 			= true,
-	CHudBattery 		= true,
-	CHudAmmo		 	= true,
-	CHudSecondaryAmmo 	= true
-}
-hook.Add("HUDShouldDraw", "HideDefault", function(hudtype)
-	if(hidetable[hudtype]) then return false end
-end)
-
 hook.Add("HUDPaint", "NewHUD", function()
 	if LocalPlayer():Alive() then
 		DrawHealth()
