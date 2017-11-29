@@ -53,7 +53,7 @@ if SERVER then
 
 	local function GetHasRevenge(ply)
 		local hasUp = ply:GetUpgrade(myupgrade.name) 
-		if hasUp == 1 then return true
+		if hasUp != 0 then return true
 		else return false end
 	end
 
@@ -82,8 +82,8 @@ if SERVER then
 		
 
 local function DeathRevenge(ply, inf, atk)
-	print(GetHasRevenge(ply))
-	if ply:LastHitGroup() != HITGROUP_HEAD && GetHasRevenge(ply) == true then
+
+	if (ply:LastHitGroup() != HITGROUP_HEAD) && (GetHasRevenge(ply)) then
 		timer.Simple(1,function()
 		local effectdata = EffectData()
 		effectdata:SetEntity(ply)
@@ -91,7 +91,7 @@ local function DeathRevenge(ply, inf, atk)
 
 		util.Effect("Explosion", effectdata)
 		util.BlastDamage(ply, ply, ply:GetPos(), 200, 200)
-		
+		print("BOOM!!!!")
 		end)--timer
 	end
 end

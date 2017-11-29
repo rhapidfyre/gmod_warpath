@@ -185,7 +185,7 @@ function GM:OnContextMenuOpen()
 							net.SendToServer()
 						end
 						y = y + 28
-						print("DEBUG Player upgrade test")
+						print("DEBUG Player upgrade test: "..v["title"])
 					end
 			
 				end

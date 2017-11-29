@@ -48,6 +48,7 @@ function round.Prep()
 			ply:StripWeapons()
 			ply:StripAmmo()
 
+
             
             -- Disperse Weaponry (Loadout)
             ply:Give("weapon_crowbar")

@@ -34,7 +34,7 @@ function meta:GetUpgrade(upname)
 			local ret = self.uptable[upname]
 			return ret
 		else
-			print("(DEBBUG) Key did not exist, returning zero as upgrade level.")
+			print("(DEBUG) Key did not exist, returning zero as upgrade level.")
 			return 0
 		end
 	else
