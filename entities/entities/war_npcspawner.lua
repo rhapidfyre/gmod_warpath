@@ -115,11 +115,11 @@ function ENT:Think()
 						npc:SetColor(team.GetColor(self.WarTeam))
 					end
 					
-					timer.Simple(2, function()
-						if npc:GetMaxHealth() < 50 then
+					timer.Simple(0.5, function()
+						--if npc:GetMaxHealth() <= 50 then
 							npc:SetMaxHealth(50)
 							npc:SetHealth(50)
-						end
+						--end
 					end)--timer end
 					
 					

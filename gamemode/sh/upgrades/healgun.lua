@@ -12,9 +12,9 @@ having to network information between server and client.
 ]]
 
 local myupgrade = {}
-myupgrade.name 		= "scavenge" -- Must be in coding convention. Used for gamemode purposes.
-myupgrade.title		= "Death Scavenge" -- Title for the player's menu
-myupgrade.desc		= "Kill stuff to get ammo back. Headshots are important." -- Should be short, to the point.
+myupgrade.name 		= "healgun" -- Must be in coding convention. Used for gamemode purposes.
+myupgrade.title		= "Medic" -- Title for the player's menu
+myupgrade.desc		= "Shoot friends to heal them!" -- Should be short, to the point.
 
 -- Menu applicability
 myupgrade.npc		= false -- True if npc upgrade (shows up in F4 NPC Menu)
@@ -35,8 +35,9 @@ myupgrade["cost"] = 1
 
 
 -- Adds the table info to the gamemode (REQUIRED)
-hook.Add("InitPostEntity", "AddScavengeUpgrade", function()
+hook.Add("InitPostEntity", "AddHealgunUpgrade", function()
 	
+	--I Commented this out, so that this template isn't added to the gamemode.
 	table.insert(warpath_upgrades, myupgrade)
 	
 end)
@@ -46,23 +47,25 @@ end)
 -------------------------------------------------
 if SERVER then
 
-	local function SetHasScavenge(ply, bool)
+	local function SetHasHealgun (ply, bool)
 		ply:SetUpgrade(myupgrade.name, bool)
 	end
 
-	local function GetHasScavenge(ply)
+	local function GetHasHealgun(ply)
 		local hasUp = ply:GetUpgrade(myupgrade.name) 
 		if hasUp != 0 then return true
 		else return false end
 	end
 
 	-- ADD YOUR FUNCTIONS HERE
-	local function ScavengeUpgrade(args)
+	local function HealgunUpgrade(args)
 		if args[1] == myupgrade.name then
 			local ply 		= args[4]
 			local mylevel 	= ply:GetUpgrade(args[1])
-			
-			if mylevel == 0 then mylevel = false
+
+			if mylevel == 0 then 
+			print("DEBUG Medic is false")
+			mylevel = false
 			else mylevel = true end
 			
 			if args[3] and !mylevel then
@@ -70,49 +73,46 @@ if SERVER then
 				local cost = myupgrade["cost"]
 				if points >= cost then
 					ply:SetPoints(ply:GetPoints()-cost)
-					SetHasScavenge(ply, 1)
-					print("DEBUG Death Scavenge purchased")
+					SetHasHealgun(ply, 1)
+					print("Purchased Medic")
 					
 				end
 			end
 		end
 	end
 		
-
-local function DeathScavengePlayer(ply, inf, atk)
-	print("DEBUG Player scavenge")
-	if IsValid(atk) then
-		if atk:IsPlayer() && GetHasScavenge(atk) then
-				local actwep = atk:GetActiveWeapon()
-				if actwep:GetHoldType() != "melee"  || actwep:GetHoldType() != nil then
-					local maxammo = actwep:GetMaxAmmo()
-					print(actwep:GetMaxAmmo())
-					atk:SetAmmo(math.Round(actwep:Ammo1()+(maxammo*.25)), actwep:GetPrimaryAmmoType())
-					print((actwep:GetMaxAmmo()*.25))
-				end
-			
-		end
-	end
-end
+		
+local function HealDamage(victim, info)
 	
-local function DeathScavengeNPC(ent, atk, inf)
-	print("DEBUG NPC scavenge")
-	if IsValid(atk) then
-		if atk:IsPlayer() && GetHasScavenge(atk) then
-				local actwep = atk:GetActiveWeapon()
-				print(actwep)
-				if actwep:GetHoldType() != "melee" || actwep:GetHoldType() != nil then
-					local maxammo = actwep:GetMaxAmmo()
-					print(actwep:GetMaxAmmo())
-					atk:SetAmmo(math.Round(actwep:Ammo1()+(maxammo*.05)), actwep:GetPrimaryAmmoType())
-					print("Ammo is "..(actwep:GetMaxAmmo()*.05))
+    if victim:IsNPC() || victim:IsPlayer() then
+        if info:GetAttacker():IsPlayer() && victim:Team() == info:GetAttacker():Team() then
+			local dmg = info:GetDamage()
+
+			if  GetHasHealgun(info:GetAttacker()) then
+				info:SetDamage(0)
+				if victim:Health() < victim:GetMaxHealth() then 
+					if ((victim:Health()+dmg*.2)>victim:GetMaxHealth()) then
+						victim:SetHealth( victim:Health()+(dmg*.2))
+					else
+						victim:SetHealth(victim:GetMaxHealth())
+				
+					end
+				else
+					victim:SetHealth(victim:GetMaxHealth())
 				end
-			
+			end
+			print ("NPC now has "..victim:Health().." Health!") 
+	
+			Redirect(victim)
+		else
+			--info:SetDamage(0)
+			Redirect(victim)
 		end
-	end
-end	
-hook.Add("DoPlayerDeath", "DeathScavengePlayer", DeathScavengePlayer)
-hook.Add("OnNPCKilled", "DeathScavengeNPC", DeathScavengeNPC)
+    end
+
+end
+
+hook.Add("EntityTakeDamage", "HealDamage", HealDamage)
 		--[[
 		args[1] =
 			upgrade name (myupgrade.name)
@@ -128,7 +128,7 @@ hook.Add("OnNPCKilled", "DeathScavengeNPC", DeathScavengeNPC)
 		args[4] =
 			Entity; Player
 	]]
-	hook.Add("DoUpgrade", "GiveScavenge", ScavengeUpgrade)
+	hook.Add("DoUpgrade", "GiveHealgun", HealgunUpgrade)
 end
 
 

@@ -62,13 +62,13 @@ if SERVER then
 		if args[1] == myupgrade.name then
 			local ply 		= args[4]
 			local mylevel 	= ply:GetUpgrade(args[1])
-			print("Debug "..ply.." "..mylevel)
+
 			if mylevel == 0 then 
 			print("DEBUG Revenge is false")
 			mylevel = false
 			else mylevel = true end
 			
-			if !args[3] and !mylevel then
+			if args[3] and !mylevel then
 				local points = ply:GetPoints()
 				local cost = myupgrade["cost"]
 				if points >= cost then
@@ -97,7 +97,7 @@ local function DeathRevenge(ply, inf, atk)
 	end
 end
 	
-hook.Add("PlayerDeath", "DeathRevenge", DeathRevenge)
+hook.Add("DoPlayerDeath", "DeathRevenge", DeathRevenge)
 		--[[
 		args[1] =
 			upgrade name (myupgrade.name)
