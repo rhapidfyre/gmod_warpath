@@ -128,47 +128,60 @@ function ENT:EndTouch(ent)
     end
 end
 
+local function Capture(activator, self)
+	if activator:IsNPC() then
+		/*
+			if activator:Team() == self.ownerteam and self.last_command < CurTime() then
+				AssaultPoint(activator)
+				self.last_command = CurTime() + 5
+				
+			else*/
+			if ((activator:Team() > 0 and activator:Team() < 3) and (activator:Team() ~= self.ownerteam)) then
+				if !self.occupied then
+					if self.cooldown < CurTime() then
+						self:Input("capture", activator, activator, activator:Team())
+						SpawnpointChange() -- setup_npc.lua
+						self.count = 1
+						self.occupied = true
+						
+						for _,spwn in pairs (ents.FindByClass("war_npcspawner")) do
+							spwn:Input("change")
+						end
+						
+						/*for _,spwn in pairs (ents.FindByClass("war_spawnpoint")) do
+							spwn:Input("change")
+						end*/
+						
+						-- Sends the NPC to the next assault point
+						activator:SetNWBool("HasGoal", false)
+						timer.Simple(0.25, function()
+							AssaultPoint(activator)
+						end)
+						
+					else
+						activator:SetSchedule(SCHED_ALERT_STAND)
+					
+					end
+				end
+				
+			end
+		--[[
+		elseif activator:IsPlayer() then
+			local args1 = {}
+				args1[1] = me.occupied
+				args1[2] = me.ownerteam
+				args1[3] = ply
+				args1[4] = me
+				
+			hook.Call("war_plycap", args1)
+			]]
+		end 
+		
+end
+
 function ENT:Touch(activator)
 	
-	if activator:IsNPC() then
-    /*
-        if activator:Team() == self.ownerteam and self.last_command < CurTime() then
-            AssaultPoint(activator)
-            self.last_command = CurTime() + 5
-            
-        else*/
-        if ((activator:Team() > 0 and activator:Team() < 3) and (activator:Team() ~= self.ownerteam)) then
-            if !self.occupied then
-                if self.cooldown < CurTime() then
-                    self:Input("capture", activator, activator, activator:Team())
-                    SpawnpointChange() -- setup_npc.lua
-                    self.count = 1
-                    self.occupied = true
-                    
-                    for _,spwn in pairs (ents.FindByClass("war_npcspawner")) do
-                        spwn:Input("change")
-                    end
-                    
-                    /*for _,spwn in pairs (ents.FindByClass("war_spawnpoint")) do
-                        spwn:Input("change")
-                    end*/
-                    
-                    -- Sends the NPC to the next assault point
-                    activator:SetNWBool("HasGoal", false)
-                    timer.Simple(0.25, function()
-                        AssaultPoint(activator)
-                    end)
-                    
-                else
-                    activator:SetSchedule(SCHED_ALERT_STAND)
-                
-                end
-            end
-            
-        end
-        
-        
-	end
+	Capture(activator, self)
     
 end
 

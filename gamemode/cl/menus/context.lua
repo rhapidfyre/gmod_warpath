@@ -230,27 +230,6 @@ function GM:OnContextMenuOpen()
 						net.SendToServer()
 					end]]
 
-				local GndButton = vgui.Create("DButton", panel1)
-				GndButton:SetText("Grenade")
-				GndButton:SetTextColor(Color(0, 0, 0))
-				GndButton:SetPos(200, 250)
-				GndButton:SetSize(60,60)
-				GndButton.DoClick = function()
-					net.Start("player_weapon")
-					net.WriteString("weapon_frag")
-					net.SendToServer()
-				end
-
-				local CapButton = vgui.Create("DButton", panel1)
-				CapButton:SetText("Capture")
-				CapButton:SetTextColor(Color(0, 0, 0))
-				CapButton:SetPos(120,250)
-				CapButton:SetSize(60,60)
-				CapButton.DoClick = function()
-					net.Start("player_perk")
-					net.WriteString("capture")
-					net.SendToServer()
-				end
 		end
 	
 	end
