@@ -181,11 +181,13 @@ function GM:OnContextMenuOpen()
 						function button.DoClick()
 							net.Start("CL_Upgrade")
 							net.WriteString(v["title"])
+							net.WriteString("upgrade")
 							net.WriteBool(true)
 							net.SendToServer()
+							print("DEBUG Player upgrade test: "..v["title"])
 						end
 						y = y + 28
-						print("DEBUG Player upgrade test: "..v["title"])
+
 					end
 			
 				end

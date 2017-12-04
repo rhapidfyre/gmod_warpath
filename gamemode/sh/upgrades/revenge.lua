@@ -62,7 +62,7 @@ if SERVER then
 		if args[1] == myupgrade.name then
 			local ply 		= args[4]
 			local mylevel 	= ply:GetUpgrade(args[1])
-			
+			print("Debug "..ply.." "..mylevel)
 			if mylevel == 0 then 
 			print("DEBUG Revenge is false")
 			mylevel = false
@@ -74,6 +74,7 @@ if SERVER then
 				if points >= cost then
 					ply:SetPoints(ply:GetPoints()-cost)
 					SetHasRevenge(ply, 1)
+					print("Purchased Revenge")
 					
 				end
 			end
