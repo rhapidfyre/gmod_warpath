@@ -23,9 +23,9 @@ myupgrade["cost"][4] 	= 1
 
 myupgrade["increase"] = {}
 myupgrade["increase"][1]  = "war_pistol"
-myupgrade["increase"][2]  = "war_shotgun"
-myupgrade["increase"][3]  = "war_rifle"
-myupgrade["increase"][4]  = "war_crossbow"
+myupgrade["increase"][2]  = "shotgun"
+myupgrade["increase"][3]  = "ar2"
+myupgrade["increase"][4]  = "crossbow"
 
 myupgrade["level"] = {}
 myupgrade["level"][1] = 1

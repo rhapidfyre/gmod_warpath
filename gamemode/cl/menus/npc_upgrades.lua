@@ -45,18 +45,18 @@ local function GameF4Menu()
 		
 		local y = 4
 		for k,v in pairs(warpath_upgrades) do
-		
-			local button = vgui.Create("DButton", menuLeft)
-			button:SetSize(menuLeft:GetWide()-28, 24)
-			button:SetPos(8,y)
-			button:SetText(v["title"])
-			function button:OnCursorEntered()
-				upName = v["title"]
-				upDesc = v["desc"]
-				upLong = v["longdesc"]
+			if v["player"] == false && v["stat"] == true then
+				local button = vgui.Create("DButton", menuLeft)
+				button:SetSize(menuLeft:GetWide()-28, 24)
+				button:SetPos(8,y)
+				button:SetText(v["title"])
+				function button:OnCursorEntered()
+					upName = v["title"]
+					upDesc = v["desc"]
+					upLong = v["longdesc"]
+				end
+				y = y + 28
 			end
-			y = y + 28
-			
 		end
 		
 		gui.EnableScreenClicker(true)

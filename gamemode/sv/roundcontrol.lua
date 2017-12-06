@@ -35,6 +35,8 @@ function round.Prep()
 	SetGlobalInt("WP_T1Points", POINT_START)
 	SetGlobalInt("WP_T2Points", POINT_START)
 	
+	WeaponTable={}
+	
     timer.Simple(1, function()
         for _,ply in pairs (player.GetAll()) do
 		
@@ -51,12 +53,12 @@ function round.Prep()
 
             
             -- Disperse Weaponry (Loadout)
-            ply:Give("weapon_crowbar")
-            ply:Give("war_pistol")
+        ply:Give("weapon_crowbar")
+        ply:Give("war_pistol")
 		ply:GiveAmmo(30, "pistol", false)
 		ply:SetPoints(1)
 
-			ply:SetRunSpeed(ply:GetMaxSpeed())
+		ply:SetRunSpeed(ply:GetMaxSpeed())
 			
             
             

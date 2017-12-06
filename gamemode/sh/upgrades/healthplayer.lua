@@ -2,14 +2,14 @@
 ---------- MIN. REQUIRED ---------
 ----------------------------------
 local myupgrade = {}
-myupgrade.name 		= "health_base" -- Short name, used for upgrade detection/code purposes, keep short and in coding convention
+myupgrade.name 		= "health_base_player" -- Short name, used for upgrade detection/code purposes, keep short and in coding convention
 myupgrade.title		= "Health Upgrade"
 myupgrade.desc		= "Increase to Max Hit Points" -- Should be in the form of an improper sentence
 myupgrade.longdesc  = "Buying a level of this upgrade will increase the amount of health you have by the percentage bonus of your current level." -- Proper grammar/punctuation, as long as you want.
 
 -- Menu applicability
 myupgrade.npc		= true -- True if npc upgrade (shows up in F4 NPC Menu)
-myupgrade.player	= false -- True if player upgrade (shows up in C context menu)
+myupgrade.player	= true -- True if player upgrade (shows up in C context menu)
 myupgrade.stat		= true -- True if not a perk upgrade
 
 -- Declares the base point cost for each upgrade level
@@ -53,7 +53,7 @@ myupgrade["level"][2] = 1
 
 
 -- Adds the table info to the gamemode
-hook.Add("InitPostEntity", "AddHealthBase", function()
+hook.Add("InitPostEntity", "AddHealthBasePlayer", function()
     table.insert(warpath_upgrades, myupgrade)
 end)
 ------------------------------------------
@@ -62,7 +62,7 @@ end)
 if SERVER then
 
 	local function HPFormula(ply)
-		local mylevel 	= ply:GetUpgrade("health_base")
+		local mylevel 	= ply:GetUpgrade("health_base_player")
 		local hpMax 	= ply:GetMaxHealth()
 		local hpMod 	= myupgrade["increase"][mylevel]
 		-- Sets the new max health for player
@@ -73,7 +73,7 @@ if SERVER then
 	end
 	
 	-- Checks NPC Health Upgrade everytime it's purchased
-	hook.Add("OnEntityCreated", "NPCHPUpgrade", function(ent)
+	hook.Add("OnEntityCreated", "PlayerHPUpgrade", function(ent)
 		if ent:IsNPC() then
 			timer.Simple(1, function()
 			local warteam = ent:Team()
@@ -97,7 +97,7 @@ if SERVER then
 	
 	-- Called by hook at bottom to preform upgrades
 	-- args: See REQUIRED below for values
-	local function DoHealthUpgrade(args)
+	local function DoHealthUpgradePlayer(args)
 		
 		if args[1] == myupgrade.name then
 		
@@ -147,7 +147,7 @@ if SERVER then
 					if cost <= pts then
 						myupgrade["level"][ply:Team()] = tlevel + 1
                         SetGlobalInt("WP_T"..ply:Team().."Points", pts - cost)
-						print("(DEBUG) Team upgrade level for health_base increased to "..myupgrade["level"][ply:Team()]..".")
+						print("(DEBUG) Player upgrade level for health_base increased to "..myupgrade["level"][ply:Team()]..".")
 					else
 						print("(DEBUG) Not enough team points for NPC upgrade..")
 					end
@@ -161,7 +161,7 @@ if SERVER then
 	end
 	
 	-- Called everytime an upgrade is purchased
-	hook.Add("DoUpgrade", "DoHPUpgrade", DoHealthUpgrade)
+	hook.Add("DoUpgrade", "DoHPUpgradePlayer", DoHealthUpgradePlayer)
 
 end
 

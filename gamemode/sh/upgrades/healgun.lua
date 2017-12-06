@@ -19,6 +19,7 @@ myupgrade.desc		= "Shoot friends to heal them!" -- Should be short, to the point
 -- Menu applicability
 myupgrade.npc		= false -- True if npc upgrade (shows up in F4 NPC Menu)
 myupgrade.player	= true -- True if player upgrade (shows up in C context menu)
+myupgrade.stat		= false -- True if not a perk upgrade
 
 -- Can be as long as you want. Full description of upgrade.
 myupgrade.longdesc  = "Buying a level of this upgrade will increase the amount of health you have by the percentage bonus of your current level." 
@@ -87,9 +88,10 @@ local function HealDamage(victim, info)
     if victim:IsNPC() || victim:IsPlayer() then
         if info:GetAttacker():IsPlayer() && victim:Team() == info:GetAttacker():Team() then
 			local dmg = info:GetDamage()
+			info:SetDamage(0) -- Uncomment this to remove friendly fire
 
 			if  GetHasHealgun(info:GetAttacker()) then
-				info:SetDamage(0)
+				--info:SetDamage(0) --Uncomment this for friendly fire
 				if victim:Health() < victim:GetMaxHealth() then 
 					if ((victim:Health()+dmg*.2)>victim:GetMaxHealth()) then
 						victim:SetHealth( victim:Health()+(dmg*.2))

@@ -148,9 +148,13 @@ local function Capture(activator, self)
 							spwn:Input("change")
 						end
 						
-						/*for _,spwn in pairs (ents.FindByClass("war_spawnpoint")) do
+						for _,crate in pairs (ents.FindByClass("war_ammosupply")) do
+							crate:Input("change")
+						end
+						
+						for _,spwn in pairs (ents.FindByClass("war_spawnpoint")) do
 							spwn:Input("change")
-						end*/
+						end
 						
 						-- Sends the NPC to the next assault point
 						activator:SetNWBool("HasGoal", false)

@@ -142,11 +142,11 @@ function ENT:Touch(activator)
 		crate:SetSequence("Close")
 		timer.Simple(2.75,function()
 			--crate:SetColor(Color(255,255,255,255))
-			crate:SetSequence("Open")
+			self:SetSequence("Open")
 		end)
 		timer.Simple(3, function()
 			self.Used = false
-			sound.Play("items/ammocrate_close.wav", crate:GetPos())
+			sound.Play("items/ammocrate_close.wav", self:GetPos())
 		end)
 		
 		for _,weapon in pairs(activator:GetWeapons()) do

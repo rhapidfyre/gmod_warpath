@@ -19,6 +19,7 @@ myupgrade.desc		= "Kill stuff to get ammo back. Headshots are important." -- Sho
 -- Menu applicability
 myupgrade.npc		= false -- True if npc upgrade (shows up in F4 NPC Menu)
 myupgrade.player	= true -- True if player upgrade (shows up in C context menu)
+myupgrade.stat		= false -- True if not a perk upgrade
 
 -- Can be as long as you want. Full description of upgrade.
 myupgrade.longdesc  = "Buying a level of this upgrade will increase the amount of health you have by the percentage bonus of your current level." 

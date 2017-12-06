@@ -18,6 +18,7 @@ function GM:OnNPCKilled( ent, attacker, inflictor )
 		attacker = attacker:GetDriver()
 	end
 
+	
 	if ( !IsValid( inflictor ) && IsValid( attacker ) ) then
 		inflictor = attacker
 	end

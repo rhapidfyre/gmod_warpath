@@ -106,77 +106,33 @@ function GM:OnContextMenuOpen()
 				TeamPoints:SetPos(20,10)
 				TeamPoints:SetText("Points:  "..PLY_Points)            
 		
-				local HPLabel = vgui.Create("DLabel", panel1)
-				HPLabel:SetPos(20,30)
-				HPLabel:SetText("HP :")
-				
-				local HPButton = vgui.Create("DButton", panel1)
-				HPButton:SetText("Upgrade!")
-				HPButton:SetTextColor(Color(0, 0, 0))
-				HPButton:SetPos(185,30)
-				HPButton:SetSize(75,20)
-				HPButton.DoClick = function()
-					net.Start("CL_Upgrade")
-					net.WriteString("health_base")
-					net.WriteString("upgrade")
-					net.SendToServer()
-				end
-				
-				local DmgLabel = vgui.Create("DLabel", panel1)
-				DmgLabel:SetPos(20,55)
-				DmgLabel:SetText("Damage :")
-				
-				local DmgButton = vgui.Create("DButton", panel1)
-				DmgButton:SetText("Upgrade!")
-				DmgButton:SetTextColor(Color(0, 0, 0))
-				DmgButton:SetPos(185,55)
-				DmgButton:SetSize(75,20)
-				DmgButton.DoClick = function()
-					net.Start("CL_Upgrade")
-					net.WriteString("damage_base")
-					net.WriteString("upgrade")
-					net.SendToServer()
-				end
-				
-				local SpeedLabel = vgui.Create("DLabel", panel1)
-				SpeedLabel:SetPos(20,80)
-				SpeedLabel:SetText("Speed :")
-				
-				local SpeedButton = vgui.Create("DButton", panel1)
-				SpeedButton:SetText("Upgrade!")
-				SpeedButton:SetTextColor(Color(0, 0, 0))
-				SpeedButton:SetPos(185,80)
-				SpeedButton:SetSize(75,20)
-				SpeedButton.DoClick = function()
-					net.Start("CL_Upgrade")
-					net.WriteString("speed_base")
-					net.WriteString("upgrade")
-					net.SendToServer()
-				end
-				
-				local AmmoLabel = vgui.Create("DLabel", panel1)
-				AmmoLabel:SetPos(20,105)
-				AmmoLabel:SetText("Ammo  :")
-				
-				local AmmoButton = vgui.Create("DButton", panel1)
-				AmmoButton:SetText("Upgrade!")
-				AmmoButton:SetTextColor(Color(0, 0, 0))
-				AmmoButton:SetPos(185,105)
-				AmmoButton:SetSize(75,20)
-				AmmoButton.DoClick = function()
-					net.Start("CL_Upgrade")
-					net.WriteString("ammo_base")
-					net.WriteString("upgrade")
-					net.SendToServer()
-				end
-				
-				
+		
 				local y = 4
-				for k,v in pairs(warpath_upgrades) do
-					if v["player"] == true then
+				for _,v in pairs(warpath_upgrades) do
+					if v["player"] == true && v["stat"] == true then
 						local button = vgui.Create("DButton", panel1)
 						button:SetSize(250, 24)
-						button:SetPos(40,170+y)
+						button:SetPos(30,10+y)
+						button:SetText(v["title"])
+						button:SetTooltip(v["desc"])
+						function button.DoClick()
+							net.Start("CL_Upgrade")
+							net.WriteString(v["name"])
+							net.WriteString("upgrade")
+							net.WriteBool(true)
+							net.SendToServer()
+							print("DEBUG Player upgrade test: "..v["title"])
+						end
+						y = y + 28
+					end
+				end
+				
+	
+				for _,v in pairs(warpath_upgrades) do
+					if v["player"] == true && v["stat"] == false then
+						local button = vgui.Create("DButton", panel1)
+						button:SetSize(250, 24)
+						button:SetPos(30,40+y)
 						button:SetText(v["title"])
 						button:SetTooltip(v["desc"])
 						function button.DoClick()
