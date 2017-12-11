@@ -136,19 +136,26 @@ function ENT:Touch(activator)
 		
 		sound.Play("items/ammocrate_open.wav", self:GetPos())
 		timer.Simple(0.125, function() sound.Play("items/ammo_pickup.wav", self:GetPos()) end)
-		
+
 		local crate = self:GetNWEntity("PropEntity")
+
 		--crate:SetColor(Color(255,0,0,0))
 		crate:SetSequence("Close")
 		timer.Simple(2.75,function()
-			--crate:SetColor(Color(255,255,255,255))
-			self:SetSequence("Open")
-		end)
-		timer.Simple(3, function()
-			self.Used = false
-			sound.Play("items/ammocrate_close.wav", self:GetPos())
+			if IsValid(self) then
+				--crate:SetColor(Color(255,255,255,255))
+				self:SetSequence("Open")
+			end
 		end)
 		
+
+		timer.Simple(3, function()
+			if IsValid(self) then
+				self.Used = false
+				sound.Play("items/ammocrate_close.wav", self:GetPos())
+			end
+		end)
+
 		for _,weapon in pairs(activator:GetWeapons()) do
 		
 			local VoidWeapons = {"m9k_knife", "m9k_suicide_bomb", "m9k_nitro", "weapon_frag", "weapon_rpg"}
@@ -158,6 +165,7 @@ function ENT:Touch(activator)
 			end
 			
 		end
+		
 		
 	end
 	
