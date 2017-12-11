@@ -43,7 +43,7 @@ if SERVER then
 
 	local function GiveWeapons(ply)
         print("(DEBUG) Running GiveWeapons(ply)")
-		if ply:WarWeapons("war_shotgun") then 
+		if ply:WarWeapons("weapon_shotgun") then 
             print("(DEBUG) Shotgun: Yes")
 			ply:Give("war_shotgun")
 		end
@@ -51,7 +51,7 @@ if SERVER then
             print("(DEBUG) Rifle: Yes")
 			ply:Give("war_rifle")
 		end
-		if ply:WarWeapons("war_crossbow") then 
+		if ply:WarWeapons("weapon_crossbow") then 
             print("(DEBUG) Crossbow: Yes")
 			ply:Give("war_crossbow")
 		end

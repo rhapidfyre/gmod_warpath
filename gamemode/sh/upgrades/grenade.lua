@@ -84,7 +84,7 @@ end
 			mylevel = false
 			else mylevel = true end
 			
-			if args[3] and !mylevel then
+			if args[3] then
 				local points = ply:GetPoints()
 				local cost = myupgrade["cost"]
 				if points >= cost then

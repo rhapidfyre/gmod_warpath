@@ -86,10 +86,10 @@ local function DeathScavengePlayer(ply, inf, atk)
 		if atk:IsPlayer() && GetHasScavenge(atk) then
 				local actwep = atk:GetActiveWeapon()
 				if actwep:GetHoldType() != "melee"  || actwep:GetHoldType() != nil then
-					local maxammo = actwep:GetMaxAmmo()
-					print(actwep:GetMaxAmmo())
-					atk:SetAmmo(math.Round(actwep:Ammo1()+(maxammo*.25)), actwep:GetPrimaryAmmoType())
-					print((actwep:GetMaxAmmo()*.25))
+					local maxammo = GetMaxAmmo(ply, actwep)
+					print(GetMaxAmmo(ply, actwep))
+					atk:SetAmmo(math.Round((actwep.Owner:GetAmmoCount( actwep:GetPrimaryAmmoType()))+(maxammo*.25)), actwep:GetPrimaryAmmoType())
+					print((GetMaxAmmo(ply, actwep)*.25))
 				end
 			
 		end
@@ -103,10 +103,10 @@ local function DeathScavengeNPC(ent, atk, inf)
 				local actwep = atk:GetActiveWeapon()
 				print(actwep)
 				if actwep:GetHoldType() != "melee" || actwep:GetHoldType() != nil then
-					local maxammo = actwep:GetMaxAmmo()
-					print(actwep:GetMaxAmmo())
-					atk:SetAmmo(math.Round(actwep:Ammo1()+(maxammo*.05)), actwep:GetPrimaryAmmoType())
-					print("Ammo is "..(actwep:GetMaxAmmo()*.05))
+					local maxammo = GetMaxAmmo(ply, actwep)
+					print(GetMaxAmmo(ply, actwep))
+					atk:SetAmmo(math.Round((actwep.Owner:GetAmmoCount( actwep:GetPrimaryAmmoType()))+(maxammo*.05)), actwep:GetPrimaryAmmoType())
+					print("Ammo is "..(GetMaxAmmo(ply, actwep)*.05))
 				end
 			
 		end

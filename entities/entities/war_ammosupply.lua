@@ -112,7 +112,7 @@ local function MaxAmmunition(gun)
 	
 	if AMMO > 0 then
 		print(gun)
-		local AMMOCOUNT = gun:Ammo1()
+		local AMMOCOUNT = gun.Owner:GetAmmoCount( gun:GetPrimaryAmmoType())
 		
 		if AMMOCOUNT < AmmoType[AMMO] then
 		
@@ -128,9 +128,7 @@ local function MaxAmmunition(gun)
 end
 
 function ENT:Touch(activator)
-	print(activator)
-	print(self.Used)
-	print(self.WarTeam)
+
 	if activator:IsPlayer() and !self.Used and self.WarTeam == activator:Team() then  
 		self.Used = true
 		
@@ -160,8 +158,8 @@ function ENT:Touch(activator)
 		
 			local VoidWeapons = {"m9k_knife", "m9k_suicide_bomb", "m9k_nitro", "weapon_frag", "weapon_rpg"}
 			if !(table.HasValue(VoidWeapons, weapon:GetClass())) then
-				local ammo = weapon:GetPrimaryAmmoType()
-				activator:GiveAmmo(MaxAmmunition(weapon), ammo, true)
+				local ammo =  activator:GetActiveWeapon():GetPrimaryAmmoType()
+				activator:GiveAmmo(GetMaxAmmo(activator, activator:GetActiveWeapon()), ammo, true)
 			end
 			
 		end

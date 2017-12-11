@@ -59,7 +59,7 @@ function GM:OnContextMenuOpen()
 				ShtButton:SetSize(60,60)
 				ShtButton.DoClick = function()
 					net.Start("player_weapon")
-					net.WriteString("war_shotgun")
+					net.WriteString("weapon_shotgun")
 					net.SendToServer()
 				end
 				
@@ -81,7 +81,7 @@ function GM:OnContextMenuOpen()
 				CrsButton:SetSize(60,60)
 				CrsButton.DoClick = function()
 					net.Start("player_weapon")
-					net.WriteString("war_crossbow")
+					net.WriteString("weapon_crossbow")
 					net.SendToServer()
 				end
 			else

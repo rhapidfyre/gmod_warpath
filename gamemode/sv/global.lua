@@ -23,3 +23,15 @@ function CheckReady()
 	end
 	return false
 end
+
+function GetMaxAmmo(ply, weapon)
+
+	if weapon == "weapon_shotgun" then
+		return 32
+	elseif weapon == "weapon_crossbow" then
+		return 10
+	else
+		print(weapon.MaxAmmo)
+		return weapon.MaxAmmo
+	end
+end

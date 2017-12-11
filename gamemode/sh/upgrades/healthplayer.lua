@@ -51,7 +51,6 @@ myupgrade["level"][2] = 1
 
 
 
-
 -- Adds the table info to the gamemode
 hook.Add("InitPostEntity", "AddHealthBasePlayer", function()
     table.insert(warpath_upgrades, myupgrade)
@@ -104,7 +103,7 @@ if SERVER then
 			local ply = args[4]
 			
 			-- PLY Upgrade
-			if !args[3] then
+			if args[3] then
 			
 				-- Use this to determine if purchase was successful
 				local success = false
@@ -136,25 +135,6 @@ if SERVER then
 				if success then
 					HPFormula(ply)
 				end
-				
-			-- NPC Upgrade
-			else
-				local pts = GetGlobalInt("WP_T"..ply:Team().."Points")
-                print(pts)
-				local tlevel = myupgrade["level"][ply:Team()]
-				local cost = myupgrade["cost"][tlevel + 1]
-				if myupgrade["level"][ply:Team()] < 10 then
-					if cost <= pts then
-						myupgrade["level"][ply:Team()] = tlevel + 1
-                        SetGlobalInt("WP_T"..ply:Team().."Points", pts - cost)
-						print("(DEBUG) Player upgrade level for health_base increased to "..myupgrade["level"][ply:Team()]..".")
-					else
-						print("(DEBUG) Not enough team points for NPC upgrade..")
-					end
-				else
-					print("(DEBUG) Team upgrade level is already maximum.")
-				end
-				
 			end
 		end
 		

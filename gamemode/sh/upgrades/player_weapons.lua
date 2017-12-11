@@ -6,6 +6,7 @@
 
 ]]
 
+	
 	local function GiveWeapons(ply, weapon)
 		print("(DEBUG) Giving " ..weapon)
 			ply:Give(weapon)
@@ -21,7 +22,7 @@ net.Receive("player_weapon", function (len,ply)
 			ply:SetPrimaryWep(plyweapon)
 			ply:SetPrimary(true)
 			ply:SetPoints(ply:GetPoints() - 1)
-			ply:GiveAmmo(prim:GetMaxAmmo(), prim:GetPrimaryAmmoType(), false)
+			ply:GiveAmmo((GetMaxAmmo(ply, plyweapon)-ply:GetAmmoCount( prim:GetPrimaryAmmoType())), prim:GetPrimaryAmmoType(), false)
 			
 			
 

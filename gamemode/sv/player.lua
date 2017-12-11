@@ -238,8 +238,7 @@ function GM:PlayerDeath( ply, inflictor, attacker )
 	
 		local actwep = attacker:GetActiveWeapon()
 		if actwep:GetHoldType() != "melee"  && attacker:GetHasScavenge() then
-			local maxammo = actwep:GetMaxAmmo()
-			print(actwep:GetMaxAmmo())
+			local maxammo = GetMaxAmmo(ply, actwep)
 			attacker:SetAmmo(math.Round(actwep:Ammo1()+(maxammo*.3)), actwep:GetPrimaryAmmoType())
 		end
 		
@@ -398,7 +397,7 @@ function GM:PlayerLoadout( pl )
     pl:Give("war_pistol")
 	if (pl:GetPrimary() && pl:GetPrimaryWep()) then
 		prim = pl:Give(pl:GetPrimaryWep())
-		pl:GiveAmmo(prim:GetMaxAmmo(), prim:GetPrimaryAmmoType(), false)
+		pl:GiveAmmo((GetMaxAmmo(pl, pl:GetPrimaryWep())-pl:GetAmmoCount( prim:GetPrimaryAmmoType())), prim:GetPrimaryAmmoType(), false)
 	end
     pl:GiveAmmo(30, "Pistol", false)
 
